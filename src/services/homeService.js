@@ -1,4 +1,4 @@
-angular.module("app")
-.service("homeService", function(){
+angular.module( "app" )
+.service( "homeService", function( ) {
 
-})
+} );

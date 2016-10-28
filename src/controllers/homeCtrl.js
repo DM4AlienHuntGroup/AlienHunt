@@ -1,4 +1,4 @@
-angular.module("app")
-.controller ("homeCtrl", function($scope, homeService){
-  $scope.test = "test"
-})
+angular.module( "app" )
+.controller( "homeCtrl", function( $scope ) {
+	$scope.test = "test";
+} );
