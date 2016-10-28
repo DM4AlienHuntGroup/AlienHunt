@@ -1,8 +1,10 @@
+
 body {
   font-family: 'VT323', monospace;
   color: green;
-  background-color: black;
+  background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
 }
+
 
 .splashcontainer {
   width: 80vh;
@@ -28,10 +30,23 @@ body {
   font-family: 'Bungee', cursive;
   margin: 20px auto;
   padding: auto 0px;
+  margin-bottom: 127px;
+  margin-top: 205px;
+  position: relative;
+
+}
+
+
+
+.alien{
+  position: absolute;
+  top: -123px;
+  left: -1000px
 }
 
 .hunt{
-  padding-left: 120px;
+  position: absolute;
+  right: -1000px;
 }
 
 .splashbuttons {
@@ -49,4 +64,10 @@ body {
 
 .splashbuttons ul li:hover {
   color: white;
+  cursor: pointer;
+}
+
+.selectImg{
+  width: 20px;
+  height: 20px;
 }
