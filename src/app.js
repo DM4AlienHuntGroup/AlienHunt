@@ -5,11 +5,11 @@ angular.module( "app", [ "ui.router" ] )
 	$stateProvider
 	.state( "splashPage", {
 		url: "/"
-	, templateUrl: "../public/splash.html"
+	, template: "<splash-page></splash-page>"
 	, controller: "homeCtrl"
 	} )
 	.state( "alienhunter", {
 		url: "/alienhunter"
 	, templateUrl: "./alienhunter.html"
 	} );
-} );
+} )
