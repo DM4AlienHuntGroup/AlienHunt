@@ -8,11 +8,11 @@ renderer.view.style.height = '100%';
 renderer.autoResize = true;
 
 
-var spaceship = new PIXI.Sprite.fromImage('./UFO.png');
-var alien = new PIXI.Sprite.fromImage('./alien.png')
-var background = new PIXI.Sprite.fromImage('./Background.png');
-var corn = new PIXI.Sprite.fromImage('./corn.png');
-var scoreboard = new PIXI.Sprite.fromImage('./Scoreboard.png');
+var spaceship = new PIXI.Sprite.fromImage('./imgs/UFO.png');
+var alien = new PIXI.Sprite.fromImage('./imgs/alien.png')
+var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
+var corn = new PIXI.Sprite.fromImage('./imgs/corn.png');
+var scoreboard = new PIXI.Sprite.fromImage('./imgs/Scoreboard.png');
 
   alien.anchor.set = 0.1;
   alien.position.x = window.innerWidth / 2;
