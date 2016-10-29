@@ -22,5 +22,7 @@ module.exports = {
             "always"
         ],
 				"sort-keys": 0
+				, "object-shorthand": 0
+				, indent: 0
     }
 };
