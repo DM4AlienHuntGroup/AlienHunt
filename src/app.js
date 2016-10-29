@@ -12,4 +12,4 @@ angular.module( "app", [ "ui.router" ] )
 		url: "/alienhunter"
 	, templateUrl: "./alienhunter.html"
 	} );
-} );
+} )

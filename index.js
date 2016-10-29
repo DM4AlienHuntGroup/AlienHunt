@@ -5,14 +5,15 @@ const express = require("express")
       , port = serverConfig.port || 4000
       , app = express()
       , session = require('express-session')
+			, mongoose = require("mongoose")
+			, mongoUri = serverConfig.mongoUri
+			, masterRoutes = require("./server/masterRoutes.js")
 
-app.use(session({
-  secret: serverConfig.secret
-  , resave: null
-  , saveUninitialized: null
-} ) );
+app.use(session(serverConfig.session) );
 app.use("/", express.static(__dirname));
 app.use(json());
 app.use(cors());
+mongoose.connect(mongoUri);
+masterRoutes(app)
 
 app.listen(port, () => {console.log(`This is Dr. Crane... I'm listening. Port:${port}`)})
