@@ -8,12 +8,33 @@ const express = require("express")
 			, mongoose = require("mongoose")
 			, mongoUri = serverConfig.mongoUri
 			, masterRoutes = require("./server/masterRoutes.js")
+			, passport = require("passport")
+			, Strategy = require('passport-facebook').Strategy
 
 app.use(session(serverConfig.session) );
 app.use("/", express.static(__dirname));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(json());
 app.use(cors());
 mongoose.connect(mongoUri);
 masterRoutes(app)
+
+passport.use(new Strategy( serverConfig.Strategy ,
+  function(accessToken, refreshToken, profile, cb) {
+    return cb(null, profile);
+  }));
+
+app.get("/#/auth/facebook", passport.authenticate("facebook"));
+app.get("/auth/facebook/callback", passport.authenticate("facebook", {
+  successRedirect: "/me",
+  failureRedirect: "/login"
+}));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
 
 app.listen(port, () => {console.log(`This is Dr. Crane... I'm listening. Port:${port}`)})
