@@ -1,7 +1,7 @@
 angular.module( "app" )
 .controller( "homeCtrl", function( $scope, homeService ) {
 	const createUser = () => {
-		homeService.createUser().then( response => { console.log(response) } )
+		homeService.createUser().then( response => { $scope.tempUser = response.data} )
 	}
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
