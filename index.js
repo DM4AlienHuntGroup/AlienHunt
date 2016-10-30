@@ -21,20 +21,21 @@ mongoose.connect(mongoUri);
 masterRoutes(app)
 
 passport.use(new Strategy( serverConfig.Strategy ,
-  function(accessToken, refreshToken, profile, cb) {
+	function(accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
   }));
 
-app.get("/#/auth/facebook", passport.authenticate("facebook"));
+app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get("/auth/facebook/callback", passport.authenticate("facebook", {
-  successRedirect: "/me",
+  successRedirect: "/",
   failureRedirect: "/login"
 }));
-passport.serializeUser(function(user, done) {
-  done(null, user);
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
 });
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
 });
 
 app.listen(port, () => {console.log(`This is Dr. Crane... I'm listening. Port:${port}`)})
