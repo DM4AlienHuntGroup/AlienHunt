@@ -1,4 +1,4 @@
-var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0x000000});
+function play(){var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0x000000});
 document.body.appendChild(renderer.view);
 var stage = new PIXI.Container();
 
@@ -70,4 +70,7 @@ function animate() {
     renderer.render(stage);
 
     requestAnimationFrame(animate);
+}
+
+
 }

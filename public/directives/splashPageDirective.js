@@ -45,6 +45,7 @@ angular.module( "app" )
 
 			const stopSplashMusic = (  ) => {
 				splashMusic.pause(  );
+				$('section').hide()
 			};
 
 			$( ".selectImg" ).css( "opacity", "0" );
