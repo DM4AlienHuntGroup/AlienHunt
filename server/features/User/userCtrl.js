@@ -9,5 +9,8 @@ module.exports = {
 				res.status(200).json(user)
 			}
 		})
+	},
+	postUser: ( req, res ) => {
+		console.log( req.body );
 	}
 }

@@ -1,4 +1,6 @@
 angular.module( "app" )
-.service( "homeService", function( ) {
-
+.service( "homeService", function( $http ) {
+	this.createUser = () => {
+			return $http.post(`/api/user`)
+	}
 } );
