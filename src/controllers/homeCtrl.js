@@ -3,6 +3,7 @@ angular.module( "app" )
 	const createUser = () => {
 		homeService.createUser().then( response => { $scope.tempUser = response.data} )
 	}
+
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
@@ -22,11 +23,18 @@ angular.module( "app" )
 		var corn = new PIXI.Sprite.fromImage('./imgs/corn.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/Scoreboard.png');
 
+		let hunted = false;
+
+		//sounds
+
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
 		$( 'canvas' ).click(function(){
 			laserShoot.play()
 		})
-	
+		const explosion = new Howl( { src: '../../sounds/Explosion.wav' } )
+		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
+
+
 
 		  alien.anchor.set = 0.1;
 		  alien.position.x = window.innerWidth / 2;
@@ -74,19 +82,55 @@ angular.module( "app" )
 		// start animating
 		requestAnimationFrame(animate);
 		function animate() {
-
+			if(!hunted) {
 		    spaceship.position.x += (target.x - spaceship.x) * 0.1;
 		    spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
 		  if(Math.abs(spaceship.x - target.x) < 1)
 		    {
+						spaceshipMove.play()
 		        reset();
 		    }
+			}
 		    // render the container
 		    renderer.render(stage);
 
 		    requestAnimationFrame(animate);
 		}
+
+		///test
+function onDown (eventData) {
+	explosion.play();
+	hunted = true;
+	animate2();
+
+	setTimeout(function(){
+		renderer.destroy(true)
+	} , 2000)
+	setTimeout(
+		$scope.play , 2000)
+
+}
+	spaceship.interactive = true;
+	spaceship.on('mousedown', onDown);
+	spaceship.on('touchstart', onDown);
+
+
+function animate2() {
+	if(hunted) {
+		requestAnimationFrame(animate2);
+
+		spaceship.rotation += 0.3;
+		spaceship.position.x += 0;
+		spaceship.position.y += 3 + Math.random() * 7;
+	}
+		renderer.render(stage);
+
+}
+
+		//test
+
+
 
 	createUser();
 	}
