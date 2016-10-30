@@ -5,6 +5,7 @@ angular.module( "app" )
 		restrict: "E"
 		, templateUrl: "../../public/splash.html"
     , link: function( scope ) {
+			
 
 			const splashMusic = new Howl(
 				{
