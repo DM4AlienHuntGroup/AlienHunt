@@ -27,12 +27,20 @@ angular.module( "app" )
 		var corn = new PIXI.Sprite.fromImage('./imgs/corn.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/Scoreboard.png');
 
+		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
+		$( 'canvas' ).click(function(){
+			laserShoot.play()
+		})
+	
+
 		  alien.anchor.set = 0.1;
 		  alien.position.x = window.innerWidth / 2;
 		  alien.position.y = 100;
 		  alien.scale.set(0.3)
 
-		  spaceship.anchor.set = 0.5;
+		  spaceship.anchor.x = 0.5;
+			spaceship.anchor.y = 0.5;
+
 		  spaceship.scale.set(0.4);
 		  spaceship.position.x = Math.random() * renderer.width;
 		  spaceship.position.y = Math.random() * renderer.height;
