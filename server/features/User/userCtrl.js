@@ -11,6 +11,15 @@ module.exports = {
 		})
 	},
 	postUser: ( req, res ) => {
-		console.log( req.body );
+		new User( { sessionID: req.sessionID } )
+		.save( (err, newUser) => {
+	    if (err) {
+	      return res.status(500).json(err);
+	    }
+	    else {
+				console.log( newUser );
+	      return res.status(200).json(newUser);
+	  	}
+		} )
 	}
 }
