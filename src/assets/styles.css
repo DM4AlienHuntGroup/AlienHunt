@@ -65,9 +65,19 @@ section {
   list-style: none;
 }
 
-.splashbuttons ul li:hover {
-  color: white;
-  cursor: pointer;
+.splashbutton1:hover{
+	color: white;
+	cursor: pointer;
+}
+
+.splashbutton2:hover{
+	color: white;
+	cursor: pointer;
+}
+
+.splashbutton4:hover{
+	color: white;
+	cursor: pointer;
 }
 .login {
 	text-decoration: none;
