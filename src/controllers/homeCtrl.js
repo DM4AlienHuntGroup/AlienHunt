@@ -5,7 +5,7 @@ angular.module( "app" )
 			homeService.createUser().then( response => { $scope.tempUser = response.data } )
 		}
 	}
-	
+
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
@@ -38,9 +38,8 @@ angular.module( "app" )
 
 
 
-		  alien.anchor.set = 0.1;
-		  alien.position.x = window.innerWidth / 2;
-		  alien.position.y = 100;
+		  alien.anchor.set = 0.5;
+		  alien.position.y = window.innerHeight-326;
 		  alien.scale.set(0.3)
 
 		  spaceship.anchor.x = 0.5;
@@ -77,9 +76,12 @@ angular.module( "app" )
 
 		var target = new PIXI.Point();
 
+
+
 		function reset () {
 		    target.x = Math.floor(Math.random() * window.innerWidth);
 		    target.y = Math.floor(Math.random() * window.innerHeight);
+
 		}
 		// start animating
 		requestAnimationFrame(animate);
@@ -94,11 +96,30 @@ angular.module( "app" )
 		        reset();
 		    }
 			}
+
+					alienWalking();
+					alienDisappear();
+
+
 		    // render the container
 		    renderer.render(stage);
 
 		    requestAnimationFrame(animate);
 		}
+
+function alienWalking() {
+	if (alien.position.x <= window.innerWidth/2) {
+		alien.position.x += 3;
+	}
+}
+
+function alienDisappear() {
+	if (alien.position.x > window.innerWidth/2) {
+		createjs.Tween.get(alien).to({alpha: 0}, 2000);
+
+	}
+}
+
 
 		///test
 function onDown (eventData) {
@@ -109,8 +130,8 @@ function onDown (eventData) {
 	setTimeout(function(){
 		renderer.destroy(true)
 	} , 2000)
-	setTimeout(
-		$scope.play , 2000)
+	setTimeout($scope.play, 2000)
+
 
 }
 	spaceship.interactive = true;
@@ -127,6 +148,7 @@ function animate2() {
 		spaceship.position.y += 3 + Math.random() * 7;
 	}
 		renderer.render(stage);
+
 
 }
 
