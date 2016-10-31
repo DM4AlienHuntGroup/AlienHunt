@@ -11,14 +11,9 @@
 }
 body {
   font-family: 'VT323', monospace;
-<<<<<<< HEAD
-  color: green;
-  background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg);
-=======
   color:  green;
   cursor: url('../../imgs/cursor.png'), auto;
   background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
->>>>>>> 30fc0683229afa086cee514ee493dfc081686dab
 }
 
 section {
