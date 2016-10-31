@@ -10,7 +10,11 @@
   color:  green;
 }
 body {
+<<<<<<< HEAD
   font-family: 'VT323', monospace;
+=======
+	font-family: 'VT323', monospace;
+>>>>>>> master
   color:  green;
   cursor: url('../../imgs/cursor.png'), auto;
   background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
