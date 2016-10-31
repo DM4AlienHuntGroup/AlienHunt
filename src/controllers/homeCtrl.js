@@ -5,7 +5,7 @@ angular.module( "app" )
 			homeService.createUser().then( response => { $scope.tempUser = response.data } )
 		}
 	}
-	
+
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
