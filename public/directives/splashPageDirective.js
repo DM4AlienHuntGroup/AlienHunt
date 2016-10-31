@@ -55,7 +55,7 @@ angular.module( "app" )
 			$( document ).ready( () => {
 
 				$( ".splashbutton" ).hover( () => {
-					beep.play(  );
+					beep.play();
 				} );
 
 				$( ".splashbutton1" ).hover( () => {
@@ -66,7 +66,7 @@ angular.module( "app" )
 					$( ".selectImg2" ).css( "opacity", "1" );
 				} );
 
-				$( ".splashbutton3" ).hover( () => {
+				$( ".login" ).hover( () => {
 					$( ".selectImg3" ).css( "opacity", "1" );
 				} );
 
