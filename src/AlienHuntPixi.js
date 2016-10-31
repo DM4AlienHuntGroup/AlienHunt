@@ -13,10 +13,14 @@ var alien = new PIXI.Sprite.fromImage('./imgs/alien.png')
 var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 var corn = new PIXI.Sprite.fromImage('./imgs/corn.png');
 var scoreboard = new PIXI.Sprite.fromImage('./imgs/Scoreboard.png');
+var c = new Charm(PIXI);
 
-  alien.anchor.set = 0.1;
-  alien.position.x = window.innerWidth / 2;
-  alien.position.y = 100;
+
+  alien.anchor.set(0.5, 0);
+  // alien.position.x = window.innerWidth / 2;
+  // alien.position.x = 0;
+  // alien.position.y = 100;
+  alien.position.y = window.innerHeight - 325;
   alien.scale.set(0.3)
 
   spaceship.anchor.set = 0.5;
@@ -61,6 +65,21 @@ function animate() {
 
     spaceship.position.x += (target.x - spaceship.x) * 0.1;
     spaceship.position.y += (target.y - spaceship.y) * 0.1;
+
+  if (alien.position.x <= window.innerWidth/2) {
+    alien.position.x += 4;
+  }
+
+
+  function fadeOutFromCenter() {
+    if (alien.position.x === window.innerWidth/2) {
+        c.fadeOut(alien);
+    }
+
+
+  }
+
+    c.update();
 
   if(Math.abs(spaceship.x - target.x) < 1)
     {
