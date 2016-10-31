@@ -1,14 +1,11 @@
 angular.module( "app" )
-.controller( "homeCtrl", function( $scope, $state, homeService ) {
+.controller( "homeCtrl", function( $scope, homeService ) {
 	const createUser = () => {
 		if (!$scope.User) {
 			homeService.createUser().then( response => { $scope.tempUser = response.data } )
 		}
 	}
-	$scope.login = () => {
-		$state.go("/auth/facebook")
-	}
-
+	
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }

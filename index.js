@@ -22,6 +22,7 @@ masterRoutes(app)
 
 passport.use(new Strategy( serverConfig.Strategy ,
 	function(accessToken, refreshToken, profile, cb) {
+		console.log(profile);
     return cb(null, profile);
   }));
 
