@@ -44,9 +44,7 @@ angular.module( "app" )
 
 
 		  alien.anchor.set = 0.5;
-
-		  alien.position.x = window.innerWidth / 6;
-		  alien.position.y = window.innerHeight / 2.155;
+		  alien.position.y = window.innerHeight - 350;
 		  alien.scale.x = 4.5;
 		  alien.scale.y = 6;
 
