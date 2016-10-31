@@ -6,6 +6,7 @@ angular.module( "app" )
 		, templateUrl: "../../public/splash.html"
     , link: function( scope ) {
 
+
 			const splashMusic = new Howl(
 				{
 					src: [ "../sounds/splashMusic.mp3" ]
@@ -45,6 +46,8 @@ angular.module( "app" )
 
 			const stopSplashMusic = (  ) => {
 				splashMusic.pause(  );
+				const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
+				$('section').hide()
 			};
 
 			$( ".selectImg" ).css( "opacity", "0" );
