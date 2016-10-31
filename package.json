@@ -1,0 +1,35 @@
+{
+  "name": "alien-hunt",
+  "version": "1.0.0",
+  "description": "DM4: Group Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint \"src/**/*.js\" \"server/**/*.js\" \"*/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianSRuiz/Alien-Hunt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulianSRuiz/Alien-Hunt/issues"
+  },
+  "homepage": "https://github.com/JulianSRuiz/Alien-Hunt#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "mongoose": "^4.6.5",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-devmountain": "^1.2.2"
+  }
+}
