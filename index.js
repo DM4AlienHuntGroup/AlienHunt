@@ -28,7 +28,7 @@ passport.use(new Strategy( serverConfig.Strategy ,
 app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get("/auth/facebook/callback", passport.authenticate("facebook", {
   successRedirect: "/",
-  failureRedirect: "/login"
+  failureRedirect: "/auth/facebook"
 }));
 passport.serializeUser(function(user, cb) {
   cb(null, user);
