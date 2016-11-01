@@ -73,6 +73,10 @@ angular.module( "app" )
 					$( ".selectImg4" ).css( "opacity", "1" );
 				} );
 
+				$( ".splashbutton5" ).hover( () => {
+					$( ".selectImg5" ).css( "opacity", "1" );
+				} );
+
 				$( ".splashbutton" ).mouseout( () => {
 					$( ".selectImg" ).css( "opacity", "0" );
 				} );

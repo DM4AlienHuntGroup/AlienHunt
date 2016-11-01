@@ -9,6 +9,7 @@ const User = new mongoose.Schema({
 		, firstName: {type: String, trim: true, default: "John"}
 		, lastName: {type: String, trim: true, default: "Doe"}
 		, isLoggedIn: {type: Boolean, default: true}
+		, currentScore: {type: Number, default: 0}
 
 })
 

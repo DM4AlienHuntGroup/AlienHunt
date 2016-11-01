@@ -2,6 +2,7 @@ angular.module( "app" )
 .controller( "homeCtrl", function( $scope, homeService ) {
 	const getUser = () => {
 		homeService.getUser().then((response)=>{
+			console.log(response.data);
 			$scope.options = true;
 			$scope.user = response.data
 
