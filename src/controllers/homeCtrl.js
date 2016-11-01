@@ -138,7 +138,7 @@ angular.module( "app" )
 					alienWalking();
 					alienDisappear();
 
-contain(spaceship, {x: 0, y: -100, width: window.innerWidth, height: 670})
+contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
 
 		    // render the container
 		    renderer.render(stage);
@@ -164,11 +164,7 @@ contain(spaceship, {x: 0, y: -100, width: window.innerWidth, height: 670})
 		    collision = "top";
 		  }
 
-		  //Right
-		  // if (sprite.x + sprite.width > container.width) {
-		  //   sprite.x = container.width - sprite.width;
-		  //   collision = "right";
-		  // }
+			//No right edge collision
 
 		  //Bottom
 		  if (sprite.y + sprite.height > container.height) {
@@ -186,7 +182,7 @@ contain(spaceship, {x: 0, y: -100, width: window.innerWidth, height: 670})
 
 function alienWalking() {
 	if (alien.position.x <= window.innerWidth/2) {
-		alien.position.x += 5;
+		alien.position.x += 2;
 	}
 }
 
