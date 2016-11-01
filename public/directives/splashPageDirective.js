@@ -6,7 +6,6 @@ angular.module( "app" )
 		, templateUrl: "../../public/splash.html"
     , link: function( scope ) {
 
-
 			const splashMusic = new Howl(
 				{
 					src: [ "../sounds/splashMusic.mp3" ]

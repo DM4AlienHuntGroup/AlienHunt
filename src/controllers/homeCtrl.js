@@ -1,11 +1,11 @@
 angular.module( "app" )
 .controller( "homeCtrl", function( $scope, homeService ) {
-	const assignUser = () => {
-		homeService.assignUser()
-		.then( response => {
-			console.log(response.data);
+	const getUser = () => {
+		homeService.getUser().then((response)=>{
+			$scope.options = true;
 			$scope.user = response.data
-		} )
+
+		})
 	}
 
 	$scope.play = () => {
@@ -301,9 +301,6 @@ function animate2() {
 
 }
 
-
-
-
-	assignUser();
-	}
+}
+	getUser()
 } );

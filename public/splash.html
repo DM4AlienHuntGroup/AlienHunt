@@ -7,10 +7,10 @@
 					<div class="hunt">Hunt</div>
 				</div>
 				<div class="splashbuttons">
-					<ul>
+					<ul ng-show="options">
             <li class="splashbutton" ng-click='stopSplashMusic(); play()'> <img class='selectImg selectImg1' src="imgs/select.png" alt=""><span class='splashbutton1'> Play</span></li>
-            <li class="splashbutton"> <img class='selectImg selectImg2' src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
-						<li> <img class='selectImg selectImg3' src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
+            <li ng-show="user" class="splashbutton"> <img class='selectImg selectImg2' src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
+						<li ng-hide="user.isLoggedIn"> <img class='selectImg selectImg3' src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
             <li class="splashbutton"> <img class='selectImg selectImg4' src="imgs/select.png" alt=""><span class='splashbutton4'> Settings</span></li>
 					</ul>
 				</div>
