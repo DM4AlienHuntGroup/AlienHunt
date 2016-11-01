@@ -51,9 +51,11 @@ angular.module( "app" )
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
 
-		  spaceship.scale.set(2.5);
-		  spaceship.position.x = Math.random() * renderer.width;
-		  spaceship.position.y = Math.random() * renderer.height;
+		  spaceship.scale.x = 0;
+			spaceship.scale.y = 0;
+
+		  spaceship.position.x = window.innerWidth/2;
+		  spaceship.position.y = window.innerHeight/2 - 140;
 
 		  scoreboard.anchor.y = 1;
 		  scoreboard.position.x = 0;
@@ -94,7 +96,10 @@ angular.module( "app" )
 		// start animating
 		requestAnimationFrame(animate);
 		function animate() {
-			if ( laserCount > 3  ) {
+
+
+
+			if ( laserCount > 3 ) {
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
 
@@ -106,12 +111,20 @@ angular.module( "app" )
 				}
 			}
 			if ( laserCount <= 3  ) {
-			if(!hunted) {
+			if(!hunted && alien.position.x > window.innerWidth/2) {
 		    spaceship.position.x += (target.x - spaceship.x) * 0.1;
 		    spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
-		  if(Math.abs(spaceship.x - target.x) < 1)
+				if (spaceship.scale.x !== 2.000000000000001 && spaceship.scale.y !== 2.000000000000001){
+					spaceship.scale.x += 0.04
+					spaceship.scale.y += 0.04
+				}
+
+		  if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > window.innerWidth/2)
 		    {
+
+
+
 						spaceshipMove.play()
 		        reset();
 		    }
