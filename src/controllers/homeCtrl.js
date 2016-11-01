@@ -21,8 +21,23 @@ angular.module( "app" )
 		renderer.autoResize = true;
 
 
-		var spaceship = new PIXI.Sprite.fromImage('./imgs/UFO2.png');
-		var alien = new PIXI.Sprite.fromImage('./imgs/alien2.png')
+
+
+		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
+		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
+		const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
+
+		const alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
+		const alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
+		const alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
+
+		const alienStep1 = PIXI.Texture.fromImage('./imgs/alienStep1.png');
+		const alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
+		const alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
+
+		const alien = new PIXI.Sprite(alienStep1);
+		const spaceship = new PIXI.Sprite(spaceship1);
+
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var corn = new PIXI.Sprite.fromImage('./imgs/grass.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/scoreboard-3.png');
@@ -46,9 +61,9 @@ angular.module( "app" )
 
 
 		  alien.anchor.set = 0.5;
-		  alien.position.y = window.innerHeight - 350;
-		  alien.scale.x = 4.5;
-		  alien.scale.y = 6;
+		  alien.position.y = window.innerHeight - 300;
+		  alien.scale.x = 4;
+		  alien.scale.y = 5.5;
 
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
@@ -78,12 +93,71 @@ angular.module( "app" )
 		  background.scale.set(1.5)
 
 
+
 		  stage.addChild(background);
 		  stage.addChild(spaceship);
 		  stage.addChild(corn);
 		  stage.addChild(scoreboard);
 		  stage.addChild(alien);
-			console.log(spaceship.scale.x);
+
+
+			let animateCount = 0;
+
+
+		  setInterval(function(){
+				  animateCount++;
+				  if (animateCount === 3 ){
+					  animateCount = 0
+				  }
+		  }, 150)
+
+		setInterval( function (){
+					if(animateCount === 0)
+					{
+					spaceship.texture = spaceship2;
+					}
+					else if (animateCount === 1)
+					{
+					spaceship.texture = spaceship3;
+					}
+					else  if (animateCount === 2){
+					  spaceship.texture = spaceship1
+					}
+
+
+				if (alien.position.x < window.innerWidth/2) {
+					if(animateCount === 0)
+					{
+					alien.texture = alienStep1;
+					}
+					else if (animateCount === 1){
+							alien.texture = alienStep2;
+							}
+							else  if (animateCount === 2){
+								alien.texture = alienStep3
+							}
+						}
+						else {
+								alien.scale.x -= 0.1;
+							  alien.scale.y -= 0.2;
+								if(animateCount === 0)
+								{
+								alien.texture = alienStop1;
+								}
+								else if (animateCount === 1)
+								{
+								alien.texture = alienStop2;
+								}
+								else  if (animateCount === 2){
+									alien.texture = alienStop3;
+								}
+
+							}
+
+
+							} , 150)
+
+
 
 
 		var target = new PIXI.Point();
