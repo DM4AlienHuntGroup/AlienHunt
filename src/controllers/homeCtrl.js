@@ -60,20 +60,20 @@ angular.module( "app" )
 		  scoreboard.anchor.y = 1;
 		  scoreboard.position.x = 0;
 		  scoreboard.position.y = window.innerHeight;
-		  scoreboard.scale.x = 5.15;
+		  scoreboard.scale.x = window.innerWidth * 0.004;
 		  scoreboard.scale.y = 2.8;
 		  // console.log(scoreboard);
 
 		  corn.anchor.y = 1;
 		  corn.position.y = window.innerHeight - 135;
 		  // console.log(scoreboard._texture._frame);
-		  corn.scale.x = 5.15;
+		  corn.scale.x = window.innerWidth * 0.004;
 		  corn.scale.y = 3;
 		  // corn.postion.x =
 		  // corn.postion.x =
 		  // corn.scale.set
 
-		  background.scale.set(1.25)
+		  background.scale.set(1.5)
 
 
 		  stage.addChild(background);
