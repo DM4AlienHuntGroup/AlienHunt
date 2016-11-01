@@ -61,9 +61,9 @@ angular.module( "app" )
 
 
 		  alien.anchor.set = 0.5;
-		  alien.position.y = window.innerHeight - 300;
-		  alien.scale.x = 4;
-		  alien.scale.y = 5.5;
+		  alien.position.y = window.innerHeight - (window.innerHeight * 0.3);
+		  alien.scale.x = window.innerWidth * 0.004;
+		  alien.scale.y = window.innerHeight * 0.004;
 
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
@@ -78,14 +78,15 @@ angular.module( "app" )
 		  scoreboard.position.x = 0;
 		  scoreboard.position.y = window.innerHeight;
 		  scoreboard.scale.x = window.innerWidth * 0.004;
-		  scoreboard.scale.y = 2.8;
+		  scoreboard.scale.y = window.innerHeight * 0.004;
 		  // console.log(scoreboard);
 
 		  corn.anchor.y = 1;
-		  corn.position.y = window.innerHeight - 135;
+		  corn.position.y = window.innerHeight - (window.innerHeight * 0.19);
+			console.log(window.innerHeight * 0.004);
 		  // console.log(scoreboard._texture._frame);
 		  corn.scale.x = window.innerWidth * 0.004;
-		  corn.scale.y = 3;
+		  corn.scale.y = window.innerHeight * 0.004;
 		  // corn.postion.x =
 		  // corn.postion.x =
 		  // corn.scale.set
