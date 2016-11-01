@@ -1,4 +1,4 @@
-const mongoose = require( "mongoose" )
+const mongoose = require( "mongoose" ) 
 			, User = require( "./User.js" )
 
 module.exports = {
@@ -43,5 +43,15 @@ module.exports = {
 				}
 			} )
 		}
+	},
+	putUser: ( req, res ) => {
+		User.findByIdAndUpdate( {_id: req.params.id}, req.body, (err, oldUserData) => {
+			if (err) {
+				res.status(500).json(err)
+			}
+			else {
+				res.status(200).json(oldUserData)
+			}
+		} )
 	}
 }

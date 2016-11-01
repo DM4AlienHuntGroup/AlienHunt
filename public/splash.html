@@ -1,3 +1,6 @@
+<div ng-if="user.isLoggedIn" class="welcome-message">
+	<a href="#ex2" rel="modal:open" class="login splashbutton splashbutton3"><img class="hamburger-icon" src="imgs/menu-alt-512.png" alt="" /></a>
+</div>
 	<div class="splashcontainer">
 		<div class="splashcontent">
 				<div class="title">
@@ -12,6 +15,7 @@
             <li ng-show="user" class="splashbutton"> <img class='selectImg selectImg2' src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
 						<li ng-hide="user.isLoggedIn"> <img class='selectImg selectImg3' src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
             <li class="splashbutton"> <img class='selectImg selectImg4' src="imgs/select.png" alt=""><span class='splashbutton4'> Settings</span></li>
+            <li class="splashbutton"> <img class='selectImg selectImg5' src="imgs/select.png" alt=""><span class='splashbutton5'> <a href="#ex3" rel="modal:open" style="text-decoration: none;" class="splashbutton splashbutton5">High Scores</a></span></li>
 					</ul>
 				</div>
 		</div>
@@ -25,4 +29,36 @@
 					<a href="http://localhost:4000/auth/facebook"><button id="facebook">Sign in with Facebook</button></a>
 				</div>
 			</p>
+		</div>
+
+	<!-- User Information Modal -->
+		<div id="ex2">
+			<p><h4>Welcome back, {{user.firstName}}!</h4></p>
+			<p>
+				<ul>
+					<li>Current Level: {{user.currentGameLvl}}</li>
+					<li>Highest Level: {{user.highLevel}}</li>
+					<li>High Score: {{user.highScore | number}}</li>
+					<li>Score: {{user.currentScore | number}}</li>
+				</ul>
+			</p>
+		</div>
+
+	<!-- High Score Modal -->
+		<div class="high-score" id="ex3">
+			<p>
+				<h1><u>High Scores:</u></h1>
+			</p>
+			<ul class="high-score-list">
+				<li>1. Shea <span style="float:right">1,000,000,000 pts</span></li>
+				<li>2. Julian <span style="float:right">1,000,000 pts</span></li>
+				<li>3. Samer <span style="float:right">999,999 pts</span></li>
+				<li>4. Timoth <span style="float:right">999,998 pts</span></li>
+				<li>5. Matt <span style="float:right">6 pts</span></li>
+				<li>6. Ryan <span style="float:right">5 pts</span></li>
+				<li>7. Dontavious <span style="float:right">4 pts</span></li>
+				<li>8. Taryn <span style="float:right">3pts</span></li>
+				<li>9. Joe <span style="float:right">1 pt</span></li>
+				<li>10. Ian <span style="float:right">-1,000,000,000 pts</span></li>
+			</ul>
 		</div>

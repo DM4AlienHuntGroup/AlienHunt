@@ -9,8 +9,29 @@ body {
 section {
   cursor : default;
 }
-
-
+.hamburger-icon{
+	height: 3vh;
+}
+#ex2{
+	background-color: rgb(88, 88, 88);
+	font-size: 1.25em;
+	color: rgb(0,200,0);
+}
+#ex2 li{
+	list-style-type: none;
+	line-height: 1.4em;
+}
+.high-score{
+	height: 90%;
+}
+.high-score-list li{
+	list-style-type: none;
+	line-height: 1.4em;
+}
+.high-score-list{
+	text-align: left;
+	font-size: 1.75em;
+}
 .splashcontainer {
   width: 80vh;
   height: 80vh;
@@ -76,6 +97,13 @@ section {
 }
 
 .splashbutton4:hover{
+	color: white;
+	cursor: pointer;
+}
+.splashbutton5{
+	color: green;
+}
+.splashbutton5:hover{
 	color: white;
 	cursor: pointer;
 }
