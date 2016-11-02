@@ -1,5 +1,4 @@
-angular.module( "app" )
-.controller( "homeCtrl", function( $scope, homeService ) {
+function homeCtrl( $scope, homeService ) {
 	const getUser = () => {
 		homeService.getUser().then((response)=>{
 			$scope.options = true;
@@ -184,7 +183,7 @@ angular.module( "app" )
 
 							} , 150)
 
-		shotBol = false
+		let shotBol = false
 
 		$( 'canvas' ).click(function(){
 			laserCount++;
@@ -414,7 +413,8 @@ function animateNewSpaceship() {
 
 }
 	getUser()
-} );
+}
+export default homeCtrl;
 
 // // const spaceships = [];
 

@@ -1,5 +1,4 @@
-angular.module( "app" )
-.directive( "splashPage", function(  ) {
+function splashPage (  ) {
 	return {
 
 		restrict: "E"
@@ -87,4 +86,5 @@ angular.module( "app" )
 
 		}
 	};
-} );
+};
+export default splashPage;
