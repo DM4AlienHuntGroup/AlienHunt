@@ -69,9 +69,9 @@ angular.module( "app" )
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-
 		const explosion = new Howl( { src: '../../sounds/Explosion.wav' } )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
+		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } )
 
 
 
@@ -199,6 +199,10 @@ angular.module( "app" )
 
 			if ( laserCount <=3 ) {
 				laserShoot.play()
+
+			}
+			if (laserCount === 4) {
+					setTimeout(() => {laugh.play()} , 400)
 			}
 
 			if ( laserCount === 0  ) {
@@ -212,6 +216,7 @@ angular.module( "app" )
 			}
 			else {
 					laserDots.texture = transparent;
+
 					shotBol = true
 
 			}
