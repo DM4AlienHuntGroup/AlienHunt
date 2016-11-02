@@ -58,7 +58,7 @@ function homeCtrl( $scope, homeService ) {
 
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var grass = new PIXI.Sprite.fromImage('./imgs/grass.png');
+		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/scoreboard-3.png');
 
 		let hunted = false;
@@ -427,7 +427,7 @@ export default homeCtrl;
 // // const spaceships = [];
 
 // // const totalSpaceships = 10;
-	
+
 // // for (var i = 0; i < totalSpaceships; i++) {
 
 // // 	const spaceship = new PIXI.Sprite(spaceship1);
