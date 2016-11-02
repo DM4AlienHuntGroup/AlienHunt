@@ -1,4 +1,16 @@
+import jquery from "jquery";
+import angular from "angular";
+import uiRouter from "angular-ui-router";
+import homeCtrl from "./controllers/homeCtrl.js";
+import homeService from "./services/homeService.js";
+import splashPageDirective from "../public/directives/splashPageDirective.js";
+import splashTmpl from "../public/splash.html";
+import howler from "../howler.js";
+import modal from "../src/assets/modal.js";
+
 angular.module( "app", [ "ui.router" ] )
+.service("homeService", homeService)
+.directive("splashPage", splashPageDirective)
 .config( ( $stateProvider, $urlRouterProvider, $compileProvider ) => {
 	$compileProvider.debugInfoEnabled( true );
 	$urlRouterProvider.otherwise( "/" );
@@ -6,10 +18,6 @@ angular.module( "app", [ "ui.router" ] )
 	.state( "splashPage", {
 		url: "/"
 	, template: "<splash-page></splash-page>"
-	, controller: "homeCtrl"
+	, controller: homeCtrl
 	} )
-	.state( "alienhunter", {
-		url: "/alienhunter"
-	, templateUrl: "./alienhunter.html"
-	} );
 } )
