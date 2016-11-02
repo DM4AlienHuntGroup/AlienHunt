@@ -2,13 +2,16 @@ angular.module( "app" )
 .controller( "homeCtrl", function( $scope, homeService ) {
 	const getUser = () => {
 		homeService.getUser().then((response)=>{
-			console.log(response.data);
 			$scope.options = true;
 			$scope.user = response.data
 
 		})
 	}
-
+	$scope.getScoreboard = () => {
+		homeService.getScoreboard().then( ( response ) => {
+			$scope.scores = response.data
+		})
+	}
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
@@ -80,11 +83,9 @@ angular.module( "app" )
 		  scoreboard.position.y = window.innerHeight;
 		  scoreboard.scale.x = window.innerWidth * 0.004;
 		  scoreboard.scale.y = 2.8;
-		  // console.log(scoreboard);
 
 		  corn.anchor.y = 1;
 		  corn.position.y = window.innerHeight - 135;
-		  // console.log(scoreboard._texture._frame);
 		  corn.scale.x = window.innerWidth * 0.004;
 		  corn.scale.y = 3;
 		  // corn.postion.x =
