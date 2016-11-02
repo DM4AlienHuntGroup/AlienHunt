@@ -1,3 +1,6 @@
+<div ng-if="user.isLoggedIn" class="welcome-message">
+	<a href="#ex2" rel="modal:open" class="login splashbutton splashbutton3"><img class="hamburger-icon" src="imgs/menu-alt-512.png" alt="" /></a>
+</div>
 	<div class="splashcontainer">
 		<div class="splashcontent">
 				<div class="title">
@@ -7,11 +10,12 @@
 					<div class="hunt">Hunt</div>
 				</div>
 				<div class="splashbuttons">
-					<ul>
+					<ul ng-show="options">
             <li class="splashbutton" ng-click='stopSplashMusic(); play()'> <img class='selectImg selectImg1' src="imgs/select.png" alt=""><span class='splashbutton1'> Play</span></li>
-            <li class="splashbutton"> <img class='selectImg selectImg2' src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
-						<li> <img class='selectImg selectImg3' src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
+            <li ng-show="user" class="splashbutton"> <img class='selectImg selectImg2' src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
+						<li ng-hide="user.isLoggedIn"> <img class='selectImg selectImg3' src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
             <li class="splashbutton"> <img class='selectImg selectImg4' src="imgs/select.png" alt=""><span class='splashbutton4'> Settings</span></li>
+            <li class="splashbutton"> <img class='selectImg selectImg5' src="imgs/select.png" alt=""><span ng-click="getScoreboard()" class='splashbutton5'> <a href="#ex3" rel="modal:open" style="text-decoration: none;" class="splashbutton splashbutton5">High Scores</a></span></li>
 					</ul>
 				</div>
 		</div>
@@ -25,4 +29,27 @@
 					<a href="http://localhost:4000/auth/facebook"><button id="facebook">Sign in with Facebook</button></a>
 				</div>
 			</p>
+		</div>
+
+	<!-- User Information Modal -->
+		<div id="ex2" style="display:none;">
+			<p><h4>Welcome back, {{user.firstName}}!</h4></p>
+			<p>
+				<ul>
+					<li>Current Level: {{user.currentGameLvl}}</li>
+					<li>Highest Level: {{user.highLevel}}</li>
+					<li>High Score: {{user.highScore | number}}</li>
+					<li>Score: {{user.currentScore | number}}</li>
+				</ul>
+			</p>
+		</div>
+
+	<!-- High Score Modal -->
+		<div class="high-score" id="ex3" style="display:none;">
+			<p>
+				<h1><u>High Scores:</u></h1>
+			</p>
+			<div ng-repeat="score in scores" class="high-score-list">
+				<li>{{score.place}}. {{score.userName}} <span style="float:right">{{score.score | number}} pts</span></li>
+			</div>
 		</div>
