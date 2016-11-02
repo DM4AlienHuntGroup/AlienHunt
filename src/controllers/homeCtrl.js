@@ -426,7 +426,7 @@ function animateNewSpaceship() {
 // // const spaceships = [];
 
 // // const totalSpaceships = 10;
-
+	
 // // for (var i = 0; i < totalSpaceships; i++) {
 
 // // 	const spaceship = new PIXI.Sprite(spaceship1);
@@ -437,6 +437,8 @@ function animateNewSpaceship() {
 // // 	spaceship.scale.y = 0;
 // // 	spaceship.position.x = window.innerWidth/2;
 // // 	spaceship.position.y = window.innerHeight/2 - 140;
+
+
 
 // // 	spaceships.push(spaceship);
 
