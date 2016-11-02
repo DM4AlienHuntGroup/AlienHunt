@@ -39,7 +39,7 @@ angular.module( "app" )
 		const spaceship = new PIXI.Sprite(spaceship1);
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var corn = new PIXI.Sprite.fromImage('./imgs/grass.png');
+		var grass = new PIXI.Sprite.fromImage('./imgs/grass.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/scoreboard-3.png');
 
 		let hunted = false;
@@ -67,10 +67,8 @@ angular.module( "app" )
 
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
-
 		  spaceship.scale.x = 0;
-			spaceship.scale.y = 0;
-
+		  spaceship.scale.y = 0;
 		  spaceship.position.x = window.innerWidth/2;
 		  spaceship.position.y = window.innerHeight/2 - 140;
 
@@ -79,24 +77,19 @@ angular.module( "app" )
 		  scoreboard.position.y = window.innerHeight;
 		  scoreboard.scale.x = window.innerWidth * 0.004;
 		  scoreboard.scale.y = 2.8;
-		  // console.log(scoreboard);
 
-		  corn.anchor.y = 1;
-		  corn.position.y = window.innerHeight - 135;
-		  // console.log(scoreboard._texture._frame);
-		  corn.scale.x = window.innerWidth * 0.004;
-		  corn.scale.y = 3;
-		  // corn.postion.x =
-		  // corn.postion.x =
-		  // corn.scale.set
-
+		  grass.anchor.y = 1;
+		  grass.position.y = window.innerHeight - 135;
+		  grass.scale.x = window.innerWidth * 0.004;
+		  grass.scale.y = 3;
+	
 		  background.scale.set(1.5)
 
 
 
 		  stage.addChild(background);
 		  stage.addChild(spaceship);
-		  stage.addChild(corn);
+		  stage.addChild(grass);
 		  stage.addChild(scoreboard);
 		  stage.addChild(alien);
 
@@ -201,7 +194,7 @@ angular.module( "app" )
 
 
 
-						spaceshipMove.play()
+				spaceshipMove.play()
 		        reset();
 		    }
 			}
@@ -212,7 +205,7 @@ angular.module( "app" )
 					alienWalking();
 					alienDisappear();
 
-contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
+			contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
 
 		    // render the container
 		    renderer.render(stage);
@@ -300,7 +293,29 @@ function animate2() {
 
 
 }
+function animateNewSpaceship() {
+	
+}
 
 }
 	getUser()
 } );
+
+// // const spaceships = [];
+
+// // const totalSpaceships = 10;
+
+// // for (var i = 0; i < totalSpaceships; i++) {
+
+// // 	const spaceship = new PIXI.Sprite(spaceship1);
+
+// // 	spaceship.anchor.x = 0.5;
+// // 	spaceship.anchor.y = 0.5;
+// // 	spaceship.scale.x = 0;
+// // 	spaceship.scale.y = 0;
+// // 	spaceship.position.x = window.innerWidth/2;
+// // 	spaceship.position.y = window.innerHeight/2 - 140;
+
+// // 	spaceships.push(spaceship);
+
+// }
