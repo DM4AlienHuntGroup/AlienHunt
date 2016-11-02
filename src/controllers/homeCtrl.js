@@ -58,7 +58,6 @@ function homeCtrl( $scope, homeService ) {
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
-
 		let hunted = false;
 		let laserCount = 0;
 
