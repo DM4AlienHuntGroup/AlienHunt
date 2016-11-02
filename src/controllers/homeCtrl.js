@@ -3,7 +3,6 @@ function homeCtrl( $scope, homeService ) {
 		homeService.getUser().then((response)=>{
 			$scope.options = true;
 			$scope.user = response.data
-
 		})
 	}
 	$scope.getScoreboard = () => {
@@ -58,7 +57,7 @@ function homeCtrl( $scope, homeService ) {
 
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var grass = new PIXI.Sprite.fromImage('./imgs/grassboard.png');
+		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 
 		let hunted = false;
 		let laserCount = 0;
