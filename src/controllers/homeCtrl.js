@@ -31,6 +31,11 @@ angular.module( "app" )
 		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
 		const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
 
+		const oneLaserdot  = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
+		const twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
+		const threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
+
+
 		const alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
 		const alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
 		const alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
@@ -39,11 +44,22 @@ angular.module( "app" )
 		const alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
 		const alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
 
+		const alienLaughing1 = PIXI.Texture.fromImage('./imgs/AlienLaughing1.png');
+		const alienLaughing2 = PIXI.Texture.fromImage('./imgs/AlienLaughing2.png');
+
+		const shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
+
+		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
+
 		const alien = new PIXI.Sprite(alienStep1);
 		const spaceship = new PIXI.Sprite(spaceship1);
+		const laserDots = new PIXI.Sprite(threeLaserdots);
+		const shot = new PIXI.Sprite(shot1);
+		const alienLaughing = new PIXI.Sprite(alienLaughing1);
+
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var corn = new PIXI.Sprite.fromImage('./imgs/grass.png');
+		var grass = new PIXI.Sprite.fromImage('./imgs/grass.png');
 		var scoreboard = new PIXI.Sprite.fromImage('./imgs/scoreboard-3.png');
 
 		let hunted = false;
@@ -53,12 +69,7 @@ angular.module( "app" )
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-		$( 'canvas' ).click(function(){
-			laserCount++;
-			if ( laserCount <=3 ) {
-				laserShoot.play()
-			}
-		})
+
 		const explosion = new Howl( { src: '../../sounds/Explosion.wav' } )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
 
@@ -69,12 +80,19 @@ angular.module( "app" )
 		  alien.scale.x = 4;
 		  alien.scale.y = 5.5;
 
+
+
+			alienLaughing.anchor.set = 0.5;
+			// fix it Julian :)
+			alienLaughing.scale.x = 3.5;
+		  alienLaughing.scale.y = 5;
+			alienLaughing.position.x = window.innerWidth/2 ;
+			alienLaughing.position.y = window.innerHeight/2 + 70;
+
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
-
 		  spaceship.scale.x = 0;
-			spaceship.scale.y = 0;
-
+		  spaceship.scale.y = 0;
 		  spaceship.position.x = window.innerWidth/2;
 		  spaceship.position.y = window.innerHeight/2 - 140;
 
@@ -84,23 +102,38 @@ angular.module( "app" )
 		  scoreboard.scale.x = window.innerWidth * 0.004;
 		  scoreboard.scale.y = 2.8;
 
-		  corn.anchor.y = 1;
-		  corn.position.y = window.innerHeight - 135;
-		  corn.scale.x = window.innerWidth * 0.004;
-		  corn.scale.y = 3;
-		  // corn.postion.x =
-		  // corn.postion.x =
-		  // corn.scale.set
+		  grass.anchor.y = 1;
+		  grass.position.y = window.innerHeight - 135;
+		  grass.scale.x = window.innerWidth * 0.004;
+		  grass.scale.y = 3;
+
+
+			laserDots.anchor.set = 0.5;
+			laserDots.position.y = window.innerHeight - 70;
+			laserDots.position.x = window.innerWidth/12.5;
+			laserDots.scale.x = window.innerWidth * 0.0012;
+			laserDots.scale.y = window.innerHeight * 0.0012;
+
+
+			shot.anchor.set = 0.5;
+			shot.position.y = window.innerHeight - 45;
+			shot.position.x = window.innerWidth/12.1;
+			shot.scale.x = window.innerWidth * 	0.0004;
+			shot.scale.y = window.innerHeight * 0.00045;
+
 
 		  background.scale.set(1.5)
 
 
 
 		  stage.addChild(background);
+			stage.addChild(alienLaughing);
 		  stage.addChild(spaceship);
-		  stage.addChild(corn);
+		  stage.addChild(grass);
 		  stage.addChild(scoreboard);
 		  stage.addChild(alien);
+			stage.addChild(laserDots);
+			stage.addChild(shot);
 
 
 			let animateCount = 0;
@@ -159,6 +192,69 @@ angular.module( "app" )
 
 							} , 150)
 
+		shotBol = false
+
+		$( 'canvas' ).click(function(){
+			laserCount++;
+
+			if ( laserCount <=3 ) {
+				laserShoot.play()
+			}
+
+			if ( laserCount === 0  ) {
+					laserDots.texture = treeLaserdots;
+			}
+			else if ( laserCount === 1  ) {
+					laserDots.texture = twoLaserdots;
+			}
+			else if ( laserCount === 2  ) {
+					laserDots.texture = oneLaserdot;
+			}
+			else {
+					laserDots.texture = transparent;
+					shotBol = true
+
+			}
+
+		})
+
+		let shotBol1 = false;
+
+		setInterval(() => {
+			if (shotBol)
+			shotBol1 = ! shotBol1;
+
+			if (shotBol1) {
+				shot.texture = transparent;
+			}
+			else {
+				shot.texture = shot1;
+			}
+		},125)
+
+		alienLaughing.interactive = true;
+		let alienLaughingBol = false
+
+
+
+		setInterval( function ()
+		{
+			if ( laserCount > 3 ) {
+		    alienLaughingBol = !alienLaughingBol;
+
+		    if(alienLaughingBol)
+		    {
+		        alienLaughing.texture = alienLaughing1;
+		    }
+		    else
+		    {
+		        alienLaughing.texture = alienLaughing2;
+		    }
+		}
+	} , 130)
+
+
+
 
 
 
@@ -173,6 +269,8 @@ angular.module( "app" )
 		}
 		// start animating
 		requestAnimationFrame(animate);
+
+		let alienLaughingPositionCounter = 0
 		function animate() {
 
 
@@ -180,6 +278,17 @@ angular.module( "app" )
 			if ( laserCount > 3 ) {
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
+
+				if (	alienLaughingPositionCounter !== 120 ) {
+					alienLaughingPositionCounter++
+				alienLaughing.position.y -= 1;
+			}
+				// console.log(alienLaughingPositionCounter);
+				if (	alienLaughingPositionCounter === 120 ) {
+
+					alienLaughing.position.y +=1;
+				}
+
 
 				if (spaceship.scale.x !== 0.019999999999999938 && spaceship.scale.y !== 0.019999999999999938) {
 					spaceship.scale.x -= 0.02;
@@ -203,7 +312,7 @@ angular.module( "app" )
 
 
 
-						spaceshipMove.play()
+				spaceshipMove.play()
 		        reset();
 		    }
 			}
@@ -214,7 +323,7 @@ angular.module( "app" )
 					alienWalking();
 					alienDisappear();
 
-contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
+			contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
 
 		    // render the container
 		    renderer.render(stage);
@@ -270,7 +379,7 @@ function alienDisappear() {
 }
 
 
-		///test
+
 
 function onDown (eventData) {
 
@@ -302,7 +411,29 @@ function animate2() {
 
 
 }
+function animateNewSpaceship() {
+
+}
 
 }
 	getUser()
 } );
+
+// // const spaceships = [];
+
+// // const totalSpaceships = 10;
+
+// // for (var i = 0; i < totalSpaceships; i++) {
+
+// // 	const spaceship = new PIXI.Sprite(spaceship1);
+
+// // 	spaceship.anchor.x = 0.5;
+// // 	spaceship.anchor.y = 0.5;
+// // 	spaceship.scale.x = 0;
+// // 	spaceship.scale.y = 0;
+// // 	spaceship.position.x = window.innerWidth/2;
+// // 	spaceship.position.y = window.innerHeight/2 - 140;
+
+// // 	spaceships.push(spaceship);
+
+// }
