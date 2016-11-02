@@ -91,7 +91,7 @@ angular.module( "app" )
 		  // corn.postion.x =
 		  // corn.scale.set
 
-		  background.scale.set(1.5)
+		  background.scale.set(1.9)
 
 
 
@@ -192,7 +192,8 @@ angular.module( "app" )
 		    spaceship.position.x += (target.x - spaceship.x) * 0.1;
 		    spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
-				if (spaceship.scale.x !== 2.000000000000001 && spaceship.scale.y !== 2.000000000000001){
+				if (spaceship.scale.x < window.innerWidth * 0.0018 && spaceship.scale.y < window.innerHeight * 0.003){
+					console.log(window.innerHeight * 0.005555555555555558);
 					spaceship.scale.x += 0.04
 					spaceship.scale.y += 0.04
 				}
@@ -213,7 +214,8 @@ angular.module( "app" )
 					alienWalking();
 					alienDisappear();
 
-contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
+contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: window.innerHeight})
+
 
 		    // render the container
 		    renderer.render(stage);
@@ -257,7 +259,7 @@ contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
 
 function alienWalking() {
 	if (alien.position.x <= window.innerWidth/2) {
-		alien.position.x += 2;
+		alien.position.x += 4;
 	}
 }
 
