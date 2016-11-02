@@ -72,17 +72,17 @@ function homeCtrl( $scope, homeService ) {
 
 
 		  alien.anchor.set = 0.5;
-		  alien.position.y = window.innerHeight * 0.7;
+		  alien.position.y = window.innerHeight * 0.675;
 		  alien.scale.x = window.innerWidth * 0.004;
 		  alien.scale.y = window.innerHeight * 0.0055;
 
 
 
 			alienLaughing.anchor.set = 0.5;
-			alienLaughing.scale.x = window.innerWidth * 0.004;
-		  alienLaughing.scale.y = window.innerHeight * 0.0055;
+			alienLaughing.scale.x = window.innerWidth * 0.003;
+		  alienLaughing.scale.y = window.innerHeight * 0.005;
 			alienLaughing.position.x = window.innerWidth/2 ;
-			alienLaughing.position.y = window.innerHeight * 0.71;
+			alienLaughing.position.y = window.innerHeight * 0.85765;
 
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
@@ -99,15 +99,15 @@ function homeCtrl( $scope, homeService ) {
 
 
 			laserDots.anchor.set = 0.5;
-			laserDots.position.y = window.innerHeight * 0.91;
-			laserDots.position.x = window.innerWidth * 0.093;
+			laserDots.position.y = window.innerHeight * 0.91225;
+			laserDots.position.x = window.innerWidth * 0.094;
 			laserDots.scale.x = window.innerWidth * 0.0012;
 			laserDots.scale.y = window.innerHeight * 0.0012;
 
 
 			shot.anchor.set = 0.5;
-			shot.position.y = window.innerHeight * 0.94;
-			shot.position.x = window.innerWidth * 0.093;
+			shot.position.y = window.innerHeight * 0.942005;
+			shot.position.x = window.innerWidth * 0.09869005;
 			shot.scale.x = window.innerWidth * 	0.0004;
 			shot.scale.y = window.innerHeight * 0.00045;
 
@@ -163,7 +163,7 @@ function homeCtrl( $scope, homeService ) {
 						}
 						else {
 								alien.scale.x -= 0.1;
-							  alien.scale.y -= 0.2;
+							  alien.scale.y -= 0.1;
 								if(animateCount === 0)
 								{
 								alien.texture = alienStop1;
@@ -280,7 +280,7 @@ function homeCtrl( $scope, homeService ) {
 				// console.log(alienLaughingPositionCounter);
 				if (	alienLaughingPositionCounter === 120 ) {
 
-					alienLaughing.position.y +=1;
+					alienLaughing.position.y += 1;
 				}
 
 
@@ -361,13 +361,13 @@ function homeCtrl( $scope, homeService ) {
 
 function alienWalking() {
 	if (alien.position.x <= window.innerWidth/2) {
-		alien.position.x += 5;
+		alien.position.x += 3;
 	}
 }
 
 function alienDisappear() {
 	if (alien.position.x > window.innerWidth/2) {
-		createjs.Tween.get(alien).to({alpha: 0}, 2000);
+		createjs.Tween.get(alien).to({alpha: 0}, 1700);
 
 	}
 }
