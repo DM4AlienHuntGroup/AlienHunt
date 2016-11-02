@@ -2,13 +2,16 @@ angular.module( "app" )
 .controller( "homeCtrl", function( $scope, homeService ) {
 	const getUser = () => {
 		homeService.getUser().then((response)=>{
-			console.log(response.data);
 			$scope.options = true;
 			$scope.user = response.data
 
 		})
 	}
-
+	$scope.getScoreboard = () => {
+		homeService.getScoreboard().then( ( response ) => {
+			$scope.scores = response.data
+		})
+	}
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
@@ -117,6 +120,7 @@ angular.module( "app" )
 			shot.position.x = window.innerWidth/12.1;
 			shot.scale.x = window.innerWidth * 	0.0004;
 			shot.scale.y = window.innerHeight * 0.00045;
+
 
 		  background.scale.set(1.5)
 
@@ -375,7 +379,7 @@ function alienDisappear() {
 }
 
 
-		
+
 
 function onDown (eventData) {
 

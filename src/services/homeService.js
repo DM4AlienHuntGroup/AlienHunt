@@ -6,4 +6,7 @@ angular.module( "app" )
 	this.updateUser = (id, update) => {
 		return $http.put(`/api/user/${id}`, update)
 	}
+	this.getScoreboard = () => {
+		return $http.get(`/api/scoreboard`)
+	}
 } );
