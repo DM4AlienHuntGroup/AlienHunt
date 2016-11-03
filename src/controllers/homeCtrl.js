@@ -74,9 +74,16 @@ function homeCtrl( $scope, homeService ) {
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-		const explosion = new Howl( { src: '../../sounds/Explosion.wav' } )
+		const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
+		const explosion = new Howl( {
+			src: '../../sounds/Explosion.wav'
+			, onend: function() {
+    huntedSound.play()
+  }
+		 } )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
-		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } )
+		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } );
+
 
 
 
@@ -500,6 +507,7 @@ function onDown (eventData) {
 	explosion.play();
 	hunted = true;
 	animate2();
+	// huntedSound.play()
 
 	score += 500
 	scoreNumber.setText(score)
