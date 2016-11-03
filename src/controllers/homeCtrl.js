@@ -47,6 +47,8 @@ function homeCtrl( $scope, homeService ) {
 
 		const shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 
+		const flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
+
 		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 		const alien = new PIXI.Sprite(alienStep1);
@@ -54,6 +56,8 @@ function homeCtrl( $scope, homeService ) {
 		const laserDots = new PIXI.Sprite(threeLaserdots);
 		const shot = new PIXI.Sprite(shot1);
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
+		const flash = new PIXI.Sprite(transparent);
+
 
 
 
@@ -127,6 +131,10 @@ function homeCtrl( $scope, homeService ) {
 			scoreImg.scale.y = window.innerHeight * 0.00215;
 
 
+			flash.scale.y = window.innerHeight;
+			flash.scale.x = window.innerWidth;
+
+
 		  background.scale.set(window.innerWidth * 0.0013, window.innerHeight * 0.0013)
 			console.log(window.innerHeight * 0.0013);
 
@@ -140,6 +148,7 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
+			stage.addChild(flash);
 
 
 			let alienLaughingMoving = false
@@ -244,7 +253,12 @@ function homeCtrl( $scope, homeService ) {
 			spaceshipInteractive = 'YES';
 			$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
-				laserShoot.play()
+				laserShoot.play();
+				flash.texture = flashTexture;
+				setTimeout(function(){
+					flash.texture = transparent;
+				},25)
+
 			laserCount++;
 
 		}
