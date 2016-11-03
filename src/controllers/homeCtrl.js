@@ -48,6 +48,8 @@ function homeCtrl( $scope, homeService ) {
 
 		const shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 
+		const flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
+
 		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 		const alien = new PIXI.Sprite(alienStep1);
@@ -55,6 +57,8 @@ function homeCtrl( $scope, homeService ) {
 		const laserDots = new PIXI.Sprite(threeLaserdots);
 		const shot = new PIXI.Sprite(shot1);
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
+		const flash = new PIXI.Sprite(transparent);
+
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
@@ -66,9 +70,16 @@ function homeCtrl( $scope, homeService ) {
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-		const explosion = new Howl( { src: '../../sounds/Explosion.wav' } )
+		const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
+		const explosion = new Howl( {
+			src: '../../sounds/Explosion.wav'
+			, onend: function() {
+    huntedSound.play()
+  }
+		 } )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
-		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } )
+		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } );
+
 
 			grass.anchor.y = 1;
 			grass.position.y = 600;
@@ -119,6 +130,9 @@ function homeCtrl( $scope, homeService ) {
 			alienLaughing.position.x = MAX_X/2 ;
 			alienLaughing.position.y = MAX_Y - 98;
 
+			flash.scale.y = window.innerHeight;
+			flash.scale.x = window.innerWidth;
+
 		  stage.addChild(background);
 			stage.addChild(alienLaughing);
 		  stage.addChild(spaceship);
@@ -128,6 +142,7 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
+			stage.addChild(flash);
 
 
 			let alienLaughingMoving = false
@@ -232,7 +247,12 @@ function homeCtrl( $scope, homeService ) {
 			spaceshipInteractive = 'YES';
 			$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
-				laserShoot.play()
+				laserShoot.play();
+				flash.texture = flashTexture;
+				setTimeout(function(){
+					flash.texture = transparent;
+				},25)
+
 			laserCount++;
 
 		}
@@ -455,6 +475,7 @@ function onDown (eventData) {
 	explosion.play();
 	hunted = true;
 	animate2();
+	// huntedSound.play()
 
 	score += 500
 	scoreNumber.setText(score)
