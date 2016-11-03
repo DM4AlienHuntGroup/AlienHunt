@@ -46762,6 +46762,8 @@
 	
 			var shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 	
+			var flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
+	
 			var transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 	
 			var alien = new PIXI.Sprite(alienStep1);
@@ -46769,6 +46771,7 @@
 			var laserDots = new PIXI.Sprite(threeLaserdots);
 			var shot = new PIXI.Sprite(shot1);
 			var alienLaughing = new PIXI.Sprite(alienLaughing1);
+			var flash = new PIXI.Sprite(transparent);
 	
 			var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
@@ -46826,6 +46829,9 @@
 			scoreImg.scale.x = window.innerWidth * 0.0007;
 			scoreImg.scale.y = window.innerHeight * 0.00215;
 	
+			flash.scale.y = window.innerHeight;
+			flash.scale.x = window.innerWidth;
+	
 			background.scale.set(window.innerWidth * 0.0013, window.innerHeight * 0.0013);
 			console.log(window.innerHeight * 0.0013);
 	
@@ -46838,6 +46844,7 @@
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
+			stage.addChild(flash);
 	
 			var alienLaughingMoving = false;
 	
@@ -46917,6 +46924,11 @@
 				$('canvas').click(function () {
 					if (laserCount < 3) {
 						laserShoot.play();
+						flash.texture = flashTexture;
+						setTimeout(function () {
+							flash.texture = transparent;
+						}, 25);
+	
 						laserCount++;
 					}
 				});
