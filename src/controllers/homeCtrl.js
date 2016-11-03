@@ -12,27 +12,19 @@ function homeCtrl( $scope, homeService ) {
 	}
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
-			MAX_X, MAX_Y, { backgroundColor : 0x000000 }
+			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
 		);
 		document.body.appendChild(renderer.view);
 		var stage = new PIXI.Container();
-		// 	constructor(opts) {
-		// 		super();
-		// 		this.scaleToWindow();
-		// 	}
-		// );
-		//
-		// scaleToWindow() {
-		// 	this.scale.set(window.innerWidth / MAX_X, window.innerHeight / MAX_Y);
-		// }
 
 		renderer.view.style.display = 'block';
 		renderer.view.style.width = '100%';
 		renderer.view.style.height = '100%';
-		renderer.autoResize = true;
 
 		const MAX_X = 800;
 		const MAX_Y = 600;
+
+		stage.scale.set(window.innerHeight/MAX_Y);
 
 		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
@@ -64,17 +56,13 @@ function homeCtrl( $scope, homeService ) {
 		const shot = new PIXI.Sprite(shot1);
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
 
-
-
-
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		let hunted = false;
 		let laserCount = 0;
 		let score = 0
-		let scoreNumber = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: 24, fill : '#ff445f', align : 'center' });
-
-
+		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
+		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -99,7 +87,7 @@ function homeCtrl( $scope, homeService ) {
 			shot.scale.x = 0.32;
 			shot.scale.y = 0.27;
 
-			background.scale.set(MAX_X * 0.0013, MAX_Y * 0.0013)
+			background.scale.set(MAX_Y * 0.0013)
 
 		  alien.anchor.set = 0.5;
 		  alien.position.y = MAX_Y - 195;
@@ -112,6 +100,18 @@ function homeCtrl( $scope, homeService ) {
 		  spaceship.scale.y = 0;
 		  spaceship.position.x = MAX_X/2;
 		  spaceship.position.y = 72;
+
+			scoreImg.anchor.set = 0.5;
+			scoreImg.position.y = 550;
+			scoreImg.position.x = 625;
+			scoreImg.scale.x = 0.56;
+			scoreImg.scale.y = 1.29;
+
+			scoreNumber.anchor.set = 0.5;
+			scoreNumber.position.x = 700;
+			scoreNumber.position.y = 554;
+			scoreNumber.scale.x = 1;
+			scoreNumber.scale.y = 1.6;
 
 			alienLaughing.anchor.set = (0.5, 0);
 			alienLaughing.scale.x = 2.8;
@@ -127,6 +127,7 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(laserDots);
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
+			stage.addChild(scoreImg);
 
 
 			let alienLaughingMoving = false
@@ -292,6 +293,7 @@ function homeCtrl( $scope, homeService ) {
 		    target.y = Math.floor(Math.random() * MAX_Y);
 
 		}
+
 		// start animating
 		requestAnimationFrame(animate);
 
