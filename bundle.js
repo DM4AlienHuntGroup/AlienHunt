@@ -46783,7 +46783,13 @@
 	
 			//sounds
 			var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
-			var explosion = new Howl({ src: '../../sounds/Explosion.wav' });
+			var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
+			var explosion = new Howl({
+				src: '../../sounds/Explosion.wav',
+				onend: function onend() {
+					huntedSound.play();
+				}
+			});
 			var spaceshipMove = new Howl({ src: '../../sounds/spaceshipMove.wav', volume: 0.4 });
 			var laugh = new Howl({ src: '../../sounds/laughing.mp3' });
 	
@@ -47117,6 +47123,7 @@
 				explosion.play();
 				hunted = true;
 				animate2();
+				// huntedSound.play()
 	
 				score += 500;
 				scoreNumber.setText(score);
