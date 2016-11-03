@@ -47,6 +47,8 @@ function homeCtrl( $scope, homeService ) {
 
 		const shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 
+		const flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
+
 		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 		const alien = new PIXI.Sprite(alienStep1);
@@ -54,6 +56,8 @@ function homeCtrl( $scope, homeService ) {
 		const laserDots = new PIXI.Sprite(threeLaserdots);
 		const shot = new PIXI.Sprite(shot1);
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
+		const flash = new PIXI.Sprite(transparent);
+
 
 
 
@@ -63,7 +67,8 @@ function homeCtrl( $scope, homeService ) {
 		let hunted = false;
 		let laserCount = 0;
 		let score = 0
-		let scoreNumber = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: 24, fill : '#ff445f', align : 'center' });
+		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
+		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
 
 
@@ -119,6 +124,16 @@ function homeCtrl( $scope, homeService ) {
 			shot.scale.x = window.innerWidth * 	0.0004;
 			shot.scale.y = window.innerHeight * 0.00045;
 
+			scoreImg.anchor.set = 0.5;
+			scoreImg.position.y = window.innerHeight * 0.9178;
+			scoreImg.position.x = window.innerWidth  * 0.8;
+			scoreImg.scale.x = window.innerWidth * 	0.0007;
+			scoreImg.scale.y = window.innerHeight * 0.00215;
+
+
+			flash.scale.y = window.innerHeight;
+			flash.scale.x = window.innerWidth;
+
 
 		  background.scale.set(window.innerWidth * 0.0013, window.innerHeight * 0.0013)
 			console.log(window.innerHeight * 0.0013);
@@ -132,6 +147,8 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(laserDots);
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
+			stage.addChild(scoreImg);
+			stage.addChild(flash);
 
 
 			let alienLaughingMoving = false
@@ -236,7 +253,13 @@ function homeCtrl( $scope, homeService ) {
 			spaceshipInteractive = 'YES';
 			$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
-				laserShoot.play()
+
+				laserShoot.play();
+				flash.texture = flashTexture;
+				setTimeout(function(){
+					flash.texture = transparent;
+				},25)
+
 			laserCount++;
 
 		}
