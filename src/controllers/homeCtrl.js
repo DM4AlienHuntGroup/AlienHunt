@@ -3,7 +3,6 @@ function homeCtrl( $scope, homeService ) {
 		homeService.getUser().then((response)=>{
 			$scope.options = true;
 			$scope.user = response.data
-
 		})
 	}
 	$scope.getScoreboard = () => {
@@ -60,9 +59,7 @@ function homeCtrl( $scope, homeService ) {
 
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var grass = new PIXI.Sprite.fromImage('./imgs/grass.png');
-		var scoreboard = new PIXI.Sprite.fromImage('./imgs/scoreboard-3.png');
-
+		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		let hunted = false;
 		let laserCount = 0;
 		let score = 0
@@ -79,17 +76,18 @@ function homeCtrl( $scope, homeService ) {
 
 
 		  alien.anchor.set = 0.5;
-		  alien.position.y = window.innerHeight - 300;
-		  alien.scale.x = 4;
-		  alien.scale.y = 5.5;
+		  alien.position.y = window.innerHeight * 0.675;
+		  alien.scale.x = window.innerWidth * 0.004;
+		  alien.scale.y = window.innerHeight * 0.0055;
 
 
 
 			alienLaughing.anchor.set = 0.5;
-			// fix it Julian :)
-			alienLaughing.scale.x = 3.5;
-		  alienLaughing.scale.y = 5;
+			alienLaughing.scale.x = window.innerWidth * 0.003;
+		  alienLaughing.scale.y = window.innerHeight * 0.005;
 			alienLaughing.position.x = window.innerWidth/2 ;
+
+
 			alienLaughing.position.y = window.innerHeight * 0.85765;
 
 
@@ -99,43 +97,37 @@ function homeCtrl( $scope, homeService ) {
 		  spaceship.scale.x = 0;
 		  spaceship.scale.y = 0;
 		  spaceship.position.x = window.innerWidth/2;
-		  spaceship.position.y = window.innerHeight/2 - 140;
+		  spaceship.position.y = window.innerHeight * 0.12;
 
-		  scoreboard.anchor.y = 1;
-		  scoreboard.position.x = 0;
-		  scoreboard.position.y = window.innerHeight;
-		  scoreboard.scale.x = window.innerWidth * 0.004;
-		  scoreboard.scale.y = 2.8;
 
 		  grass.anchor.y = 1;
-		  grass.position.y = window.innerHeight - 135;
+		  grass.position.y = window.innerHeight;
 		  grass.scale.x = window.innerWidth * 0.004;
-		  grass.scale.y = 3;
+		  grass.scale.y = window.innerWidth * 0.002;
 
 
 			laserDots.anchor.set = 0.5;
-			laserDots.position.y = window.innerHeight - 70;
-			laserDots.position.x = window.innerWidth/12.5;
+			laserDots.position.y = window.innerHeight * 0.91225;
+			laserDots.position.x = window.innerWidth * 0.094;
 			laserDots.scale.x = window.innerWidth * 0.0012;
 			laserDots.scale.y = window.innerHeight * 0.0012;
 
 
 			shot.anchor.set = 0.5;
-			shot.position.y = window.innerHeight - 45;
-			shot.position.x = window.innerWidth/12.1;
+			shot.position.y = window.innerHeight * 0.942005;
+			shot.position.x = window.innerWidth * 0.09869005;
 			shot.scale.x = window.innerWidth * 	0.0004;
 			shot.scale.y = window.innerHeight * 0.00045;
 
 
-		  background.scale.set(1.5)
-
+		  background.scale.set(window.innerWidth * 0.0013, window.innerHeight * 0.0013)
+			console.log(window.innerHeight * 0.0013);
 
 
 		  stage.addChild(background);
 			stage.addChild(alienLaughing);
 		  stage.addChild(spaceship);
 		  stage.addChild(grass);
-		  stage.addChild(scoreboard);
 		  stage.addChild(alien);
 			stage.addChild(laserDots);
 			stage.addChild(shot);
@@ -218,7 +210,7 @@ function homeCtrl( $scope, homeService ) {
 						}
 						else {
 								alien.scale.x -= 0.1;
-							  alien.scale.y -= 0.2;
+							  alien.scale.y -= 0.1;
 								if(animateCount === 0)
 								{
 								alien.texture = alienStop1;
@@ -245,7 +237,7 @@ function homeCtrl( $scope, homeService ) {
 			$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
 				laserShoot.play()
-				laserCount++;
+			laserCount++;
 
 		}
 
@@ -369,19 +361,25 @@ function homeCtrl( $scope, homeService ) {
 
 				if (	alienLaughingPositionCounter !== 120 ) {
 					alienLaughingPositionCounter++
-				alienLaughing.position.y -= 1;
-			}
+					alienLaughing.position.y -= 1;
+				}
 				// console.log(alienLaughingPositionCounter);
 				if (	alienLaughingPositionCounter === 120 ) {
 
-					alienLaughing.position.y +=1;
+					alienLaughing.position.y += 1;
 				}
+
+
+
+
 				}
 			}
 			if ( laserCount <= 3  ) {
 			if(!hunted && alien.position.x > window.innerWidth/2) {
 		    spaceship.position.x += (target.x - spaceship.x) * 0.1;
 		    spaceship.position.y += (target.y - spaceship.y) * 0.1;
+
+
 
 				if (spaceship.scale.x < window.innerWidth * 0.00275 && spaceship.scale.y < window.innerHeight * 0.00275){
 
@@ -405,10 +403,11 @@ function homeCtrl( $scope, homeService ) {
 					alienWalking();
 					alienDisappear();
 
-			contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: 670})
-			alienLaughing._texture._frame.width = 200;
+			contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: window.innerHeight})
+
 		    // render the container
 		    renderer.render(stage);
+
 		    requestAnimationFrame(animate);
 		}
 
@@ -453,13 +452,13 @@ function homeCtrl( $scope, homeService ) {
 
 function alienWalking() {
 	if (alien.position.x <= window.innerWidth/2) {
-		alien.position.x += 2;
+		alien.position.x += 3;
 	}
 }
 
 function alienDisappear() {
 	if (alien.position.x > window.innerWidth/2) {
-		createjs.Tween.get(alien).to({alpha: 0}, 2000);
+		createjs.Tween.get(alien).to({alpha: 0}, 1700);
 
 	}
 }
