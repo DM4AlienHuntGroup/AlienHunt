@@ -1,5 +1,4 @@
-angular.module( "app" )
-.service( "homeService", function( $http ) {
+function homeService ( $http ) {
 	this.getUser = () => {
 		return $http.get("/api/user")
 	}
@@ -9,4 +8,5 @@ angular.module( "app" )
 	this.getScoreboard = () => {
 		return $http.get(`/api/scoreboard`)
 	}
-} );
+}
+export default homeService;
