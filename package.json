@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "DM4: Group Project",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint \"src/**/*.js\" \"server/**/*.js\" \"*/**/*.js\"",
+    "start": "webpack -d -w"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JulianSRuiz/Alien-Hunt.git"
