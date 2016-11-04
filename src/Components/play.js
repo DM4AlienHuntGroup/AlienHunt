@@ -2,6 +2,8 @@ let score = 0;
 let round = 1;
 
 const play = () => {
+
+
 	var renderer = PIXI.autoDetectRenderer(
 				window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
 			);
@@ -38,6 +40,7 @@ const play = () => {
 
 			stage.scale.set(windowScale);
 
+
 			const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 			const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
 			const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
@@ -45,7 +48,6 @@ const play = () => {
 			const oneLaserdot  = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
 			const twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
 			const threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
-
 
 			const alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
 			const alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
@@ -64,23 +66,36 @@ const play = () => {
 
 			const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
-			const explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
-					  ,explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
-					  ,explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
-						,explosionImg4  = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png')
-					  ,explosionImg5  = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png')
-						,explosionImg6  = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png')
-						,explosionImg7  = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png')
-						,explosionImg8  = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png')
-						,explosionImg9  = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png')
-						,explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png')
-						,explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png')
-						,explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png')
-						,explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png')
-					  ,explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png')
-						,explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
+	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 
+	const ufoIconPositions = [
+		300, 558,
+		325, 558,
+		350, 558,
+		375, 558,
+		400, 558,
+		425, 558,
+		450, 558,
+		475, 558,
+		500, 558,
+		525, 558
+	]
 
+	const explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
+				,explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
+				,explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
+				,explosionImg4  = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png')
+				,explosionImg5  = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png')
+				,explosionImg6  = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png')
+				,explosionImg7  = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png')
+				,explosionImg8  = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png')
+				,explosionImg9  = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png')
+				,explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png')
+				,explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png')
+				,explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png')
+				,explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png')
+				,explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png')
+				,explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
 
 			const box = PIXI.Texture.fromImage('./imgs/Round.png');
 
@@ -99,7 +114,6 @@ const play = () => {
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 			let hunted = false;
 			let laserCount = 0;
-
 			let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 			var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
@@ -117,8 +131,8 @@ const play = () => {
 
 				}
 				, onend: function() {
-	    huntedSound.play()
-	  }
+			huntedSound.play()
+		}
 			 } )
 			const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
 			const laugh = new Howl( { src: '../../sounds/laughing.mp3' } );
@@ -160,6 +174,7 @@ const play = () => {
 						// console.log(explosionCounter);
 
 
+			let ufoRow = [];
 
 					if (explosionCounter < 20){
 						explosionCounter++
@@ -198,7 +213,6 @@ const play = () => {
 						else if(explosionCounter === 11 ) {
 							explosionImg.texture = explosionImg11;
 						}
-
 						else if(explosionCounter === 12 ) {
 							explosionImg.texture = explosionImg12;
 						}
@@ -220,21 +234,19 @@ const play = () => {
 				},40)
 
 
+		background.scale.set(MAX_Y * 0.0013)
 
+				alien.anchor.set = 0.5;
+				alien.position.y = MAX_Y - 195;
+				alien.scale.x = 3.2;
+				alien.scale.y = 3.3;
 
-				background.scale.set(MAX_Y * 0.0013)
-
-			  alien.anchor.set = 0.5;
-			  alien.position.y = MAX_Y - 195;
-			  alien.scale.x = 3.2;
-			  alien.scale.y = 3.3;
-
-			  spaceship.anchor.x = 0.5;
-			  spaceship.anchor.y = 0.5;
-			  spaceship.scale.x = 0;
-			  spaceship.scale.y = 0;
-			  spaceship.position.x = MAX_X/2;
-			  spaceship.position.y = 72;
+				spaceship.anchor.x = 0.5;
+				spaceship.anchor.y = 0.5;
+				spaceship.scale.x = 0;
+				spaceship.scale.y = 0;
+				spaceship.position.x = MAX_X/2;
+				spaceship.position.y = 72;
 
 				scoreImg.anchor.set = 0.5;
 				scoreImg.position.y = 550;
@@ -257,12 +269,12 @@ const play = () => {
 				flash.scale.y = window.innerHeight;
 				flash.scale.x = window.innerWidth;
 
-			  stage.addChild(background);
+				stage.addChild(background);
 				stage.addChild(alienLaughing);
-			  stage.addChild(spaceship);
+				stage.addChild(spaceship);
 				stage.addChild(explosionImg)
-			  stage.addChild(grass);
-			  stage.addChild(alien);
+				stage.addChild(grass);
+				stage.addChild(alien);
 				stage.addChild(laserDots);
 				stage.addChild(shot);
 				stage.addChild(scoreNumber);
@@ -312,12 +324,12 @@ const play = () => {
 				let animateCount = 0;
 
 
-			  setInterval(function(){
-					  animateCount++;
-					  if (animateCount === 3 ){
-						  animateCount = 0
-					  }
-			  }, 150)
+				setInterval(function(){
+						animateCount++;
+						if (animateCount === 3 ){
+							animateCount = 0
+						}
+				}, 150)
 
 
 			setInterval( function (){
@@ -330,7 +342,7 @@ const play = () => {
 						spaceship.texture = spaceship3;
 						}
 						else  if (animateCount === 2){
-						  spaceship.texture = spaceship1
+							spaceship.texture = spaceship1
 						}
 
 
@@ -348,7 +360,7 @@ const play = () => {
 							}
 							else {
 									alien.scale.x -= 0.1;
-								  alien.scale.y -= 0.03;
+									alien.scale.y -= 0.03;
 									if(animateCount === 0)
 									{
 									alien.texture = alienStop1;
@@ -399,7 +411,7 @@ const play = () => {
 						else {
 							shot.texture = shot1;
 						}
-	      }
+				}
 				else {
 					shot.texture = shot1
 				}
@@ -414,16 +426,16 @@ const play = () => {
 			setInterval( function ()
 			{
 
-			    alienLaughingBol = !alienLaughingBol;
+					alienLaughingBol = !alienLaughingBol;
 
-			    if(alienLaughingBol)
-			    {
-			        alienLaughing.texture = alienLaughing1;
-			    }
-			    else
-			    {
-			        alienLaughing.texture = alienLaughing2;
-			    }
+					if(alienLaughingBol)
+					{
+							alienLaughing.texture = alienLaughing1;
+					}
+					else
+					{
+							alienLaughing.texture = alienLaughing2;
+					}
 
 		} , 130)
 
@@ -437,17 +449,29 @@ const play = () => {
 
 
 			function reset () {
-			    target.x = Math.floor(Math.random() * MAX_X);
-			    target.y = Math.floor(Math.random() * MAX_Y);
+					target.x = Math.floor(Math.random() * MAX_X);
+					target.y = Math.floor(Math.random() * MAX_Y);
 
 			}
 
 			// start animating
 			requestAnimationFrame(animate);
 
-			let alienLaughingPositionCounter = 0
-			function animate() {
+	let alienLaughingPositionCounter = 0
 
+	let ufoRow = [];
+
+	for (let i = 0; i < 10; i++) {
+		var ufoIndex = new PIXI.Sprite(ufoIcon)
+			ufoRow.push(ufoIndex);
+			ufoIndex.scale.set(0.35);
+			ufoIndex.position.x = ufoIconPositions[i * 2];
+			ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
+			stage.addChild(ufoIndex);
+	}
+
+
+	function animate() {
 
 				if ( laserCount === 0 && spaceshipInteractive === 'YES' ) {
 					spaceship.interactive = true;
@@ -518,8 +542,8 @@ const play = () => {
 				}
 				if ( laserCount <= 3  ) {
 				if(!hunted && alien.position.x > MAX_X/2) {
-			    spaceship.position.x += (target.x - spaceship.x) * 0.1;
-			    spaceship.position.y += (target.y - spaceship.y) * 0.1;
+					spaceship.position.x += (target.x - spaceship.x) * 0.1;
+					spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
 
 
@@ -528,10 +552,10 @@ const play = () => {
 						spaceship.scale.y += 0.04
 					}
 
-			  if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
+				if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
 					spaceshipMove.play()
-			        reset();
-			    }
+							reset();
+					}
 				}
 
 			}
@@ -542,40 +566,40 @@ const play = () => {
 
 				contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
 
-			    // render the container
-			    renderer.render(stage);
+					// render the container
+					renderer.render(stage);
 
-			    requestAnimationFrame(animate);
+					requestAnimationFrame(animate);
 			}
 
 
 
 			function contain(sprite, container) {
 
-			  var collision = "";
+				var collision = "";
 
-			  //Left
-			  if (sprite.x < container.x) {
-			    sprite.x = container.x;
-			    collision = "left";
-			  }
+				//Left
+				if (sprite.x < container.x) {
+					sprite.x = container.x;
+					collision = "left";
+				}
 
-			  //Top
-			  if (sprite.y < container.y) {
-			    sprite.y = container.y;
-			    collision = "top";
-			  }
+				//Top
+				if (sprite.y < container.y) {
+					sprite.y = container.y;
+					collision = "top";
+				}
 
 				//No right edge collision
 
-			  //Bottom
-			  if (sprite.y + sprite.height > container.height) {
-			    sprite.y = container.height - sprite.height;
-			    collision = "bottom";
-			  }
+				//Bottom
+				if (sprite.y + sprite.height > container.height) {
+					sprite.y = container.height - sprite.height;
+					collision = "bottom";
+				}
 
-			  //Return the `collision` value
-			  return collision;
+				//Return the `collision` value
+				return collision;
 			}
 
 

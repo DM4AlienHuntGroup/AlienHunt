@@ -46740,11 +46740,9 @@
 		};
 	
 		$scope.play = function () {
-			// <<<<<<< HEAD
-			// 		// =======
 			(0, _play2.default)();
 		};
-		// >>>>>>> ea5048d69926f288203f7f5d8e84d69b19e0f822
+	
 		getUser();
 	}
 	exports.default = homeCtrl;
@@ -49914,6 +49912,7 @@
 	var round = 1;
 	
 	var play = function play() {
+	
 		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
 	
 		/// Renders game on view
@@ -49971,6 +49970,10 @@
 	
 		var transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 	
+		var ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
+	
+		var ufoIconPositions = [300, 558, 325, 558, 350, 558, 375, 558, 400, 558, 425, 558, 450, 558, 475, 558, 500, 558, 525, 558];
+	
 		var explosionImg1 = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png'),
 		    explosionImg2 = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png'),
 		    explosionImg3 = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png'),
@@ -50002,7 +50005,6 @@
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		var hunted = false;
 		var laserCount = 0;
-	
 		var scoreNumber = new PIXI.Text('0', { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 	
@@ -50057,6 +50059,8 @@
 		setInterval(function () {
 			// console.log(explosionCounter);
 	
+	
+			var ufoRow = [];
 	
 			if (explosionCounter < 20) {
 				explosionCounter++;
@@ -50278,6 +50282,18 @@
 		requestAnimationFrame(animate);
 	
 		var alienLaughingPositionCounter = 0;
+	
+		var ufoRow = [];
+	
+		for (var i = 0; i < 10; i++) {
+			var ufoIndex = new PIXI.Sprite(ufoIcon);
+			ufoRow.push(ufoIndex);
+			ufoIndex.scale.set(0.35);
+			ufoIndex.position.x = ufoIconPositions[i * 2];
+			ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
+			stage.addChild(ufoIndex);
+		}
+	
 		function animate() {
 	
 			if (laserCount === 0 && spaceshipInteractive === 'YES') {
