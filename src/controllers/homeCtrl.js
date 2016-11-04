@@ -51,12 +51,31 @@ function homeCtrl( $scope, homeService ) {
 
 		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
+		const explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
+				  ,explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
+				  ,explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
+					,explosionImg4  = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png')
+				  ,explosionImg5  = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png')
+					,explosionImg6  = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png')
+					,explosionImg7  = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png')
+					,explosionImg8  = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png')
+					,explosionImg9  = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png')
+					,explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png')
+					,explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png')
+					,explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png')
+					,explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png')
+				  ,explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png')
+					,explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
+
+
+
 		const alien = new PIXI.Sprite(alienStep1);
 		const spaceship = new PIXI.Sprite(spaceship1);
 		const laserDots = new PIXI.Sprite(threeLaserdots);
 		const shot = new PIXI.Sprite(shot1);
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
 		const flash = new PIXI.Sprite(transparent);
+		const explosionImg = new PIXI.Sprite(transparent);
 
 
 
@@ -70,13 +89,17 @@ function homeCtrl( $scope, homeService ) {
 		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
-
+		let explosionCounter = 20;
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
 		const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
 		const explosion = new Howl( {
 			src: '../../sounds/Explosion.wav'
+			,onplay: function(){
+				explosionCounter = 0
+
+			}
 			, onend: function() {
     huntedSound.play()
   }
@@ -91,6 +114,71 @@ function homeCtrl( $scope, homeService ) {
 		  alien.position.y = window.innerHeight * 0.675;
 		  alien.scale.x = window.innerWidth * 0.004;
 		  alien.scale.y = window.innerHeight * 0.0055;
+
+
+			setInterval(function(){
+					// console.log(explosionCounter);
+
+
+
+				if (explosionCounter < 20){
+					explosionCounter++
+				}
+
+					if(explosionCounter === 1 ) {
+						explosionImg.texture = explosionImg1;
+					}
+					else if(explosionCounter === 2 ) {
+						explosionImg.texture = explosionImg2;
+					}
+					else if(explosionCounter === 3 ) {
+						explosionImg.texture = explosionImg3;
+					}
+					else if(explosionCounter === 4 ) {
+						explosionImg.texture = explosionImg4;
+					}
+					else if(explosionCounter === 5 ) {
+						explosionImg.texture = explosionImg5;
+					}
+					else if(explosionCounter === 6 ) {
+						explosionImg.texture = explosionImg6;
+					}
+					else if(explosionCounter === 7 ) {
+						explosionImg.texture = explosionImg7;
+					}
+					else if(explosionCounter === 8 ) {
+						explosionImg.texture = explosionImg8;
+					}
+					else if(explosionCounter === 9 ) {
+						explosionImg.texture = explosionImg9;
+					}
+					else if(explosionCounter === 10 ) {
+						explosionImg.texture = explosionImg10;
+					}
+					else if(explosionCounter === 11 ) {
+						explosionImg.texture = explosionImg11;
+					}
+
+					else if(explosionCounter === 12 ) {
+						explosionImg.texture = explosionImg12;
+					}
+					else if(explosionCounter === 13 ) {
+						explosionImg.texture = explosionImg13;
+					}
+					else if(explosionCounter === 14 ) {
+						explosionImg.texture = explosionImg14;
+					}
+					else if(explosionCounter === 15 ) {
+						explosionImg.texture = explosionImg15;
+					}
+					else {
+						// explosionCounter = 0
+						explosionImg.texture = transparent;
+						}
+
+				// }
+			},40)
+
 
 
 
@@ -110,6 +198,8 @@ function homeCtrl( $scope, homeService ) {
 		  spaceship.scale.y = 0;
 		  spaceship.position.x = window.innerWidth/2;
 		  spaceship.position.y = window.innerHeight * 0.12;
+
+			// explosionImg.scale.set(0.8)
 
 
 		  grass.anchor.y = 1;
@@ -149,6 +239,7 @@ function homeCtrl( $scope, homeService ) {
 		  stage.addChild(background);
 			stage.addChild(alienLaughing);
 		  stage.addChild(spaceship);
+			stage.addChild(explosionImg)
 		  stage.addChild(grass);
 		  stage.addChild(alien);
 			stage.addChild(laserDots);
@@ -383,7 +474,7 @@ function homeCtrl( $scope, homeService ) {
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
 
-// <<<<<<< HEAD
+
 
 
 				if (spaceship.scale.x < window.innerWidth * 0.2 && spaceship.scale.y < window.innerHeight * 0.3) {
@@ -540,6 +631,9 @@ function animate2() {
 		spaceship.rotation += 0.3;
 		spaceship.position.x += 0;
 		spaceship.position.y += 3 + Math.random() * 7;
+
+		explosionImg.position.x = spaceship.position.x - 120;
+		explosionImg.position.y = spaceship.position.y - 240;
 	}
 		// renderer.render(stage);
 
