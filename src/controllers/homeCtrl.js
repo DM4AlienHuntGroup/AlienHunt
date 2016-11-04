@@ -14,17 +14,35 @@ function homeCtrl( $scope, homeService ) {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
 		);
+
+		/// Renders game on view
 		document.body.appendChild(renderer.view);
-		var stage = new PIXI.Container();
 
-		renderer.view.style.display = 'block';
-		renderer.view.style.width = '100%';
-		renderer.view.style.height = '100%';
-
+		// prior to scaling, sets width/height.
 		const MAX_X = 800;
 		const MAX_Y = 600;
 
-		stage.scale.set(window.innerHeight/MAX_Y);
+		//creates container in which all elements will be contained.
+		var stage = new PIXI.Container();
+
+		// windowScale creates the number by which scale size is determined (container height / actual window size)
+		// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+		var windowScale = window.innerHeight / MAX_Y;
+
+		// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
+		var centerStage = (renderer.view.clientWidth - ( MAX_X * windowScale ) ) / 2;
+
+		//adds left Margin to the stage, ensuring it is centered on the screen.
+		stage.transform.position.set(centerStage, 0)
+
+
+		renderer.view.style.display = 'flex';
+		renderer.view.style.justifyContent = 'space-around';
+		renderer.view.style.width = '100%';
+		renderer.view.style.height = '100%';
+
+
+		stage.scale.set(windowScale);
 
 		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
@@ -51,6 +69,21 @@ function homeCtrl( $scope, homeService ) {
 
 		const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
+		const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
+
+		const ufoIconPositions = [
+			300, 558,
+			325, 558,
+			350, 558,
+			375, 558,
+			400, 558,
+			425, 558,
+			450, 558,
+			475, 558,
+			500, 558,
+			525, 558
+		]
+
 		const explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
 				  ,explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
 				  ,explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
@@ -75,7 +108,6 @@ function homeCtrl( $scope, homeService ) {
 		const flash = new PIXI.Sprite(transparent);
 		const explosionImg = new PIXI.Sprite(transparent);
 
-
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		let hunted = false;
@@ -83,8 +115,6 @@ function homeCtrl( $scope, homeService ) {
 		let score = 0
 		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
-		let ufoIconWhite = new PIXI.Sprite.fromImage('./imgs/tiny-spaceship-white.png');
-		let ufoIconRed = new PIXI.Sprite.fromImage('./imgs/tiny-spaceship-red.png')
 
 		let explosionCounter = 20;
 
@@ -214,11 +244,11 @@ function homeCtrl( $scope, homeService ) {
 			scoreNumber.scale.x = 1;
 			scoreNumber.scale.y = 1.6;
 
-			ufoIconWhite.anchor.set = 0.5;
-			ufoIconWhite.position.x = 300;
-			ufoIconWhite.position.y = 565;
-			ufoIconWhite.scale.set(0.5);
-			ufoIconWhite.rotation = -0.7;
+			// ufoIconWhite.anchor.set = 0.5;
+			// ufoIconWhite.position.x = 300;
+			// ufoIconWhite.position.y = 565;
+			// ufoIconWhite.scale.set(0.5);
+			// ufoIconWhite.rotation = -0.7;
 
 			alienLaughing.anchor.set = (0.5, 0);
 			alienLaughing.scale.x = 2.8;
@@ -240,23 +270,11 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
 			stage.addChild(flash);
-			stage.addChild(ufoIconWhite);
-			stage.addChild(ufoRow);
+			// stage.addChild(ufoIconWhite);
+			// stage.addChild(ufoRow);
 
 			let alienLaughingMoving = false;
 
-			function ufoCounter() {
-					for (let i = 0; i < 10; i++) {
-						if (!hunted) {
-							ufoRow.push(ufoIconWhite);
-						}
-						else if (hunted) {
-							ufoRow[i] = ufoIconRed;
-						}
-					}
-			}
-
-			ufoCounter();
 
 			setInterval(function(){
 
@@ -357,6 +375,7 @@ function homeCtrl( $scope, homeService ) {
 			spaceshipInteractive = 'YES';
 			$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
+
 				laserShoot.play();
 				flash.texture = flashTexture;
 				setTimeout(function(){
@@ -428,6 +447,17 @@ function homeCtrl( $scope, homeService ) {
 		requestAnimationFrame(animate);
 
 		let alienLaughingPositionCounter = 0
+
+		for (let i = 0; i < 10; i++) {
+			var ufoIndex = new PIXI.Sprite(ufoIcon)
+				ufoRow.push(ufoIndex);
+				ufoIndex.scale.set(0.35);
+				ufoIndex.position.x = ufoIconPositions[i * 2];
+				ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
+				stage.addChild(ufoIndex);
+		}
+
+
 		function animate() {
 
 
@@ -517,6 +547,8 @@ function homeCtrl( $scope, homeService ) {
 			}
 
 		}
+
+
 
 
 					alienWalking();
