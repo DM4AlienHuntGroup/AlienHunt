@@ -46733,17 +46733,33 @@
 		};
 		$scope.play = function () {
 			var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
+	
+			/// Renders game on view
 			document.body.appendChild(renderer.view);
-			var stage = new PIXI.Container();
 	
-			renderer.view.style.display = 'block';
-			renderer.view.style.width = '100%';
-			renderer.view.style.height = '100%';
-	
+			// prior to scaling, sets width/height.
 			var MAX_X = 800;
 			var MAX_Y = 600;
 	
-			stage.scale.set(window.innerHeight / MAX_Y);
+			//creates container in which all elements will be contained.
+			var stage = new PIXI.Container();
+	
+			// windowScale creates the number by which scale size is determined (container height / actual window size)
+			// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+			var windowScale = window.innerHeight / MAX_Y;
+	
+			// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
+			var centerStage = (renderer.view.clientWidth - MAX_X * windowScale) / 2;
+	
+			//adds left Margin to the stage, ensuring it is centered on the screen.
+			stage.transform.position.set(centerStage, 0);
+	
+			renderer.view.style.display = 'flex';
+			renderer.view.style.justifyContent = 'space-around';
+			renderer.view.style.width = '100%';
+			renderer.view.style.height = '100%';
+	
+			stage.scale.set(windowScale);
 	
 			var spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 			var spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
