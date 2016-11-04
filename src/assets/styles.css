@@ -3,7 +3,7 @@ body {
 	padding: 0;
   font-family: 'VT323', monospace;
   color:  #ffa347;
-  cursor: url('../../imgs/cursor.png'), auto;
+  cursor: url('../../imgs/cursor.png') 25 15, auto;
   background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
 }
 section {

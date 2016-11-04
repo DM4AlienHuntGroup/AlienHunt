@@ -46733,6 +46733,7 @@
 				$scope.user = response.data;
 			});
 		};
+	
 		$scope.getScoreboard = function () {
 			homeService.getScoreboard().then(function (response) {
 				$scope.scores = response.data;
@@ -46763,7 +46764,6 @@
 	var round = 1;
 	
 	var play = function play() {
-	
 		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
 	
 		/// Renders game on view
@@ -46908,9 +46908,6 @@
 		roundText.scale.y = 1.6;
 	
 		setInterval(function () {
-			// console.log(explosionCounter);
-	
-	
 			var ufoRow = [];
 	
 			if (explosionCounter < 20) {
@@ -46948,11 +46945,8 @@
 			} else if (explosionCounter === 15) {
 				explosionImg.texture = explosionImg15;
 			} else {
-				// explosionCounter = 0
 				explosionImg.texture = transparent;
 			}
-	
-			// }
 		}, 40);
 	
 		background.scale.set(MAX_Y * 0.0013);
@@ -47007,10 +47001,8 @@
 		var alienLaughingMoving = false;
 	
 		setInterval(function () {
-	
 			if (!hunted && spaceship.rotation === 0) {
 				laserCount = 4;
-	
 				setTimeout(function () {
 					stage.removeChild(spaceship);
 				}, 1000);
@@ -47052,7 +47044,6 @@
 			} else if (animateCount === 2) {
 				spaceship.texture = spaceship1;
 			}
-	
 			if (alien.position.x < MAX_X / 2) {
 				if (animateCount === 0) {
 					alien.texture = alienStep1;
@@ -47064,6 +47055,7 @@
 			} else {
 				alien.scale.x -= 0.1;
 				alien.scale.y -= 0.03;
+	
 				if (animateCount === 0) {
 					alien.texture = alienStop1;
 				} else if (animateCount === 1) {
@@ -47081,13 +47073,11 @@
 			spaceshipInteractive = 'YES';
 			$('canvas').click(function () {
 				if (laserCount < 3) {
-	
 					laserShoot.play();
 					flash.texture = flashTexture;
 					setTimeout(function () {
 						flash.texture = transparent;
 					}, 25);
-	
 					laserCount++;
 				}
 			});
@@ -47112,9 +47102,7 @@
 		var alienLaughingBol = false;
 	
 		setInterval(function () {
-	
 			alienLaughingBol = !alienLaughingBol;
-	
 			if (alienLaughingBol) {
 				alienLaughing.texture = alienLaughing1;
 			} else {
@@ -47133,7 +47121,6 @@
 		requestAnimationFrame(animate);
 	
 		var alienLaughingPositionCounter = 0;
-	
 		var ufoRow = [];
 	
 		for (var i = 0; i < 10; i++) {
@@ -47146,7 +47133,6 @@
 		}
 	
 		function animate() {
-	
 			if (laserCount === 0 && spaceshipInteractive === 'YES') {
 				spaceship.interactive = true;
 				laserDots.texture = threeLaserdots;
@@ -47160,46 +47146,32 @@
 				spaceship.interactive = false;
 				laserDots.texture = transparent;
 			}
-	
-			// 	if ( laserCount !== 0 || laserCount !== 1 || laserCount !== 2 ){
-			// 		console.log('yes');
-			//
-			//
-			// }
 			if (laserCount === 3) {
 				shotBol = true;
 			} else {
 				shotBol = false;
 			}
-	
 			if (alienLaughingMoving) {
 				if (alienLaughingPositionCounter !== 120) {
 					alienLaughingPositionCounter++;
 					alienLaughing.position.y -= 1;
 				}
-				// console.log(alienLaughingPositionCounter);
 				if (alienLaughingPositionCounter === 120) {
-	
 					alienLaughing.position.y += 0.00000125;
 				}
 			}
 			if (!alienLaughingMoving) {
 				alienLaughingPositionCounter = 0;
 			}
-	
 			if (laserCount > 3) {
-	
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
-	
 				if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
-	
 					if (alienLaughingPositionCounter !== 120) {
 						alienLaughingPositionCounter++;
 						alienLaughing.position.y -= 1;
 					}
 					if (alienLaughingPositionCounter === 120) {
-	
 						alienLaughing.position.y += 1;
 					}
 				}
@@ -47213,14 +47185,12 @@
 						spaceship.scale.x += 0.04;
 						spaceship.scale.y += 0.04;
 					}
-	
 					if (Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X / 2) {
 						spaceshipMove.play();
 						reset();
 					}
 				}
 			}
-	
 			alienWalking();
 			alienDisappear();
 	
@@ -47228,34 +47198,26 @@
 	
 			// render the container
 			renderer.render(stage);
-	
 			requestAnimationFrame(animate);
 		}
 	
 		function contain(sprite, container) {
-	
 			var collision = "";
-	
 			//Left
 			if (sprite.x < container.x) {
 				sprite.x = container.x;
 				collision = "left";
 			}
-	
 			//Top
 			if (sprite.y < container.y) {
 				sprite.y = container.y;
 				collision = "top";
 			}
-	
-			//No right edge collision
-	
 			//Bottom
 			if (sprite.y + sprite.height > container.height) {
 				sprite.y = container.height - sprite.height;
 				collision = "bottom";
 			}
-	
 			//Return the `collision` value
 			return collision;
 		}
@@ -47270,13 +47232,11 @@
 			if (alien.position.x > MAX_X / 2) {
 				stage.removeChild(roundText);
 				stage.removeChild(RoundBox);
-	
 				createjs.Tween.get(alien).to({ alpha: 0 }, 1700);
 			}
 		}
 	
 		function onDown(eventData) {
-	
 			// setTimeout(function() {
 			// 	if(!hunted){
 			// 		laserCount = 4;
@@ -47287,10 +47247,8 @@
 			hunted = true;
 			animate2();
 			// huntedSound.play()
-	
 			score += 500;
 			scoreNumber.setText(score);
-	
 			setTimeout(function () {
 				stage.removeChild(spaceship);
 			}, 2000);
@@ -47311,7 +47269,6 @@
 		function animate2() {
 			if (hunted) {
 				requestAnimationFrame(animate2);
-	
 				spaceship.rotation += 0.3;
 				spaceship.position.x += 0;
 				spaceship.position.y += 3 + Math.random() * 7;
@@ -47320,10 +47277,7 @@
 				explosionImg.position.y = spaceship.position.y - 240;
 			}
 			// renderer.render(stage);
-	
 		}
-	
-		// }
 	};
 	
 	exports.default = play;
