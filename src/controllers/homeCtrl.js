@@ -10,6 +10,10 @@ function homeCtrl( $scope, homeService ) {
 			$scope.scores = response.data
 		})
 	}
+
+	let score = 0;
+	let round = 1;
+
 	$scope.play = () => {
 		var renderer = PIXI.autoDetectRenderer(
 			window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
@@ -91,6 +95,8 @@ function homeCtrl( $scope, homeService ) {
 
 
 
+		const box = PIXI.Texture.fromImage('./imgs/Round.png');
+
 		const alien = new PIXI.Sprite(alienStep1);
 		const spaceship = new PIXI.Sprite(spaceship1);
 		const laserDots = new PIXI.Sprite(threeLaserdots);
@@ -98,15 +104,19 @@ function homeCtrl( $scope, homeService ) {
 		const alienLaughing = new PIXI.Sprite(alienLaughing1);
 		const flash = new PIXI.Sprite(transparent);
 		const explosionImg = new PIXI.Sprite(transparent);
+		const RoundBox  = new PIXI.Sprite(box);
+
 
 
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		let hunted = false;
 		let laserCount = 0;
-		let score = 0
+
 		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
+
+		let roundText = new PIXI.Text('ROUND ' + round,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 
 		let explosionCounter = 20;
 
@@ -143,6 +153,21 @@ function homeCtrl( $scope, homeService ) {
 			shot.position.x = 79.5;
 			shot.scale.x = 0.32;
 			shot.scale.y = 0.27;
+
+			RoundBox.anchor.set = 0.5;
+			RoundBox.position.x = MAX_X/2.4 ;
+			RoundBox.position.y = MAX_Y/3.3;
+			RoundBox.scale.x = 1.5;
+			RoundBox.scale.y = 0.8;
+
+
+			roundText.anchor.set = 0.5;
+			roundText.position.x = MAX_X/2.2;
+			roundText.position.y = MAX_Y/3;
+			roundText.scale.x = 1.6;
+			roundText.scale.y = 1.6;
+
+
 
 			setInterval(function(){
 					// console.log(explosionCounter);
@@ -255,6 +280,8 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
+			stage.addChild(RoundBox);
+			stage.addChild(roundText);
 			stage.addChild(flash);
 
 
@@ -573,6 +600,9 @@ function alienWalking() {
 
 function alienDisappear() {
 	if (alien.position.x > MAX_X/2) {
+			stage.removeChild(roundText)
+			stage.removeChild(RoundBox)
+		
 		createjs.Tween.get(alien).to({alpha: 0}, 1700);
 
 	}

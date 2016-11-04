@@ -46731,6 +46731,10 @@
 				$scope.scores = response.data;
 			});
 		};
+	
+		var score = 0;
+		var round = 1;
+	
 		$scope.play = function () {
 			var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
 	
@@ -46805,6 +46809,8 @@
 			    explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png'),
 			    explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
 	
+			var box = PIXI.Texture.fromImage('./imgs/Round.png');
+	
 			var alien = new PIXI.Sprite(alienStep1);
 			var spaceship = new PIXI.Sprite(spaceship1);
 			var laserDots = new PIXI.Sprite(threeLaserdots);
@@ -46812,14 +46818,17 @@
 			var alienLaughing = new PIXI.Sprite(alienLaughing1);
 			var flash = new PIXI.Sprite(transparent);
 			var explosionImg = new PIXI.Sprite(transparent);
+			var RoundBox = new PIXI.Sprite(box);
 	
 			var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 			var hunted = false;
 			var laserCount = 0;
-			var score = 0;
+	
 			var scoreNumber = new PIXI.Text('0', { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
 			var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
+	
+			var roundText = new PIXI.Text('ROUND ' + round, { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
 	
 			var explosionCounter = 20;
 	
@@ -46854,6 +46863,18 @@
 			shot.position.x = 79.5;
 			shot.scale.x = 0.32;
 			shot.scale.y = 0.27;
+	
+			RoundBox.anchor.set = 0.5;
+			RoundBox.position.x = MAX_X / 2.4;
+			RoundBox.position.y = MAX_Y / 3.3;
+			RoundBox.scale.x = 1.5;
+			RoundBox.scale.y = 0.8;
+	
+			roundText.anchor.set = 0.5;
+			roundText.position.x = MAX_X / 2.2;
+			roundText.position.y = MAX_Y / 3;
+			roundText.scale.x = 1.6;
+			roundText.scale.y = 1.6;
 	
 			setInterval(function () {
 				// console.log(explosionCounter);
@@ -46946,6 +46967,8 @@
 			stage.addChild(shot);
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
+			stage.addChild(RoundBox);
+			stage.addChild(roundText);
 			stage.addChild(flash);
 	
 			var alienLaughingMoving = false;
@@ -47200,6 +47223,9 @@
 	
 			function alienDisappear() {
 				if (alien.position.x > MAX_X / 2) {
+					stage.removeChild(roundText);
+					stage.removeChild(RoundBox);
+	
 					createjs.Tween.get(alien).to({ alpha: 0 }, 1700);
 				}
 			}
