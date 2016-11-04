@@ -2,7 +2,7 @@
 body {
 	padding: 0;
   font-family: 'VT323', monospace;
-  color:  green;
+  color:  #ffa347;
   cursor: url('../../imgs/cursor.png'), auto;
   background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
 }
@@ -46,7 +46,7 @@ section {
 .separator {
   width: 50vh;
   height: 1vh;
-  background-color: green;
+  background-color: #ffa347;
 }
 
 .title {
@@ -59,8 +59,8 @@ section {
   margin-bottom: 127px;
   margin-top: 205px;
   position: relative;
-  color: #115011;
-  text-shadow: -3px -2px 2px #04842b,-5px -1px 2px rgb(221, 224, 73);
+  color: #00ebdb;
+  /*text-shadow: -3px -2px 2px #04842b,-5px -1px 2px rgb(221, 224, 73);*/
 }
 .alien{
   position: absolute;
@@ -101,7 +101,7 @@ section {
 	cursor: pointer;
 }
 .splashbutton5{
-	color: green;
+	color: #ffa347;
 }
 .splashbutton5:hover{
 	color: white;
@@ -116,7 +116,7 @@ section {
 	font-weight: 700;
 	line-height: 1.4em;
 	font-family: 'VT323', monospace;
-  color:  green;
+  color:  #ffa347;
 }
 .login:hover {
   color: white;
@@ -185,7 +185,7 @@ section {
 		font-weight: 700;
 		line-height: 1.4em;
 		font-family: 'VT323', monospace;
-		color:  green;
+		color:  #ffa347;
 	}
 	div.social-wrap button {
   padding-right: 45px;
