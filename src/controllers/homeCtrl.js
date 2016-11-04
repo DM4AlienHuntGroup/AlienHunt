@@ -20,10 +20,11 @@ function homeCtrl( $scope, homeService ) {
 		renderer.view.style.display = 'block';
 		renderer.view.style.width = '100%';
 		renderer.view.style.height = '100%';
-		renderer.autoResize = true;
 
+		const MAX_X = 800;
+		const MAX_Y = 600;
 
-
+		stage.scale.set(window.innerHeight/MAX_Y);
 
 		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
@@ -59,9 +60,6 @@ function homeCtrl( $scope, homeService ) {
 		const flash = new PIXI.Sprite(transparent);
 
 
-
-
-
 		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		let hunted = false;
@@ -69,8 +67,6 @@ function homeCtrl( $scope, homeService ) {
 		let score = 0
 		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
-
-
 
 		//sounds
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -85,66 +81,57 @@ function homeCtrl( $scope, homeService ) {
 		const laugh = new Howl( { src: '../../sounds/laughing.mp3' } );
 
 
+			grass.anchor.y = 1;
+			grass.position.y = 600;
+			grass.scale.x = 3.2;
+			grass.scale.y = 2.2;
 
+			laserDots.anchor.set = 0.5;
+			laserDots.position.y = 548;
+			laserDots.position.x = 76.5;
+			laserDots.scale.x = 0.96;
+			laserDots.scale.y = 0.72;
+
+			shot.anchor.set = 0.5;
+			shot.position.y = 565;
+			shot.position.x = 79.5;
+			shot.scale.x = 0.32;
+			shot.scale.y = 0.27;
+
+			background.scale.set(MAX_Y * 0.0013)
 
 		  alien.anchor.set = 0.5;
-		  alien.position.y = window.innerHeight * 0.675;
-		  alien.scale.x = window.innerWidth * 0.004;
-		  alien.scale.y = window.innerHeight * 0.0055;
-
-
-
-			alienLaughing.anchor.set = 0.5;
-			alienLaughing.scale.x = window.innerWidth * 0.003;
-		  alienLaughing.scale.y = window.innerHeight * 0.005;
-			alienLaughing.position.x = window.innerWidth/2 ;
-
-
-			alienLaughing.position.y = window.innerHeight * 0.85765;
-
-
+		  alien.position.y = MAX_Y - 195;
+		  alien.scale.x = 3.2;
+		  alien.scale.y = 3.3;
 
 		  spaceship.anchor.x = 0.5;
 		  spaceship.anchor.y = 0.5;
 		  spaceship.scale.x = 0;
 		  spaceship.scale.y = 0;
-		  spaceship.position.x = window.innerWidth/2;
-		  spaceship.position.y = window.innerHeight * 0.12;
-
-
-		  grass.anchor.y = 1;
-		  grass.position.y = window.innerHeight;
-		  grass.scale.x = window.innerWidth * 0.004;
-		  grass.scale.y = window.innerWidth * 0.002;
-
-
-			laserDots.anchor.set = 0.5;
-			laserDots.position.y = window.innerHeight * 0.91225;
-			laserDots.position.x = window.innerWidth * 0.094;
-			laserDots.scale.x = window.innerWidth * 0.0012;
-			laserDots.scale.y = window.innerHeight * 0.0012;
-
-
-			shot.anchor.set = 0.5;
-			shot.position.y = window.innerHeight * 0.942005;
-			shot.position.x = window.innerWidth * 0.09869005;
-			shot.scale.x = window.innerWidth * 	0.0004;
-			shot.scale.y = window.innerHeight * 0.00045;
+		  spaceship.position.x = MAX_X/2;
+		  spaceship.position.y = 72;
 
 			scoreImg.anchor.set = 0.5;
-			scoreImg.position.y = window.innerHeight * 0.9178;
-			scoreImg.position.x = window.innerWidth  * 0.8;
-			scoreImg.scale.x = window.innerWidth * 	0.0007;
-			scoreImg.scale.y = window.innerHeight * 0.00215;
+			scoreImg.position.y = 550;
+			scoreImg.position.x = 625;
+			scoreImg.scale.x = 0.56;
+			scoreImg.scale.y = 1.29;
 
+			scoreNumber.anchor.set = 0.5;
+			scoreNumber.position.x = 700;
+			scoreNumber.position.y = 554;
+			scoreNumber.scale.x = 1;
+			scoreNumber.scale.y = 1.6;
+
+			alienLaughing.anchor.set = (0.5, 0);
+			alienLaughing.scale.x = 2.8;
+			alienLaughing.scale.y = 2.8;
+			alienLaughing.position.x = MAX_X/2 ;
+			alienLaughing.position.y = MAX_Y - 98;
 
 			flash.scale.y = window.innerHeight;
 			flash.scale.x = window.innerWidth;
-
-
-		  background.scale.set(window.innerWidth * 0.0013, window.innerHeight * 0.0013)
-			console.log(window.innerHeight * 0.0013);
-
 
 		  stage.addChild(background);
 			stage.addChild(alienLaughing);
@@ -187,8 +174,8 @@ function homeCtrl( $scope, homeService ) {
 					alienLaughingMoving = true;
 					setTimeout(function(){
 						alienLaughingMoving = false;
-						alienLaughing.position.x = window.innerWidth/2 ;
-						alienLaughing.position.y = window.innerHeight * 0.85765;
+						alienLaughing.position.x = MAX_X/2 ;
+						alienLaughing.position.y = MAX_Y - 98;
 
 					},4000)
 				} , 400)
@@ -220,7 +207,7 @@ function homeCtrl( $scope, homeService ) {
 					}
 
 
-				if (alien.position.x < window.innerWidth/2) {
+				if (alien.position.x < MAX_X/2) {
 					if(animateCount === 0)
 					{
 					alien.texture = alienStep1;
@@ -234,7 +221,7 @@ function homeCtrl( $scope, homeService ) {
 						}
 						else {
 								alien.scale.x -= 0.1;
-							  alien.scale.y -= 0.1;
+							  alien.scale.y -= 0.03;
 								if(animateCount === 0)
 								{
 								alien.texture = alienStop1;
@@ -323,10 +310,11 @@ function homeCtrl( $scope, homeService ) {
 
 
 		function reset () {
-		    target.x = Math.floor(Math.random() * window.innerWidth);
-		    target.y = Math.floor(Math.random() * window.innerHeight);
+		    target.x = Math.floor(Math.random() * MAX_X);
+		    target.y = Math.floor(Math.random() * MAX_Y);
 
 		}
+
 		// start animating
 		requestAnimationFrame(animate);
 
@@ -371,7 +359,7 @@ function homeCtrl( $scope, homeService ) {
 			// console.log(alienLaughingPositionCounter);
 			if (	alienLaughingPositionCounter === 120 ) {
 
-				alienLaughing.position.y +=1;
+				alienLaughing.position.y += 0.00000125;
 			}
 
 		}
@@ -384,16 +372,13 @@ function homeCtrl( $scope, homeService ) {
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
 
-// <<<<<<< HEAD
 
-
-				if (spaceship.scale.x < window.innerWidth * 0.2 && spaceship.scale.y < window.innerHeight * 0.3) {
+				if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
 
 				if (	alienLaughingPositionCounter !== 120 ) {
 					alienLaughingPositionCounter++
 					alienLaughing.position.y -= 1;
 				}
-				// console.log(alienLaughingPositionCounter);
 				if (	alienLaughingPositionCounter === 120 ) {
 
 					alienLaughing.position.y += 1;
@@ -405,23 +390,18 @@ function homeCtrl( $scope, homeService ) {
 				}
 			}
 			if ( laserCount <= 3  ) {
-			if(!hunted && alien.position.x > window.innerWidth/2) {
+			if(!hunted && alien.position.x > MAX_X/2) {
 		    spaceship.position.x += (target.x - spaceship.x) * 0.1;
 		    spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
 
 
-				if (spaceship.scale.x < window.innerWidth * 0.00275 && spaceship.scale.y < window.innerHeight * 0.00275){
-
+				if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
 					spaceship.scale.x += 0.04
 					spaceship.scale.y += 0.04
 				}
 
-		  if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > window.innerWidth/2)
-		    {
-
-
-
+		  if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
 				spaceshipMove.play()
 		        reset();
 		    }
@@ -433,7 +413,7 @@ function homeCtrl( $scope, homeService ) {
 					alienWalking();
 					alienDisappear();
 
-			contain(spaceship, {x: 0, y: -50, width: window.innerWidth, height: window.innerHeight})
+			contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
 
 		    // render the container
 		    renderer.render(stage);
@@ -472,29 +452,18 @@ function homeCtrl( $scope, homeService ) {
 		}
 
 
-
-
-
-
-
-
-
-
 function alienWalking() {
-	if (alien.position.x <= window.innerWidth/2) {
+	if (alien.position.x <= MAX_X/2) {
 		alien.position.x += 3;
 	}
 }
 
 function alienDisappear() {
-	if (alien.position.x > window.innerWidth/2) {
+	if (alien.position.x > MAX_X/2) {
 		createjs.Tween.get(alien).to({alpha: 0}, 1700);
 
 	}
 }
-
-
-
 
 function onDown (eventData) {
 
@@ -547,10 +516,6 @@ function animate2() {
 
 }
 
-// function animateNewSpaceship() {
-//
-// }
-
 }
 	getUser()
 }
@@ -568,8 +533,8 @@ export default homeCtrl;
 // // 	spaceship.anchor.y = 0.5;
 // // 	spaceship.scale.x = 0;
 // // 	spaceship.scale.y = 0;
-// // 	spaceship.position.x = window.innerWidth/2;
-// // 	spaceship.position.y = window.innerHeight/2 - 140;
+// // 	spaceship.position.x = MAX_X/2;
+// // 	spaceship.position.y = MAX_Y/2 - 140;
 
 // // 	spaceships.push(spaceship);
 //
