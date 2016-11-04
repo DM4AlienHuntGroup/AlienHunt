@@ -28,19 +28,20 @@ function homeCtrl( $scope, homeService ) {
 		// windowScale creates the number by which scale size is determined (container height / actual window size)
 		// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
 		var windowScale = window.innerHeight / MAX_Y;
-
+		var scaledStageWidth = MAX_X * windowScale
 		// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
-		var centerStage = (renderer.view.clientWidth - ( MAX_X * windowScale ) ) / 2;
+		var leftMargin = (renderer.view.clientWidth - ( scaledStageWidth ) ) / 2;
 
 		//adds left Margin to the stage, ensuring it is centered on the screen.
-		stage.transform.position.set(centerStage, 0)
+		// stage.transform.position.set(leftMargin, 0)
 
-
-
-		renderer.view.style.display = 'flex';
-		renderer.view.style.justifyContent = 'space-around';
-		renderer.view.style.width = '100%';
+		// console.log(renderer);
+		// console.log(scaledStageWidth);
+		// renderer.view.style.display = 'flex';
+		// renderer.view.style.justifyContent = 'space-around';
+		renderer.view.width = scaledStageWidth;
 		renderer.view.style.height = '100%';
+		renderer.view.style.marginLeft = `${leftMargin}px`;
 
 
 

@@ -46747,17 +46747,20 @@
 			// windowScale creates the number by which scale size is determined (container height / actual window size)
 			// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
 			var windowScale = window.innerHeight / MAX_Y;
-	
+			var scaledStageWidth = MAX_X * windowScale;
 			// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
-			var centerStage = (renderer.view.clientWidth - MAX_X * windowScale) / 2;
+			var leftMargin = (renderer.view.clientWidth - scaledStageWidth) / 2;
 	
 			//adds left Margin to the stage, ensuring it is centered on the screen.
-			stage.transform.position.set(centerStage, 0);
+			// stage.transform.position.set(leftMargin, 0)
 	
-			renderer.view.style.display = 'flex';
-			renderer.view.style.justifyContent = 'space-around';
-			renderer.view.style.width = '100%';
+			// console.log(renderer);
+			// console.log(scaledStageWidth);
+			// renderer.view.style.display = 'flex';
+			// renderer.view.style.justifyContent = 'space-around';
+			renderer.view.width = scaledStageWidth;
 			renderer.view.style.height = '100%';
+			renderer.view.style.marginLeft = leftMargin + 'px';
 	
 			stage.scale.set(windowScale);
 	
@@ -46786,12 +46789,29 @@
 	
 			var transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 	
+			var explosionImg1 = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png'),
+			    explosionImg2 = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png'),
+			    explosionImg3 = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png'),
+			    explosionImg4 = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png'),
+			    explosionImg5 = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png'),
+			    explosionImg6 = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png'),
+			    explosionImg7 = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png'),
+			    explosionImg8 = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png'),
+			    explosionImg9 = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png'),
+			    explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png'),
+			    explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png'),
+			    explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png'),
+			    explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png'),
+			    explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png'),
+			    explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
+	
 			var alien = new PIXI.Sprite(alienStep1);
 			var spaceship = new PIXI.Sprite(spaceship1);
 			var laserDots = new PIXI.Sprite(threeLaserdots);
 			var shot = new PIXI.Sprite(shot1);
 			var alienLaughing = new PIXI.Sprite(alienLaughing1);
 			var flash = new PIXI.Sprite(transparent);
+			var explosionImg = new PIXI.Sprite(transparent);
 	
 			var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
@@ -46801,11 +46821,16 @@
 			var scoreNumber = new PIXI.Text('0', { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
 			var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 	
+			var explosionCounter = 20;
+	
 			//sounds
 			var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
 			var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
 			var explosion = new Howl({
 				src: '../../sounds/Explosion.wav',
+				onplay: function onplay() {
+					explosionCounter = 0;
+				},
 				onend: function onend() {
 					huntedSound.play();
 				}
@@ -46829,6 +46854,52 @@
 			shot.position.x = 79.5;
 			shot.scale.x = 0.32;
 			shot.scale.y = 0.27;
+	
+			setInterval(function () {
+				// console.log(explosionCounter);
+	
+	
+				if (explosionCounter < 20) {
+					explosionCounter++;
+				}
+	
+				if (explosionCounter === 1) {
+					explosionImg.texture = explosionImg1;
+				} else if (explosionCounter === 2) {
+					explosionImg.texture = explosionImg2;
+				} else if (explosionCounter === 3) {
+					explosionImg.texture = explosionImg3;
+				} else if (explosionCounter === 4) {
+					explosionImg.texture = explosionImg4;
+				} else if (explosionCounter === 5) {
+					explosionImg.texture = explosionImg5;
+				} else if (explosionCounter === 6) {
+					explosionImg.texture = explosionImg6;
+				} else if (explosionCounter === 7) {
+					explosionImg.texture = explosionImg7;
+				} else if (explosionCounter === 8) {
+					explosionImg.texture = explosionImg8;
+				} else if (explosionCounter === 9) {
+					explosionImg.texture = explosionImg9;
+				} else if (explosionCounter === 10) {
+					explosionImg.texture = explosionImg10;
+				} else if (explosionCounter === 11) {
+					explosionImg.texture = explosionImg11;
+				} else if (explosionCounter === 12) {
+					explosionImg.texture = explosionImg12;
+				} else if (explosionCounter === 13) {
+					explosionImg.texture = explosionImg13;
+				} else if (explosionCounter === 14) {
+					explosionImg.texture = explosionImg14;
+				} else if (explosionCounter === 15) {
+					explosionImg.texture = explosionImg15;
+				} else {
+					// explosionCounter = 0
+					explosionImg.texture = transparent;
+				}
+	
+				// }
+			}, 40);
 	
 			background.scale.set(MAX_Y * 0.0013);
 	
@@ -46868,6 +46939,7 @@
 			stage.addChild(background);
 			stage.addChild(alienLaughing);
 			stage.addChild(spaceship);
+			stage.addChild(explosionImg);
 			stage.addChild(grass);
 			stage.addChild(alien);
 			stage.addChild(laserDots);
@@ -47172,6 +47244,9 @@
 					spaceship.rotation += 0.3;
 					spaceship.position.x += 0;
 					spaceship.position.y += 3 + Math.random() * 7;
+	
+					explosionImg.position.x = spaceship.position.x - 120;
+					explosionImg.position.y = spaceship.position.y - 240;
 				}
 				// renderer.render(stage);
 	
