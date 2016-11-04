@@ -34,7 +34,6 @@ function homeCtrl( $scope, homeService ) {
 		const twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
 		const threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
 
-
 		const alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
 		const alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
 		const alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
@@ -68,8 +67,6 @@ function homeCtrl( $scope, homeService ) {
 				  ,explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png')
 					,explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
 
-
-
 		const alien = new PIXI.Sprite(alienStep1);
 		const spaceship = new PIXI.Sprite(spaceship1);
 		const laserDots = new PIXI.Sprite(threeLaserdots);
@@ -86,6 +83,8 @@ function homeCtrl( $scope, homeService ) {
 		let score = 0
 		let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
+		let ufoIconWhite = new PIXI.Sprite.fromImage('./imgs/tiny-spaceship-white.png');
+		let ufoIconRed = new PIXI.Sprite.fromImage('./imgs/tiny-spaceship-red.png')
 
 		let explosionCounter = 20;
 
@@ -186,7 +185,7 @@ function homeCtrl( $scope, homeService ) {
 				// }
 			},40)
 
-
+				let ufoRow = [];
 
 
 			background.scale.set(MAX_Y * 0.0013)
@@ -215,6 +214,12 @@ function homeCtrl( $scope, homeService ) {
 			scoreNumber.scale.x = 1;
 			scoreNumber.scale.y = 1.6;
 
+			ufoIconWhite.anchor.set = 0.5;
+			ufoIconWhite.position.x = 300;
+			ufoIconWhite.position.y = 565;
+			ufoIconWhite.scale.set(0.5);
+			ufoIconWhite.rotation = -0.7;
+
 			alienLaughing.anchor.set = (0.5, 0);
 			alienLaughing.scale.x = 2.8;
 			alienLaughing.scale.y = 2.8;
@@ -235,10 +240,23 @@ function homeCtrl( $scope, homeService ) {
 			stage.addChild(scoreNumber);
 			stage.addChild(scoreImg);
 			stage.addChild(flash);
+			stage.addChild(ufoIconWhite);
+			stage.addChild(ufoRow);
 
+			let alienLaughingMoving = false;
 
-			let alienLaughingMoving = false
+			function ufoCounter() {
+					for (let i = 0; i < 10; i++) {
+						if (!hunted) {
+							ufoRow.push(ufoIconWhite);
+						}
+						else if (hunted) {
+							ufoRow[i] = ufoIconRed;
+						}
+					}
+			}
 
+			ufoCounter();
 
 			setInterval(function(){
 
