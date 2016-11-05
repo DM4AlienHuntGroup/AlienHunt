@@ -75,23 +75,23 @@
 	
 	var _homeCtrl2 = _interopRequireDefault(_homeCtrl);
 	
-	var _homeService = __webpack_require__(/*! ./services/homeService.js */ 7);
+	var _homeService = __webpack_require__(/*! ./services/homeService.js */ 10);
 	
 	var _homeService2 = _interopRequireDefault(_homeService);
 	
-	var _splashPageDirective = __webpack_require__(/*! ../public/directives/splashPageDirective.js */ 8);
+	var _splashPageDirective = __webpack_require__(/*! ../public/directives/splashPageDirective.js */ 11);
 	
 	var _splashPageDirective2 = _interopRequireDefault(_splashPageDirective);
 	
-	var _splash = __webpack_require__(/*! ../public/splash.html */ 9);
+	var _splash = __webpack_require__(/*! ../public/splash.html */ 12);
 	
 	var _splash2 = _interopRequireDefault(_splash);
 	
-	var _howler = __webpack_require__(/*! ../howler.js */ 10);
+	var _howler = __webpack_require__(/*! ../howler.js */ 13);
 	
 	var _howler2 = _interopRequireDefault(_howler);
 	
-	var _modal = __webpack_require__(/*! ../src/assets/modal.js */ 11);
+	var _modal = __webpack_require__(/*! ../src/assets/modal.js */ 14);
 	
 	var _modal2 = _interopRequireDefault(_modal);
 	
@@ -46720,7 +46720,7 @@
 		value: true
 	});
 	
-	var _play = __webpack_require__(/*! ../Components/play.js */ 13);
+	var _play = __webpack_require__(/*! ../Components/play.js */ 7);
 	
 	var _play2 = _interopRequireDefault(_play);
 	
@@ -46733,6 +46733,7 @@
 				$scope.user = response.data;
 			});
 		};
+	
 		$scope.getScoreboard = function () {
 			homeService.getScoreboard().then(function (response) {
 				$scope.scores = response.data;
@@ -46749,6 +46750,522 @@
 
 /***/ },
 /* 7 */
+/*!********************************!*\
+  !*** ./src/Components/play.js ***!
+  \********************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var score = 0;
+	var round = 1;
+	
+	var play = function play() {
+		console.log(document.body.style);
+		document.body.style.background = "black";
+		document.body.style.overflow = "hidden";
+		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
+		//creates container in which all elements will be contained.
+		var stage = new PIXI.Container();
+		stage.scale.set(window.innerHeight / 600);
+		/// Renders game on view
+		document.body.appendChild(renderer.view);
+	
+		// prior to scaling, sets width/height.
+		var MAX_X = 800;
+		var MAX_Y = 600;
+		// windowScale creates the number by which scale size is determined (container height / actual window size)
+		// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+		var windowScale = window.innerHeight / MAX_Y;
+		var scaledStageWidth = MAX_X * windowScale;
+		// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
+		var leftMargin = (renderer.view.clientWidth - scaledStageWidth) / 2;
+		//adds left Margin to the stage, ensuring it is centered on the screen.
+		renderer.view.width = scaledStageWidth;
+		renderer.view.style.height = '100%';
+		renderer.view.style.marginLeft = leftMargin + "px";
+	
+		// stage.scale.set(windowScale);
+	
+	
+		var spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
+		var spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
+		var spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
+	
+		var oneLaserdot = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
+		var twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
+		var threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
+	
+		var alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
+		var alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
+		var alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
+	
+		var alienStep1 = PIXI.Texture.fromImage('./imgs/alienStep1.png');
+		var alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
+		var alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
+	
+		var alienLaughing1 = PIXI.Texture.fromImage('./imgs/AlienLaughing1.png');
+		var alienLaughing2 = PIXI.Texture.fromImage('./imgs/AlienLaughing2.png');
+	
+		var shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
+	
+		var flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
+	
+		var transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
+	
+		var ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
+	
+		var ufoIconPositions = [300, 558, 325, 558, 350, 558, 375, 558, 400, 558, 425, 558, 450, 558, 475, 558, 500, 558, 525, 558];
+	
+		var explosionImg1 = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png'),
+		    explosionImg2 = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png'),
+		    explosionImg3 = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png'),
+		    explosionImg4 = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png'),
+		    explosionImg5 = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png'),
+		    explosionImg6 = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png'),
+		    explosionImg7 = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png'),
+		    explosionImg8 = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png'),
+		    explosionImg9 = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png'),
+		    explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png'),
+		    explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png'),
+		    explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png'),
+		    explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png'),
+		    explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png'),
+		    explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
+	
+		var box = PIXI.Texture.fromImage('./imgs/Round.png');
+	
+		var alien = new PIXI.Sprite(alienStep1);
+		var spaceship = new PIXI.Sprite(spaceship1);
+		var laserDots = new PIXI.Sprite(threeLaserdots);
+		var shot = new PIXI.Sprite(shot1);
+		var alienLaughing = new PIXI.Sprite(alienLaughing1);
+		var flash = new PIXI.Sprite(transparent);
+		var explosionImg = new PIXI.Sprite(transparent);
+		var RoundBox = new PIXI.Sprite(box);
+	
+		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
+		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
+		var hunted = false;
+		var laserCount = 0;
+		var scoreNumber = new PIXI.Text('0', { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
+		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
+	
+		var roundText = new PIXI.Text('ROUND ' + round, { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
+	
+		var explosionCounter = 20;
+	
+		//sounds
+		var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
+		var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
+		var explosion = new Howl({
+			src: '../../sounds/Explosion.wav',
+			onplay: function onplay() {
+				explosionCounter = 0;
+			},
+			onend: function onend() {
+				huntedSound.play();
+			}
+		});
+		var spaceshipMove = new Howl({ src: '../../sounds/spaceshipMove.wav', volume: 0.4 });
+		var laugh = new Howl({ src: '../../sounds/laughing.mp3' });
+	
+		grass.anchor.y = 1;
+		grass.position.y = 600;
+		grass.scale.x = 3.2;
+		grass.scale.y = 2.2;
+	
+		laserDots.anchor.set = 0.5;
+		laserDots.position.y = 548;
+		laserDots.position.x = 76.5;
+		laserDots.scale.x = 0.96;
+		laserDots.scale.y = 0.72;
+	
+		shot.anchor.set = 0.5;
+		shot.position.y = 565;
+		shot.position.x = 79.5;
+		shot.scale.x = 0.32;
+		shot.scale.y = 0.27;
+	
+		RoundBox.anchor.set = 0.5;
+		RoundBox.position.x = MAX_X / 2.4;
+		RoundBox.position.y = MAX_Y / 3.3;
+		RoundBox.scale.x = 1.5;
+		RoundBox.scale.y = 0.8;
+	
+		roundText.anchor.set = 0.5;
+		roundText.position.x = MAX_X / 2.2;
+		roundText.position.y = MAX_Y / 3;
+		roundText.scale.x = 1.6;
+		roundText.scale.y = 1.6;
+	
+		setInterval(function () {
+	
+			if (explosionCounter < 20) {
+				explosionCounter++;
+			}
+	
+			if (explosionCounter === 1) {
+				explosionImg.texture = explosionImg1;
+			} else if (explosionCounter === 2) {
+				explosionImg.texture = explosionImg2;
+			} else if (explosionCounter === 3) {
+				explosionImg.texture = explosionImg3;
+			} else if (explosionCounter === 4) {
+				explosionImg.texture = explosionImg4;
+			} else if (explosionCounter === 5) {
+				explosionImg.texture = explosionImg5;
+			} else if (explosionCounter === 6) {
+				explosionImg.texture = explosionImg6;
+			} else if (explosionCounter === 7) {
+				explosionImg.texture = explosionImg7;
+			} else if (explosionCounter === 8) {
+				explosionImg.texture = explosionImg8;
+			} else if (explosionCounter === 9) {
+				explosionImg.texture = explosionImg9;
+			} else if (explosionCounter === 10) {
+				explosionImg.texture = explosionImg10;
+			} else if (explosionCounter === 11) {
+				explosionImg.texture = explosionImg11;
+			} else if (explosionCounter === 12) {
+				explosionImg.texture = explosionImg12;
+			} else if (explosionCounter === 13) {
+				explosionImg.texture = explosionImg13;
+			} else if (explosionCounter === 14) {
+				explosionImg.texture = explosionImg14;
+			} else if (explosionCounter === 15) {
+				explosionImg.texture = explosionImg15;
+			} else {
+				explosionImg.texture = transparent;
+			}
+		}, 40);
+	
+		background.scale.set(MAX_Y * 0.0013);
+	
+		alien.anchor.set = 0.5;
+		alien.position.y = MAX_Y - 195;
+		alien.scale.x = 3.2;
+		alien.scale.y = 3.3;
+	
+		spaceship.anchor.x = 0.5;
+		spaceship.anchor.y = 0.5;
+		spaceship.scale.x = 0;
+		spaceship.scale.y = 0;
+		spaceship.position.x = MAX_X / 2;
+		spaceship.position.y = 72;
+	
+		scoreImg.anchor.set = 0.5;
+		scoreImg.position.y = 550;
+		scoreImg.position.x = 625;
+		scoreImg.scale.x = 0.56;
+		scoreImg.scale.y = 1.29;
+	
+		scoreNumber.anchor.set = 0.5;
+		scoreNumber.position.x = 700;
+		scoreNumber.position.y = 554;
+		scoreNumber.scale.x = 1;
+		scoreNumber.scale.y = 1.6;
+	
+		alienLaughing.anchor.set = (0.5, 0);
+		alienLaughing.scale.x = 2.8;
+		alienLaughing.scale.y = 2.8;
+		alienLaughing.position.x = MAX_X / 2;
+		alienLaughing.position.y = MAX_Y - 98;
+	
+		flash.scale.y = window.innerHeight;
+		flash.scale.x = window.innerWidth;
+	
+		stage.addChild(background, alienLaughing, spaceship, explosionImg, grass, alien, laserDots, shot, scoreNumber, scoreImg, RoundBox, roundText, flash);
+	
+		var alienLaughingMoving = false;
+	
+		setInterval(function () {
+			if (!hunted && spaceship.rotation === 0) {
+				laserCount = 4;
+				setTimeout(function () {
+					stage.removeChild(spaceship);
+				}, 1000);
+				setTimeout(function () {
+					shotBol = false;
+					shot.texture = shot1;
+					hunted = false;
+					spaceship.rotation = 0;
+					stage.addChildAt(spaceship, 2);
+					laserCount = 0;
+				}, 3000);
+	
+				setTimeout(function () {
+					laugh.play();
+					alienLaughingMoving = true;
+					setTimeout(function () {
+						alienLaughingMoving = false;
+						alienLaughing.position.x = MAX_X / 2;
+						alienLaughing.position.y = MAX_Y - 98;
+					}, 4000);
+				}, 400);
+			}
+		}, 9000);
+	
+		var animateCount = 0;
+	
+		setInterval(function () {
+			animateCount++;
+			if (animateCount === 3) {
+				animateCount = 0;
+			}
+		}, 150);
+	
+		setInterval(function () {
+			if (animateCount === 0) {
+				spaceship.texture = spaceship2;
+			} else if (animateCount === 1) {
+				spaceship.texture = spaceship3;
+			} else if (animateCount === 2) {
+				spaceship.texture = spaceship1;
+			}
+			if (alien.position.x < MAX_X / 2) {
+				if (animateCount === 0) {
+					alien.texture = alienStep1;
+				} else if (animateCount === 1) {
+					alien.texture = alienStep2;
+				} else if (animateCount === 2) {
+					alien.texture = alienStep3;
+				}
+			} else {
+				alien.scale.x -= 0.1;
+				alien.scale.y -= 0.03;
+	
+				if (animateCount === 0) {
+					alien.texture = alienStop1;
+				} else if (animateCount === 1) {
+					alien.texture = alienStop2;
+				} else if (animateCount === 2) {
+					alien.texture = alienStop3;
+				}
+			}
+		}, 150);
+	
+		var shotBol = false;
+		var spaceshipInteractive = 'NO';
+	
+		setTimeout(function () {
+			spaceshipInteractive = 'YES';
+			$('canvas').click(function () {
+				if (laserCount < 3) {
+					laserShoot.play();
+					flash.texture = flashTexture;
+					setTimeout(function () {
+						flash.texture = transparent;
+					}, 25);
+					laserCount++;
+				}
+			});
+		}, 6000);
+	
+		var shotBol1 = false;
+	
+		setInterval(function () {
+			if (shotBol) {
+				shotBol1 = !shotBol1;
+				if (shotBol1) {
+					shot.texture = transparent;
+				} else {
+					shot.texture = shot1;
+				}
+			} else {
+				shot.texture = shot1;
+			}
+		}, 125);
+	
+		alienLaughing.interactive = true;
+		var alienLaughingBol = false;
+	
+		setInterval(function () {
+			alienLaughingBol = !alienLaughingBol;
+			if (alienLaughingBol) {
+				alienLaughing.texture = alienLaughing1;
+			} else {
+				alienLaughing.texture = alienLaughing2;
+			}
+		}, 130);
+	
+		var target = new PIXI.Point();
+	
+		function resetTarget() {
+			target.x = Math.floor(Math.random() * MAX_X);
+			target.y = Math.floor(Math.random() * MAX_Y);
+		}
+	
+		// start animating
+		requestAnimationFrame(animate);
+	
+		var alienLaughingPositionCounter = 0;
+		var ufoRow = [];
+	
+		for (var i = 0; i < 10; i++) {
+			var ufoIndex = new PIXI.Sprite(ufoIcon);
+			ufoRow.push(ufoIndex);
+			ufoIndex.scale.set(0.35);
+			ufoIndex.position.x = ufoIconPositions[i * 2];
+			ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
+			stage.addChild(ufoIndex);
+		}
+	
+		function animate() {
+			if (laserCount === 0 && spaceshipInteractive === 'YES') {
+				spaceship.interactive = true;
+				laserDots.texture = threeLaserdots;
+			} else if (laserCount === 1) {
+				spaceship.interactive = true;
+				laserDots.texture = twoLaserdots;
+			} else if (laserCount === 2) {
+				spaceship.interactive = true;
+				laserDots.texture = oneLaserdot;
+			} else {
+				spaceship.interactive = false;
+				laserDots.texture = transparent;
+			}
+			if (laserCount === 3) {
+				shotBol = true;
+			} else {
+				shotBol = false;
+			}
+			if (alienLaughingMoving) {
+				if (alienLaughingPositionCounter !== 120) {
+					alienLaughingPositionCounter++;
+					alienLaughing.position.y -= 1;
+				}
+				if (alienLaughingPositionCounter === 120) {
+					alienLaughing.position.y += 0.00000125;
+				}
+			}
+			if (!alienLaughingMoving) {
+				alienLaughingPositionCounter = 0;
+			}
+			if (laserCount > 3) {
+				spaceship.position.x += 10;
+				spaceship.position.y -= 10;
+				if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
+					if (alienLaughingPositionCounter !== 120) {
+						alienLaughingPositionCounter++;
+						alienLaughing.position.y -= 1;
+					}
+					if (alienLaughingPositionCounter === 120) {
+						alienLaughing.position.y += 1;
+					}
+				}
+			}
+			if (laserCount <= 3) {
+				if (!hunted && alien.position.x > MAX_X / 2) {
+					spaceship.position.x += (target.x - spaceship.x) * 0.1;
+					spaceship.position.y += (target.y - spaceship.y) * 0.1;
+	
+					if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
+						spaceship.scale.x += 0.04;
+						spaceship.scale.y += 0.04;
+					}
+					if (Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X / 2) {
+						spaceshipMove.play();
+						resetTarget();
+					}
+				}
+			}
+			alienWalking();
+			alienDisappear();
+	
+			contain(spaceship, { x: 0, y: -50, width: MAX_X, height: 575 });
+	
+			// render the container
+			renderer.render(stage);
+			requestAnimationFrame(animate);
+		}
+	
+		function contain(sprite, container) {
+			var collision = "";
+			//Left
+			if (sprite.x < container.x) {
+				sprite.x = container.x;
+				collision = "left";
+			}
+			//Top
+			if (sprite.y < container.y) {
+				sprite.y = container.y;
+				collision = "top";
+			}
+			//Bottom
+			if (sprite.y + sprite.height > container.height) {
+				sprite.y = container.height - sprite.height;
+				collision = "bottom";
+			}
+			//Return the `collision` value
+			return collision;
+		}
+	
+		function alienWalking() {
+			if (alien.position.x <= MAX_X / 2) {
+				alien.position.x += 3;
+			}
+		}
+	
+		function alienDisappear() {
+			if (alien.position.x > MAX_X / 2) {
+				stage.removeChild(roundText);
+				stage.removeChild(RoundBox);
+				createjs.Tween.get(alien).to({ alpha: 0 }, 1700);
+			}
+		}
+	
+		function onDown(eventData) {
+			// setTimeout(function() {
+			// 	if(!hunted){
+			// 		laserCount = 4;
+			// 	setTimeout(() => {laugh.play()} , 400)
+			// }
+			// },10000)
+			explosion.play();
+			hunted = true;
+			animate2();
+			// huntedSound.play()
+			score += 500;
+			scoreNumber.setText(score);
+			setTimeout(function () {
+				stage.removeChild(spaceship);
+			}, 2000);
+			setTimeout(function () {
+				shotBol = false;
+				shot.texture = shot1;
+				hunted = false;
+				spaceship.rotation = 0;
+				stage.addChildAt(spaceship, 2);
+				laserCount = 0;
+			}, 5000);
+		}
+	
+		spaceship.on('mousedown', onDown);
+		spaceship.on('touchstart', onDown);
+	
+		function animate2() {
+			if (hunted) {
+				requestAnimationFrame(animate2);
+				spaceship.rotation += 0.3;
+				spaceship.position.x += 0;
+				spaceship.position.y += 3 + Math.random() * 7;
+	
+				explosionImg.position.x = spaceship.position.x - 120;
+				explosionImg.position.y = spaceship.position.y - 240;
+			}
+		}
+	};
+	
+	exports.default = play;
+
+/***/ },
+/* 8 */,
+/* 9 */,
+/* 10 */
 /*!*************************************!*\
   !*** ./src/services/homeService.js ***!
   \*************************************/
@@ -46773,7 +47290,7 @@
 	exports.default = homeService;
 
 /***/ },
-/* 8 */
+/* 11 */
 /*!**************************************************!*\
   !*** ./public/directives/splashPageDirective.js ***!
   \**************************************************/
@@ -46870,7 +47387,7 @@
 	exports.default = splashPage;
 
 /***/ },
-/* 9 */
+/* 12 */
 /*!****************************!*\
   !*** ./public/splash.html ***!
   \****************************/
@@ -46879,7 +47396,7 @@
 	module.exports = "<div ng-if=\"user.isLoggedIn\" class=\"welcome-message\">\n\t<a href=\"#ex2\" rel=\"modal:open\" class=\"login splashbutton splashbutton3\"><img class=\"hamburger-icon\" ng-src=\"imgs/menu-alt-512.png\" alt=\"\" /></a>\n</div>\n\t<div class=\"splashcontainer\">\n\t\t<div class=\"splashcontent\">\n\t\t\t\t<div class=\"title\">\n\t\t\t\t\t<div class='alienMargin'><span style='display: none;'>FAKE</span></div>\n\t\t\t\t\t<div class=\"alien\">Alien</div>\n\t\t\t\t\t\t<div class=\"separator\"></div>\n\t\t\t\t\t<div class=\"hunt\">Hunt</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"splashbuttons\">\n\t\t\t\t\t<ul ng-show=\"options\">\n            <li class=\"splashbutton\" ng-click='stopSplashMusic(); play()'> <img class='selectImg selectImg1' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton1'> Play</span></li>\n            <li ng-show=\"user\" class=\"splashbutton\"> <img class='selectImg selectImg2' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton2'> Continue</span></li>\n\t\t\t\t\t\t<li ng-hide=\"user.isLoggedIn\"> <img class='selectImg selectImg3' ng-src=\"imgs/select.png\" alt=\"\">  <a href=\"#ex1\" rel=\"modal:open\" class=\"login splashbutton splashbutton3\">Login</a></li>\n            <li class=\"splashbutton\"> <img class='selectImg selectImg4' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton4'> Settings</span></li>\n            <li class=\"splashbutton\"> <img class='selectImg selectImg5' ng-src=\"imgs/select.png\" alt=\"\"><span ng-click=\"getScoreboard()\" class='splashbutton5'> <a href=\"#ex3\" rel=\"modal:open\" style=\"text-decoration: none;\" class=\"splashbutton splashbutton5\">High Scores</a></span></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t</div>\n\t</div>\n\n\t<!--- Facebook Login Modal --->\n\t\t<div id=\"ex1\" style=\"display:none;\">\n\t\t  <p>In order to keep track of your progress and save scores, please Log In via Facebook. <p> Don't worry, we don't post to your wall or have access to any of your Data.  Log In or press ESC</p>\n\t\t\t<p>\n\t\t\t\t<div class=\"social-wrap a\">\n\t\t\t\t\t<a href=\"http://localhost:8080/auth/facebook\"><button id=\"facebook\">Sign in with Facebook</button></a>\n\t\t\t\t</div>\n\t\t\t</p>\n\t\t</div>\n\n\t<!-- User Information Modal -->\n\t\t<div id=\"ex2\" style=\"display:none;\">\n\t\t\t<p><h4>Welcome back, {{user.firstName}}!</h4></p>\n\t\t\t<p>\n\t\t\t\t<div>\n\t\t\t\t\t<li>Current Level: {{user.currentGameLvl}}</li>\n\t\t\t\t\t<li>Highest Level: {{user.highLevel}}</li>\n\t\t\t\t\t<li>High Score: {{user.highScore | number}}</li>\n\t\t\t\t\t<li>Score: {{user.currentScore | number}}</li>\n\t\t\t\t</div>\n\t\t\t</p>\n\t\t</div>\n\n\t<!-- High Score Modal -->\n\t\t<div class=\"high-score\" id=\"ex3\" style=\"display:none;\">\n\t\t\t<p>\n\t\t\t\t<h1><u>High Scores:</u></h1>\n\t\t\t</p>\n\t\t\t<div ng-repeat=\"score in scores\" class=\"high-score-list\">\n\t\t\t\t<li>{{score.place}}. {{score.userName}} <span style=\"float:right\">{{score.score | number}} pts</span></li>\n\t\t\t</div>\n\t\t</div>\n";
 
 /***/ },
-/* 10 */
+/* 13 */
 /*!*******************!*\
   !*** ./howler.js ***!
   \*******************/
@@ -49636,7 +50153,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 11 */
+/* 14 */
 /*!*****************************!*\
   !*** ./src/assets/modal.js ***!
   \*****************************/
@@ -49875,10 +50392,10 @@
 			$(this).modal();
 		});
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 12)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 15)(module)))
 
 /***/ },
-/* 12 */
+/* 15 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
@@ -49895,587 +50412,6 @@
 		return module;
 	}
 
-
-/***/ },
-/* 13 */
-/*!********************************!*\
-  !*** ./src/Components/play.js ***!
-  \********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	var score = 0;
-	var round = 1;
-	
-	var play = function play() {
-	
-		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
-	
-		/// Renders game on view
-		document.body.appendChild(renderer.view);
-	
-		// prior to scaling, sets width/height.
-		var MAX_X = 800;
-		var MAX_Y = 600;
-	
-		//creates container in which all elements will be contained.
-		var stage = new PIXI.Container();
-	
-		// windowScale creates the number by which scale size is determined (container height / actual window size)
-		// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
-		var windowScale = window.innerHeight / MAX_Y;
-		var scaledStageWidth = MAX_X * windowScale;
-		// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
-		var leftMargin = (renderer.view.clientWidth - scaledStageWidth) / 2;
-	
-		//adds left Margin to the stage, ensuring it is centered on the screen.
-		// stage.transform.position.set(leftMargin, 0)
-	
-		// console.log(renderer);
-		// console.log(scaledStageWidth);
-		// renderer.view.style.display = 'flex';
-		// renderer.view.style.justifyContent = 'space-around';
-		renderer.view.width = scaledStageWidth;
-		renderer.view.style.height = '100%';
-		renderer.view.style.marginLeft = leftMargin + 'px';
-	
-		stage.scale.set(windowScale);
-	
-		var spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
-		var spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
-		var spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
-	
-		var oneLaserdot = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
-		var twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
-		var threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
-	
-		var alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
-		var alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
-		var alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
-	
-		var alienStep1 = PIXI.Texture.fromImage('./imgs/alienStep1.png');
-		var alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
-		var alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
-	
-		var alienLaughing1 = PIXI.Texture.fromImage('./imgs/AlienLaughing1.png');
-		var alienLaughing2 = PIXI.Texture.fromImage('./imgs/AlienLaughing2.png');
-	
-		var shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
-	
-		var flashTexture = PIXI.Texture.fromImage('./imgs/flash.png');
-	
-		var transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
-	
-		var ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
-	
-		var ufoIconPositions = [300, 558, 325, 558, 350, 558, 375, 558, 400, 558, 425, 558, 450, 558, 475, 558, 500, 558, 525, 558];
-	
-		var explosionImg1 = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png'),
-		    explosionImg2 = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png'),
-		    explosionImg3 = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png'),
-		    explosionImg4 = PIXI.Texture.fromImage('./imgs/explosionImgs/4.png'),
-		    explosionImg5 = PIXI.Texture.fromImage('./imgs/explosionImgs/5.png'),
-		    explosionImg6 = PIXI.Texture.fromImage('./imgs/explosionImgs/6.png'),
-		    explosionImg7 = PIXI.Texture.fromImage('./imgs/explosionImgs/7.png'),
-		    explosionImg8 = PIXI.Texture.fromImage('./imgs/explosionImgs/8.png'),
-		    explosionImg9 = PIXI.Texture.fromImage('./imgs/explosionImgs/9.png'),
-		    explosionImg10 = PIXI.Texture.fromImage('./imgs/explosionImgs/10.png'),
-		    explosionImg11 = PIXI.Texture.fromImage('./imgs/explosionImgs/11.png'),
-		    explosionImg12 = PIXI.Texture.fromImage('./imgs/explosionImgs/12.png'),
-		    explosionImg13 = PIXI.Texture.fromImage('./imgs/explosionImgs/13.png'),
-		    explosionImg14 = PIXI.Texture.fromImage('./imgs/explosionImgs/14.png'),
-		    explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
-	
-		var box = PIXI.Texture.fromImage('./imgs/Round.png');
-	
-		var alien = new PIXI.Sprite(alienStep1);
-		var spaceship = new PIXI.Sprite(spaceship1);
-		var laserDots = new PIXI.Sprite(threeLaserdots);
-		var shot = new PIXI.Sprite(shot1);
-		var alienLaughing = new PIXI.Sprite(alienLaughing1);
-		var flash = new PIXI.Sprite(transparent);
-		var explosionImg = new PIXI.Sprite(transparent);
-		var RoundBox = new PIXI.Sprite(box);
-	
-		var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-		var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
-		var hunted = false;
-		var laserCount = 0;
-		var scoreNumber = new PIXI.Text('0', { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
-		var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
-	
-		var roundText = new PIXI.Text('ROUND ' + round, { fontFamily: 'VT323', fontSize: 24, fill: '#fff', align: 'center' });
-	
-		var explosionCounter = 20;
-	
-		//sounds
-		var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
-		var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
-		var explosion = new Howl({
-			src: '../../sounds/Explosion.wav',
-			onplay: function onplay() {
-				explosionCounter = 0;
-			},
-			onend: function onend() {
-				huntedSound.play();
-			}
-		});
-		var spaceshipMove = new Howl({ src: '../../sounds/spaceshipMove.wav', volume: 0.4 });
-		var laugh = new Howl({ src: '../../sounds/laughing.mp3' });
-	
-		grass.anchor.y = 1;
-		grass.position.y = 600;
-		grass.scale.x = 3.2;
-		grass.scale.y = 2.2;
-	
-		laserDots.anchor.set = 0.5;
-		laserDots.position.y = 548;
-		laserDots.position.x = 76.5;
-		laserDots.scale.x = 0.96;
-		laserDots.scale.y = 0.72;
-	
-		shot.anchor.set = 0.5;
-		shot.position.y = 565;
-		shot.position.x = 79.5;
-		shot.scale.x = 0.32;
-		shot.scale.y = 0.27;
-	
-		RoundBox.anchor.set = 0.5;
-		RoundBox.position.x = MAX_X / 2.4;
-		RoundBox.position.y = MAX_Y / 3.3;
-		RoundBox.scale.x = 1.5;
-		RoundBox.scale.y = 0.8;
-	
-		roundText.anchor.set = 0.5;
-		roundText.position.x = MAX_X / 2.2;
-		roundText.position.y = MAX_Y / 3;
-		roundText.scale.x = 1.6;
-		roundText.scale.y = 1.6;
-	
-		setInterval(function () {
-			// console.log(explosionCounter);
-	
-	
-			var ufoRow = [];
-	
-			if (explosionCounter < 20) {
-				explosionCounter++;
-			}
-	
-			if (explosionCounter === 1) {
-				explosionImg.texture = explosionImg1;
-			} else if (explosionCounter === 2) {
-				explosionImg.texture = explosionImg2;
-			} else if (explosionCounter === 3) {
-				explosionImg.texture = explosionImg3;
-			} else if (explosionCounter === 4) {
-				explosionImg.texture = explosionImg4;
-			} else if (explosionCounter === 5) {
-				explosionImg.texture = explosionImg5;
-			} else if (explosionCounter === 6) {
-				explosionImg.texture = explosionImg6;
-			} else if (explosionCounter === 7) {
-				explosionImg.texture = explosionImg7;
-			} else if (explosionCounter === 8) {
-				explosionImg.texture = explosionImg8;
-			} else if (explosionCounter === 9) {
-				explosionImg.texture = explosionImg9;
-			} else if (explosionCounter === 10) {
-				explosionImg.texture = explosionImg10;
-			} else if (explosionCounter === 11) {
-				explosionImg.texture = explosionImg11;
-			} else if (explosionCounter === 12) {
-				explosionImg.texture = explosionImg12;
-			} else if (explosionCounter === 13) {
-				explosionImg.texture = explosionImg13;
-			} else if (explosionCounter === 14) {
-				explosionImg.texture = explosionImg14;
-			} else if (explosionCounter === 15) {
-				explosionImg.texture = explosionImg15;
-			} else {
-				// explosionCounter = 0
-				explosionImg.texture = transparent;
-			}
-	
-			// }
-		}, 40);
-	
-		background.scale.set(MAX_Y * 0.0013);
-	
-		alien.anchor.set = 0.5;
-		alien.position.y = MAX_Y - 195;
-		alien.scale.x = 3.2;
-		alien.scale.y = 3.3;
-	
-		spaceship.anchor.x = 0.5;
-		spaceship.anchor.y = 0.5;
-		spaceship.scale.x = 0;
-		spaceship.scale.y = 0;
-		spaceship.position.x = MAX_X / 2;
-		spaceship.position.y = 72;
-	
-		scoreImg.anchor.set = 0.5;
-		scoreImg.position.y = 550;
-		scoreImg.position.x = 625;
-		scoreImg.scale.x = 0.56;
-		scoreImg.scale.y = 1.29;
-	
-		scoreNumber.anchor.set = 0.5;
-		scoreNumber.position.x = 700;
-		scoreNumber.position.y = 554;
-		scoreNumber.scale.x = 1;
-		scoreNumber.scale.y = 1.6;
-	
-		alienLaughing.anchor.set = (0.5, 0);
-		alienLaughing.scale.x = 2.8;
-		alienLaughing.scale.y = 2.8;
-		alienLaughing.position.x = MAX_X / 2;
-		alienLaughing.position.y = MAX_Y - 98;
-	
-		flash.scale.y = window.innerHeight;
-		flash.scale.x = window.innerWidth;
-	
-		stage.addChild(background);
-		stage.addChild(alienLaughing);
-		stage.addChild(spaceship);
-		stage.addChild(explosionImg);
-		stage.addChild(grass);
-		stage.addChild(alien);
-		stage.addChild(laserDots);
-		stage.addChild(shot);
-		stage.addChild(scoreNumber);
-		stage.addChild(scoreImg);
-		stage.addChild(RoundBox);
-		stage.addChild(roundText);
-		stage.addChild(flash);
-	
-		var alienLaughingMoving = false;
-	
-		setInterval(function () {
-	
-			if (!hunted && spaceship.rotation === 0) {
-				laserCount = 4;
-	
-				setTimeout(function () {
-					stage.removeChild(spaceship);
-				}, 1000);
-				setTimeout(function () {
-					shotBol = false;
-					shot.texture = shot1;
-					hunted = false;
-					spaceship.rotation = 0;
-					stage.addChildAt(spaceship, 2);
-					laserCount = 0;
-				}, 3000);
-	
-				setTimeout(function () {
-					laugh.play();
-					alienLaughingMoving = true;
-					setTimeout(function () {
-						alienLaughingMoving = false;
-						alienLaughing.position.x = MAX_X / 2;
-						alienLaughing.position.y = MAX_Y - 98;
-					}, 4000);
-				}, 400);
-			}
-		}, 9000);
-	
-		var animateCount = 0;
-	
-		setInterval(function () {
-			animateCount++;
-			if (animateCount === 3) {
-				animateCount = 0;
-			}
-		}, 150);
-	
-		setInterval(function () {
-			if (animateCount === 0) {
-				spaceship.texture = spaceship2;
-			} else if (animateCount === 1) {
-				spaceship.texture = spaceship3;
-			} else if (animateCount === 2) {
-				spaceship.texture = spaceship1;
-			}
-	
-			if (alien.position.x < MAX_X / 2) {
-				if (animateCount === 0) {
-					alien.texture = alienStep1;
-				} else if (animateCount === 1) {
-					alien.texture = alienStep2;
-				} else if (animateCount === 2) {
-					alien.texture = alienStep3;
-				}
-			} else {
-				alien.scale.x -= 0.1;
-				alien.scale.y -= 0.03;
-				if (animateCount === 0) {
-					alien.texture = alienStop1;
-				} else if (animateCount === 1) {
-					alien.texture = alienStop2;
-				} else if (animateCount === 2) {
-					alien.texture = alienStop3;
-				}
-			}
-		}, 150);
-	
-		var shotBol = false;
-	
-		var spaceshipInteractive = 'NO';
-		setTimeout(function () {
-			spaceshipInteractive = 'YES';
-			$('canvas').click(function () {
-				if (laserCount < 3) {
-	
-					laserShoot.play();
-					flash.texture = flashTexture;
-					setTimeout(function () {
-						flash.texture = transparent;
-					}, 25);
-	
-					laserCount++;
-				}
-			});
-		}, 6000);
-	
-		var shotBol1 = false;
-	
-		setInterval(function () {
-			if (shotBol) {
-				shotBol1 = !shotBol1;
-				if (shotBol1) {
-					shot.texture = transparent;
-				} else {
-					shot.texture = shot1;
-				}
-			} else {
-				shot.texture = shot1;
-			}
-		}, 125);
-	
-		alienLaughing.interactive = true;
-		var alienLaughingBol = false;
-	
-		setInterval(function () {
-	
-			alienLaughingBol = !alienLaughingBol;
-	
-			if (alienLaughingBol) {
-				alienLaughing.texture = alienLaughing1;
-			} else {
-				alienLaughing.texture = alienLaughing2;
-			}
-		}, 130);
-	
-		var target = new PIXI.Point();
-	
-		function reset() {
-			target.x = Math.floor(Math.random() * MAX_X);
-			target.y = Math.floor(Math.random() * MAX_Y);
-		}
-	
-		// start animating
-		requestAnimationFrame(animate);
-	
-		var alienLaughingPositionCounter = 0;
-	
-		var ufoRow = [];
-	
-		for (var i = 0; i < 10; i++) {
-			var ufoIndex = new PIXI.Sprite(ufoIcon);
-			ufoRow.push(ufoIndex);
-			ufoIndex.scale.set(0.35);
-			ufoIndex.position.x = ufoIconPositions[i * 2];
-			ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
-			stage.addChild(ufoIndex);
-		}
-	
-		function animate() {
-	
-			if (laserCount === 0 && spaceshipInteractive === 'YES') {
-				spaceship.interactive = true;
-				laserDots.texture = threeLaserdots;
-			} else if (laserCount === 1) {
-				spaceship.interactive = true;
-				laserDots.texture = twoLaserdots;
-			} else if (laserCount === 2) {
-				spaceship.interactive = true;
-				laserDots.texture = oneLaserdot;
-			} else {
-				spaceship.interactive = false;
-				laserDots.texture = transparent;
-			}
-	
-			// 	if ( laserCount !== 0 || laserCount !== 1 || laserCount !== 2 ){
-			// 		console.log('yes');
-			//
-			//
-			// }
-			if (laserCount === 3) {
-				shotBol = true;
-			} else {
-				shotBol = false;
-			}
-	
-			if (alienLaughingMoving) {
-				if (alienLaughingPositionCounter !== 120) {
-					alienLaughingPositionCounter++;
-					alienLaughing.position.y -= 1;
-				}
-				// console.log(alienLaughingPositionCounter);
-				if (alienLaughingPositionCounter === 120) {
-	
-					alienLaughing.position.y += 0.00000125;
-				}
-			}
-			if (!alienLaughingMoving) {
-				alienLaughingPositionCounter = 0;
-			}
-	
-			if (laserCount > 3) {
-	
-				spaceship.position.x += 10;
-				spaceship.position.y -= 10;
-	
-				if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
-	
-					if (alienLaughingPositionCounter !== 120) {
-						alienLaughingPositionCounter++;
-						alienLaughing.position.y -= 1;
-					}
-					if (alienLaughingPositionCounter === 120) {
-	
-						alienLaughing.position.y += 1;
-					}
-				}
-			}
-			if (laserCount <= 3) {
-				if (!hunted && alien.position.x > MAX_X / 2) {
-					spaceship.position.x += (target.x - spaceship.x) * 0.1;
-					spaceship.position.y += (target.y - spaceship.y) * 0.1;
-	
-					if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
-						spaceship.scale.x += 0.04;
-						spaceship.scale.y += 0.04;
-					}
-	
-					if (Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X / 2) {
-						spaceshipMove.play();
-						reset();
-					}
-				}
-			}
-	
-			alienWalking();
-			alienDisappear();
-	
-			contain(spaceship, { x: 0, y: -50, width: MAX_X, height: 575 });
-	
-			// render the container
-			renderer.render(stage);
-	
-			requestAnimationFrame(animate);
-		}
-	
-		function contain(sprite, container) {
-	
-			var collision = "";
-	
-			//Left
-			if (sprite.x < container.x) {
-				sprite.x = container.x;
-				collision = "left";
-			}
-	
-			//Top
-			if (sprite.y < container.y) {
-				sprite.y = container.y;
-				collision = "top";
-			}
-	
-			//No right edge collision
-	
-			//Bottom
-			if (sprite.y + sprite.height > container.height) {
-				sprite.y = container.height - sprite.height;
-				collision = "bottom";
-			}
-	
-			//Return the `collision` value
-			return collision;
-		}
-	
-		function alienWalking() {
-			if (alien.position.x <= MAX_X / 2) {
-				alien.position.x += 3;
-			}
-		}
-	
-		function alienDisappear() {
-			if (alien.position.x > MAX_X / 2) {
-				stage.removeChild(roundText);
-				stage.removeChild(RoundBox);
-	
-				createjs.Tween.get(alien).to({ alpha: 0 }, 1700);
-			}
-		}
-	
-		function onDown(eventData) {
-	
-			// setTimeout(function() {
-			// 	if(!hunted){
-			// 		laserCount = 4;
-			// 	setTimeout(() => {laugh.play()} , 400)
-			// }
-			// },10000)
-			explosion.play();
-			hunted = true;
-			animate2();
-			// huntedSound.play()
-	
-			score += 500;
-			scoreNumber.setText(score);
-	
-			setTimeout(function () {
-				stage.removeChild(spaceship);
-			}, 2000);
-			setTimeout(function () {
-				shotBol = false;
-				shot.texture = shot1;
-				hunted = false;
-				spaceship.rotation = 0;
-				stage.addChildAt(spaceship, 2);
-				laserCount = 0;
-			}, 5000);
-		}
-	
-		// spaceship.interactive = true;
-		spaceship.on('mousedown', onDown);
-		spaceship.on('touchstart', onDown);
-	
-		function animate2() {
-			if (hunted) {
-				requestAnimationFrame(animate2);
-	
-				spaceship.rotation += 0.3;
-				spaceship.position.x += 0;
-				spaceship.position.y += 3 + Math.random() * 7;
-	
-				explosionImg.position.x = spaceship.position.x - 120;
-				explosionImg.position.y = spaceship.position.y - 240;
-			}
-			// renderer.render(stage);
-	
-		}
-	
-		// }
-	};
-	
-	exports.default = play;
 
 /***/ }
 /******/ ]);
