@@ -1,42 +1,35 @@
 let score = 0;
 let round = 1;
 
+
 const play = () => {
+	console.log(document.body.style);
+	document.body.style.background = "black";
+	document.body.style.overflow = "hidden";
 	var renderer = PIXI.autoDetectRenderer(
 		window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
 	);
-
+	//creates container in which all elements will be contained.
+	const stage = new PIXI.Container()
+	stage.scale.set(window.innerHeight / 600);
 	/// Renders game on view
 	document.body.appendChild(renderer.view);
 
 	// prior to scaling, sets width/height.
 	const MAX_X = 800;
 	const MAX_Y = 600;
-
-	//creates container in which all elements will be contained.
-	var stage = new PIXI.Container();
-
 	// windowScale creates the number by which scale size is determined (container height / actual window size)
 	// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
 	var windowScale = window.innerHeight / MAX_Y;
 	var scaledStageWidth = MAX_X * windowScale
 	// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
 	var leftMargin = (renderer.view.clientWidth - ( scaledStageWidth ) ) / 2;
-
 	//adds left Margin to the stage, ensuring it is centered on the screen.
-	// stage.transform.position.set(leftMargin, 0)
-
-	// console.log(renderer);
-	// console.log(scaledStageWidth);
-	// renderer.view.style.display = 'flex';
-	// renderer.view.style.justifyContent = 'space-around';
 	renderer.view.width = scaledStageWidth;
 	renderer.view.style.height = '100%';
 	renderer.view.style.marginLeft = `${leftMargin}px`;
 
-
-
-	stage.scale.set(windowScale);
+	// stage.scale.set(windowScale);
 
 
 	const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
@@ -168,7 +161,6 @@ const play = () => {
 
 
 	setInterval(function(){
-		let ufoRow = [];
 
 		if (explosionCounter < 20){
 		explosionCounter++
@@ -260,23 +252,23 @@ const play = () => {
 	flash.scale.y = window.innerHeight;
 	flash.scale.x = window.innerWidth;
 
-	stage.addChild(background);
-	stage.addChild(alienLaughing);
-	stage.addChild(spaceship);
-	stage.addChild(explosionImg)
-	stage.addChild(grass);
-	stage.addChild(alien);
-	stage.addChild(laserDots);
-	stage.addChild(shot);
-	stage.addChild(scoreNumber);
-	stage.addChild(scoreImg);
-	stage.addChild(RoundBox);
-	stage.addChild(roundText);
-	stage.addChild(flash);
-
+	stage.addChild(
+			background
+		, alienLaughing
+		, spaceship
+		, explosionImg
+		, grass
+		, alien
+		, laserDots
+		, shot
+		, scoreNumber
+		, scoreImg
+		, RoundBox
+		, roundText
+		, flash
+	);
 
 	let alienLaughingMoving = false;
-
 
 	setInterval(function(){
 		if(!hunted && spaceship.rotation === 0 ){
@@ -354,10 +346,9 @@ const play = () => {
 		}
 	} , 150)
 
-
 	let	shotBol = false
-
 	let spaceshipInteractive = 'NO';
+
 	setTimeout(function(){
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
@@ -376,7 +367,7 @@ const play = () => {
 
 	setInterval(() => {
 		if (shotBol){
-			shotBol1 = ! shotBol1;
+			shotBol1 = !shotBol1;
 			if (shotBol1) {
 				shot.texture = transparent;
 			}
@@ -394,7 +385,7 @@ const play = () => {
 
 	setInterval( function () {
 		alienLaughingBol = !alienLaughingBol;
-		if(alienLaughingBol) {
+		if( alienLaughingBol ) {
 			alienLaughing.texture = alienLaughing1;
 		}
 		else {
@@ -404,13 +395,13 @@ const play = () => {
 
 	var target = new PIXI.Point();
 
-	function reset () {
-		target.x = Math.floor(Math.random() * MAX_X);
-		target.y = Math.floor(Math.random() * MAX_Y);
+	function resetTarget () {
+		target.x = Math.floor( Math.random() * MAX_X );
+		target.y = Math.floor( Math.random() * MAX_Y );
 	}
 
 	// start animating
-	requestAnimationFrame(animate);
+	requestAnimationFrame( animate );
 
 	let alienLaughingPositionCounter = 0
 	let ufoRow = [];
@@ -484,7 +475,7 @@ const play = () => {
 				}
 				if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
 					spaceshipMove.play()
-					reset();
+					resetTarget();
 				}
 			}
 		}
@@ -560,10 +551,8 @@ const play = () => {
 		} , 5000)
 	}
 
-	// spaceship.interactive = true;
 	spaceship.on('mousedown', onDown);
 	spaceship.on('touchstart', onDown);
-
 
 	function animate2() {
 		if(hunted) {
@@ -575,7 +564,6 @@ const play = () => {
 			explosionImg.position.x = spaceship.position.x - 120;
 			explosionImg.position.y = spaceship.position.y - 240;
 		}
-		// renderer.render(stage);
 	}
 }
 

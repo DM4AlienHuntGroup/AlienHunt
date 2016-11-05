@@ -4,7 +4,8 @@ body {
   font-family: 'VT323', monospace;
   color:  #ffa347;
   cursor: url('../../imgs/cursor.png') 25 15, auto;
-  background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
+  /*background: black;*/
+	background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg);
 }
 section {
   cursor : default;

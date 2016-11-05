@@ -75,23 +75,23 @@
 	
 	var _homeCtrl2 = _interopRequireDefault(_homeCtrl);
 	
-	var _homeService = __webpack_require__(/*! ./services/homeService.js */ 8);
+	var _homeService = __webpack_require__(/*! ./services/homeService.js */ 10);
 	
 	var _homeService2 = _interopRequireDefault(_homeService);
 	
-	var _splashPageDirective = __webpack_require__(/*! ../public/directives/splashPageDirective.js */ 9);
+	var _splashPageDirective = __webpack_require__(/*! ../public/directives/splashPageDirective.js */ 11);
 	
 	var _splashPageDirective2 = _interopRequireDefault(_splashPageDirective);
 	
-	var _splash = __webpack_require__(/*! ../public/splash.html */ 10);
+	var _splash = __webpack_require__(/*! ../public/splash.html */ 12);
 	
 	var _splash2 = _interopRequireDefault(_splash);
 	
-	var _howler = __webpack_require__(/*! ../howler.js */ 11);
+	var _howler = __webpack_require__(/*! ../howler.js */ 13);
 	
 	var _howler2 = _interopRequireDefault(_howler);
 	
-	var _modal = __webpack_require__(/*! ../src/assets/modal.js */ 12);
+	var _modal = __webpack_require__(/*! ../src/assets/modal.js */ 14);
 	
 	var _modal2 = _interopRequireDefault(_modal);
 	
@@ -46755,7 +46755,7 @@
   \********************************/
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -46764,37 +46764,32 @@
 	var round = 1;
 	
 	var play = function play() {
+		console.log(document.body.style);
+		document.body.style.background = "black";
+		document.body.style.overflow = "hidden";
 		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
-	
+		//creates container in which all elements will be contained.
+		var stage = new PIXI.Container();
+		stage.scale.set(window.innerHeight / 600);
 		/// Renders game on view
 		document.body.appendChild(renderer.view);
 	
 		// prior to scaling, sets width/height.
 		var MAX_X = 800;
 		var MAX_Y = 600;
-	
-		//creates container in which all elements will be contained.
-		var stage = new PIXI.Container();
-	
 		// windowScale creates the number by which scale size is determined (container height / actual window size)
 		// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
 		var windowScale = window.innerHeight / MAX_Y;
 		var scaledStageWidth = MAX_X * windowScale;
 		// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
 		var leftMargin = (renderer.view.clientWidth - scaledStageWidth) / 2;
-	
 		//adds left Margin to the stage, ensuring it is centered on the screen.
-		// stage.transform.position.set(leftMargin, 0)
-	
-		// console.log(renderer);
-		// console.log(scaledStageWidth);
-		// renderer.view.style.display = 'flex';
-		// renderer.view.style.justifyContent = 'space-around';
 		renderer.view.width = scaledStageWidth;
 		renderer.view.style.height = '100%';
-		renderer.view.style.marginLeft = leftMargin + 'px';
+		renderer.view.style.marginLeft = leftMargin + "px";
 	
-		stage.scale.set(windowScale);
+		// stage.scale.set(windowScale);
+	
 	
 		var spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 		var spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
@@ -46908,7 +46903,6 @@
 		roundText.scale.y = 1.6;
 	
 		setInterval(function () {
-			var ufoRow = [];
 	
 			if (explosionCounter < 20) {
 				explosionCounter++;
@@ -46984,19 +46978,7 @@
 		flash.scale.y = window.innerHeight;
 		flash.scale.x = window.innerWidth;
 	
-		stage.addChild(background);
-		stage.addChild(alienLaughing);
-		stage.addChild(spaceship);
-		stage.addChild(explosionImg);
-		stage.addChild(grass);
-		stage.addChild(alien);
-		stage.addChild(laserDots);
-		stage.addChild(shot);
-		stage.addChild(scoreNumber);
-		stage.addChild(scoreImg);
-		stage.addChild(RoundBox);
-		stage.addChild(roundText);
-		stage.addChild(flash);
+		stage.addChild(background, alienLaughing, spaceship, explosionImg, grass, alien, laserDots, shot, scoreNumber, scoreImg, RoundBox, roundText, flash);
 	
 		var alienLaughingMoving = false;
 	
@@ -47067,8 +47049,8 @@
 		}, 150);
 	
 		var shotBol = false;
-	
 		var spaceshipInteractive = 'NO';
+	
 		setTimeout(function () {
 			spaceshipInteractive = 'YES';
 			$('canvas').click(function () {
@@ -47112,7 +47094,7 @@
 	
 		var target = new PIXI.Point();
 	
-		function reset() {
+		function resetTarget() {
 			target.x = Math.floor(Math.random() * MAX_X);
 			target.y = Math.floor(Math.random() * MAX_Y);
 		}
@@ -47187,7 +47169,7 @@
 					}
 					if (Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X / 2) {
 						spaceshipMove.play();
-						reset();
+						resetTarget();
 					}
 				}
 			}
@@ -47262,7 +47244,6 @@
 			}, 5000);
 		}
 	
-		// spaceship.interactive = true;
 		spaceship.on('mousedown', onDown);
 		spaceship.on('touchstart', onDown);
 	
@@ -47276,14 +47257,15 @@
 				explosionImg.position.x = spaceship.position.x - 120;
 				explosionImg.position.y = spaceship.position.y - 240;
 			}
-			// renderer.render(stage);
 		}
 	};
 	
 	exports.default = play;
 
 /***/ },
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */
 /*!*************************************!*\
   !*** ./src/services/homeService.js ***!
   \*************************************/
@@ -47308,7 +47290,7 @@
 	exports.default = homeService;
 
 /***/ },
-/* 9 */
+/* 11 */
 /*!**************************************************!*\
   !*** ./public/directives/splashPageDirective.js ***!
   \**************************************************/
@@ -47405,7 +47387,7 @@
 	exports.default = splashPage;
 
 /***/ },
-/* 10 */
+/* 12 */
 /*!****************************!*\
   !*** ./public/splash.html ***!
   \****************************/
@@ -47414,7 +47396,7 @@
 	module.exports = "<div ng-if=\"user.isLoggedIn\" class=\"welcome-message\">\n\t<a href=\"#ex2\" rel=\"modal:open\" class=\"login splashbutton splashbutton3\"><img class=\"hamburger-icon\" ng-src=\"imgs/menu-alt-512.png\" alt=\"\" /></a>\n</div>\n\t<div class=\"splashcontainer\">\n\t\t<div class=\"splashcontent\">\n\t\t\t\t<div class=\"title\">\n\t\t\t\t\t<div class='alienMargin'><span style='display: none;'>FAKE</span></div>\n\t\t\t\t\t<div class=\"alien\">Alien</div>\n\t\t\t\t\t\t<div class=\"separator\"></div>\n\t\t\t\t\t<div class=\"hunt\">Hunt</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"splashbuttons\">\n\t\t\t\t\t<ul ng-show=\"options\">\n            <li class=\"splashbutton\" ng-click='stopSplashMusic(); play()'> <img class='selectImg selectImg1' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton1'> Play</span></li>\n            <li ng-show=\"user\" class=\"splashbutton\"> <img class='selectImg selectImg2' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton2'> Continue</span></li>\n\t\t\t\t\t\t<li ng-hide=\"user.isLoggedIn\"> <img class='selectImg selectImg3' ng-src=\"imgs/select.png\" alt=\"\">  <a href=\"#ex1\" rel=\"modal:open\" class=\"login splashbutton splashbutton3\">Login</a></li>\n            <li class=\"splashbutton\"> <img class='selectImg selectImg4' ng-src=\"imgs/select.png\" alt=\"\"><span class='splashbutton4'> Settings</span></li>\n            <li class=\"splashbutton\"> <img class='selectImg selectImg5' ng-src=\"imgs/select.png\" alt=\"\"><span ng-click=\"getScoreboard()\" class='splashbutton5'> <a href=\"#ex3\" rel=\"modal:open\" style=\"text-decoration: none;\" class=\"splashbutton splashbutton5\">High Scores</a></span></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t</div>\n\t</div>\n\n\t<!--- Facebook Login Modal --->\n\t\t<div id=\"ex1\" style=\"display:none;\">\n\t\t  <p>In order to keep track of your progress and save scores, please Log In via Facebook. <p> Don't worry, we don't post to your wall or have access to any of your Data.  Log In or press ESC</p>\n\t\t\t<p>\n\t\t\t\t<div class=\"social-wrap a\">\n\t\t\t\t\t<a href=\"http://localhost:8080/auth/facebook\"><button id=\"facebook\">Sign in with Facebook</button></a>\n\t\t\t\t</div>\n\t\t\t</p>\n\t\t</div>\n\n\t<!-- User Information Modal -->\n\t\t<div id=\"ex2\" style=\"display:none;\">\n\t\t\t<p><h4>Welcome back, {{user.firstName}}!</h4></p>\n\t\t\t<p>\n\t\t\t\t<div>\n\t\t\t\t\t<li>Current Level: {{user.currentGameLvl}}</li>\n\t\t\t\t\t<li>Highest Level: {{user.highLevel}}</li>\n\t\t\t\t\t<li>High Score: {{user.highScore | number}}</li>\n\t\t\t\t\t<li>Score: {{user.currentScore | number}}</li>\n\t\t\t\t</div>\n\t\t\t</p>\n\t\t</div>\n\n\t<!-- High Score Modal -->\n\t\t<div class=\"high-score\" id=\"ex3\" style=\"display:none;\">\n\t\t\t<p>\n\t\t\t\t<h1><u>High Scores:</u></h1>\n\t\t\t</p>\n\t\t\t<div ng-repeat=\"score in scores\" class=\"high-score-list\">\n\t\t\t\t<li>{{score.place}}. {{score.userName}} <span style=\"float:right\">{{score.score | number}} pts</span></li>\n\t\t\t</div>\n\t\t</div>\n";
 
 /***/ },
-/* 11 */
+/* 13 */
 /*!*******************!*\
   !*** ./howler.js ***!
   \*******************/
@@ -50171,7 +50153,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 12 */
+/* 14 */
 /*!*****************************!*\
   !*** ./src/assets/modal.js ***!
   \*****************************/
@@ -50410,10 +50392,10 @@
 			$(this).modal();
 		});
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 13)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 15)(module)))
 
 /***/ },
-/* 13 */
+/* 15 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
