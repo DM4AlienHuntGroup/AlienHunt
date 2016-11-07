@@ -31,7 +31,6 @@ const play = () => {
 
 	// stage.scale.set(windowScale);
 
-
 	const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
 	const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
 	const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
@@ -58,6 +57,8 @@ const play = () => {
 	const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
+
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 
 	const ufoIconPositions = [
 		300, 558,
@@ -89,7 +90,6 @@ const play = () => {
 				, explosionImg15 = PIXI.Texture.fromImage('./imgs/explosionImgs/15.png');
 
 	const box = PIXI.Texture.fromImage('./imgs/Round.png');
-
 	const alien = new PIXI.Sprite(alienStep1);
 	const spaceship = new PIXI.Sprite(spaceship1);
 	const laserDots = new PIXI.Sprite(threeLaserdots);
@@ -150,7 +150,6 @@ const play = () => {
 	RoundBox.position.y = MAX_Y/3.3;
 	RoundBox.scale.x = 1.5;
 	RoundBox.scale.y = 0.8;
-
 
 	roundText.anchor.set = 0.5;
 	roundText.position.x = MAX_X/2.2;
@@ -407,12 +406,15 @@ const play = () => {
 	let ufoRow = [];
 
 	for (let i = 0; i < 10; i++) {
-		var ufoIndex = new PIXI.Sprite(ufoIcon)
+		var ufoIndex = new PIXI.Sprite(ufoIcon);
 		ufoRow.push(ufoIndex);
 		ufoIndex.scale.set(0.35);
 		ufoIndex.position.x = ufoIconPositions[i * 2];
 		ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
 		stage.addChild(ufoIndex);
+		if (spaceship === i) {
+			ufoRow[i] = new PIXI.Sprite(ufoIconRed);
+		}
 	}
 
 
