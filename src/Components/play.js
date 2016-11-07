@@ -554,8 +554,6 @@ const play = () => {
 
 	function onDown (eventData) {
 		spaceshipArrayCounter++;
-		console.log(spaceshipArrayCounter);
-		// ufoRow[animateCount] = ufoIconRed;
 		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
 		// setTimeout(function() {
