@@ -21,7 +21,6 @@ module.exports = {
 					} )
 				}
 				else {
-					console.log(req.sessionID);
 					return res.status(200).json(fbUser)
 				}
 			})
