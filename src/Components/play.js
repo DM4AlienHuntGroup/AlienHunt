@@ -112,7 +112,9 @@ const play = () => {
 
 	let explosionCounter = 20;
 
-	let hitText = new PIXI.Text('HIT', {fontFamily: 'VT323', fontSize: 34, fill : '#8DEA03', align : 'center'})
+	const hitText = new PIXI.Text('HIT', {fontFamily: 'VT323', fontSize: 34, fill : '#8DEA03', align : 'center'})
+
+	const rText = new PIXI.Text('R: ' + round, {fontFamily: 'VT323', fontSize: 24, fill : '#fff', align : 'center'})
 
 	//sounds
 	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -266,6 +268,9 @@ const play = () => {
 	hitText.position.y = MAX_Y - 46;
 	hitText.scale.x = 1.7;
 
+	rText.position.x = 93;
+	rText.position.y = 517.5;
+
 	flash.scale.y = window.innerHeight;
 	flash.scale.x = window.innerWidth;
 
@@ -285,6 +290,7 @@ const play = () => {
 		, RoundBox
 		, roundText
 		, hitText
+		, rText
 		, flash
 	);
 
@@ -465,7 +471,7 @@ const play = () => {
 				alienLaughing.position.y -= 0.000000125;
 			}
 			if (	alienLaughingPositionCounter === 120 ) {
-				alienLaughing.position.y += 1;
+				alienLaughing.position.y += 0.75;
 			}
 		}
 		if (!alienLaughingMoving) {
