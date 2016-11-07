@@ -4,7 +4,6 @@ body {
   font-family: 'VT323', monospace;
   color:  #ffa347;
   cursor: url('../../imgs/cursor.png') 25 15, auto;
-  /*background: black;*/
 	background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg);
 }
 section {
@@ -16,7 +15,11 @@ section {
 #ex2{
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
+<<<<<<< HEAD
 	color: #ffa347;
+=======
+	color: rgb(0, 235, 219);
+>>>>>>> master
 }
 #ex2 li{
 	list-style-type: none;
@@ -61,7 +64,6 @@ section {
   margin-top: 205px;
   position: relative;
   color: #00ebdb;
-  /*text-shadow: -3px -2px 2px #04842b,-5px -1px 2px rgb(221, 224, 73);*/
 }
 .alien{
   position: absolute;
