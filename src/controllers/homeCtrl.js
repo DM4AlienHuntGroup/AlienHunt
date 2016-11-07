@@ -6,19 +6,17 @@ function homeCtrl( $scope, homeService ) {
 			$scope.user = response.data
 		})
 	}
+
 	$scope.getScoreboard = () => {
-		homeService.getScoreboard().then( ( response ) => {
+			homeService.getScoreboard().then( ( response ) => {
 			$scope.scores = response.data
 		})
 	}
 
-
 	$scope.play = () => {
-// <<<<<<< HEAD
-// 		// =======
 		play();
 	}
-// >>>>>>> ea5048d69926f288203f7f5d8e84d69b19e0f822
-	getUser()
+
+	getUser();
 }
 export default homeCtrl;
