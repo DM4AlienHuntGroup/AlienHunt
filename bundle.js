@@ -46731,6 +46731,7 @@
 			homeService.getUser().then(function (response) {
 				$scope.options = true;
 				$scope.user = response.data;
+				console.log($scope.user);
 			});
 		};
 	
