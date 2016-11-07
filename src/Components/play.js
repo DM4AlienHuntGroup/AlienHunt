@@ -5,7 +5,7 @@ let round = 1;
 const play = () => {
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
-	var renderer = PIXI.autoDetectRenderer(
+	let renderer = PIXI.autoDetectRenderer(
 		window.innerWidth, window.innerHeight, { backgroundColor : 0x000000 }
 	);
 	//creates container in which all elements will be contained.
@@ -19,10 +19,10 @@ const play = () => {
 	const MAX_Y = 600;
 	// windowScale creates the number by which scale size is determined (container height / actual window size)
 	// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
-	var windowScale = window.innerHeight / MAX_Y;
-	var scaledStageWidth = MAX_X * windowScale
+	let windowScale = window.innerHeight / MAX_Y;
+	let scaledStageWidth = MAX_X * windowScale
 	// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
-	var leftMargin = (renderer.view.clientWidth - ( scaledStageWidth ) ) / 2;
+	let leftMargin = (renderer.view.clientWidth - ( scaledStageWidth ) ) / 2;
 	//adds left Margin to the stage, ensuring it is centered on the screen.
 	renderer.view.width = scaledStageWidth;
 	renderer.view.style.height = '100%';
@@ -99,13 +99,14 @@ const play = () => {
 	const RoundBox  = new PIXI.Sprite(box);
 
 
-
-	var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
-	var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
+	const background = new PIXI.Sprite.fromImage('./imgs/Background.png');
+	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
+	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
+	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
 	let hunted = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
-	var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
+	const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
 	let roundText = new PIXI.Text('ROUND ' + round,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 
@@ -222,6 +223,18 @@ const play = () => {
 	alien.scale.x = 3.2;
 	alien.scale.y = 3.3;
 
+	tree.anchor.set = 0.5;
+	tree.position.x = 30;
+	tree.position.y = MAX_Y - 500;
+	tree.scale.x = 2.9;
+	tree.scale.y = 2.9;
+
+	sign.anchor.set = 0.5;
+	sign.position.x = MAX_X - 180;
+	sign.position.y = MAX_Y - 240;
+	sign.scale.x = 0.55;
+	sign.scale.y = 0.55;
+
 	spaceship.anchor.x = 0.5;
 	spaceship.anchor.y = 0.5;
 	spaceship.scale.x = 0;
@@ -255,6 +268,8 @@ const play = () => {
 		, alienLaughing
 		, spaceship
 		, explosionImg
+		, tree
+		, sign
 		, grass
 		, alien
 		, laserDots
@@ -411,9 +426,6 @@ const play = () => {
 		ufoIndex.position.x = ufoIconPositions[i * 2];
 		ufoIndex.position.y = ufoIconPositions[i * 2 + 1];
 		stage.addChild(ufoIndex);
-		if (spaceship === i) {
-			ufoRow[i] = new PIXI.Sprite(ufoIconRed);
-		}
 	}
 
 
