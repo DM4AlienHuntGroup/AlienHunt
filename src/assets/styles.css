@@ -15,11 +15,7 @@ section {
 #ex2{
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
-<<<<<<< HEAD
-	color: #ffa347;
-=======
 	color: rgb(0, 235, 219);
->>>>>>> master
 }
 #ex2 li{
 	list-style-type: none;
