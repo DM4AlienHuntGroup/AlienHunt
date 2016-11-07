@@ -4,6 +4,7 @@ function homeCtrl( $scope, homeService ) {
 		homeService.getUser().then((response)=>{
 			$scope.options = true;
 			$scope.user = response.data
+			console.log($scope.user);
 		})
 	}
 
