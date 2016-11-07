@@ -60,16 +60,16 @@ const play = () => {
 	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 
 	const ufoIconPositions = [
-		300, 558,
-		325, 558,
-		350, 558,
-		375, 558,
-		400, 558,
-		425, 558,
-		450, 558,
-		475, 558,
-		500, 558,
-		525, 558
+		300, 559,
+		325, 559,
+		350, 559,
+		375, 559,
+		400, 559,
+		425, 559,
+		450, 559,
+		475, 559,
+		500, 559,
+		525, 559
 	]
 
 	const   explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
@@ -111,6 +111,8 @@ const play = () => {
 	let roundText = new PIXI.Text('ROUND ' + round,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 
 	let explosionCounter = 20;
+
+	let hitText = new PIXI.Text('HIT', {fontFamily: 'VT323', fontSize: 34, fill : '#8DEA03', align : 'center'})
 
 	//sounds
 	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -260,6 +262,10 @@ const play = () => {
 	alienLaughing.position.x = MAX_X/2 ;
 	alienLaughing.position.y = MAX_Y - 150;
 
+	hitText.position.x = 212;
+	hitText.position.y = MAX_Y - 46;
+	hitText.scale.x = 1.7;
+
 	flash.scale.y = window.innerHeight;
 	flash.scale.x = window.innerWidth;
 
@@ -278,6 +284,7 @@ const play = () => {
 		, scoreImg
 		, RoundBox
 		, roundText
+		, hitText
 		, flash
 	);
 
