@@ -3,7 +3,6 @@ let round = 1;
 
 
 const play = () => {
-	console.log(document.body.style);
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
 	var renderer = PIXI.autoDetectRenderer(

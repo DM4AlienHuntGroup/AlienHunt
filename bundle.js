@@ -46764,7 +46764,6 @@
 	var round = 1;
 	
 	var play = function play() {
-		console.log(document.body.style);
 		document.body.style.background = "black";
 		document.body.style.overflow = "hidden";
 		var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x000000 });
