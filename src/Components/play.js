@@ -1,6 +1,6 @@
 let score = 0;
 let round = 1;
-
+let spaceshipArrayCounter = -1;
 
 const play = () => {
 	document.body.style.background = "black";
@@ -314,6 +314,7 @@ const play = () => {
 			setTimeout( () => {
 				laugh.play();
 				alienLaughingMoving = true;
+				spaceshipArrayCounter++;
 				setTimeout(function(){
 					alienLaughingMoving = false;
 					alienLaughing.position.x = MAX_X/2 ;
@@ -552,6 +553,9 @@ const play = () => {
 	}
 
 	function onDown (eventData) {
+		spaceshipArrayCounter++;
+		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
+
 		// setTimeout(function() {
 		// 	if(!hunted){
 		// 		laserCount = 4;
