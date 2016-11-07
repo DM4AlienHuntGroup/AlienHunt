@@ -21,6 +21,7 @@ module.exports = {
 					} )
 				}
 				else {
+					console.log(req.sessionID);
 					return res.status(200).json(fbUser)
 				}
 			})
@@ -34,7 +35,7 @@ module.exports = {
 							return res.status(500).json(err);
 						}
 						else {
-							return res.status(200).json(sessionUser);
+							return res.status(200).json(newUser);
 						}
 					} )
 				}
