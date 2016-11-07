@@ -3,8 +3,8 @@ body {
 	padding: 0;
   font-family: 'VT323', monospace;
   color:  #ffa347;
-  cursor: url('../../imgs/cursor.png'), auto;
-  background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg)
+  cursor: url('../../imgs/cursor.png') 25 15, auto;
+	background: url(https://scienceisbrilliant.files.wordpress.com/2013/10/black-spce.jpg);
 }
 section {
   cursor : default;
@@ -30,7 +30,7 @@ button {
 #ex2{
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
-	color: rgb(0,200,0);
+	color: rgb(0, 235, 219);
 }
 #ex2 li{
 	list-style-type: none;
@@ -75,7 +75,6 @@ button {
   margin-top: 205px;
   position: relative;
   color: #00ebdb;
-  /*text-shadow: -3px -2px 2px #04842b,-5px -1px 2px rgb(221, 224, 73);*/
 }
 .alien{
   position: absolute;
@@ -176,7 +175,7 @@ button {
 	  max-width: 500px;
 	  box-sizing: border-box;
 	  width: 90%;
-	  background: rgb(163, 162, 162);
+	  background: rgb(88, 88, 88);
 	  padding: 15px 30px;
 	  -webkit-border-radius: 8px;
 	  -moz-border-radius: 8px;
@@ -190,6 +189,8 @@ button {
 	  box-shadow: 0 0 10px #000;
 	  text-align: center;
 		cursor: auto;
+		color: rgb(0, 235, 219);
+		font-size: 22px;
 	}
 	.fb-auth{
 		text-decoration: none;
@@ -200,7 +201,7 @@ button {
 		font-weight: 700;
 		line-height: 1.4em;
 		font-family: 'VT323', monospace;
-		color:  #ffa347;
+		color: rgb(0, 235, 219);
 	}
 	div.social-wrap button {
   padding-right: 45px;

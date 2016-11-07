@@ -1,4 +1,4 @@
-const mongoose = require( "mongoose" ) 
+const mongoose = require( "mongoose" )
 			, User = require( "./User.js" )
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
 							return res.status(500).json(err);
 						}
 						else {
-							return res.status(200).json(sessionUser);
+							return res.status(200).json(newUser);
 						}
 					} )
 				}
@@ -45,12 +45,27 @@ module.exports = {
 		}
 	},
 	putUser: ( req, res ) => {
-		User.findByIdAndUpdate( {_id: req.params.id}, req.body, (err, oldUserData) => {
+		User.findById( {_id: req.params.id}, (err, user) => {
 			if (err) {
-				res.status(500).json(err)
+				return res.json(err)
 			}
 			else {
-				res.status(200).json(oldUserData)
+				const tempUser = req.body;
+				if (req.body.currentScore > user.highScore) {
+					tempUser.highScore = req.body.currentScore
+				}
+				if (req.body.currentGameLvl > user.highLevel) {
+					tempUser.highLevel = req.body.currentGameLvl
+				}
+				console.log(tempUser);
+				User.findByIdAndUpdate( {_id: req.params.id}, tempUser, (err, oldUserData) => {
+					if (err) {
+						res.status(500).json(err)
+					}
+					else {
+						res.status(200).json(oldUserData)
+					}
+				} )
 			}
 		} )
 	}
