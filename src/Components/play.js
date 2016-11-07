@@ -255,10 +255,10 @@ const play = () => {
 	scoreNumber.scale.y = 1.6;
 
 	alienLaughing.anchor.set = (0.5, 0);
-	alienLaughing.scale.x = 2.8;
+	alienLaughing.scale.x = 3;
 	alienLaughing.scale.y = 2.8;
 	alienLaughing.position.x = MAX_X/2 ;
-	alienLaughing.position.y = MAX_Y - 98;
+	alienLaughing.position.y = MAX_Y - 150;
 
 	flash.scale.y = window.innerHeight;
 	flash.scale.x = window.innerWidth;
@@ -304,7 +304,7 @@ const play = () => {
 				setTimeout(function(){
 					alienLaughingMoving = false;
 					alienLaughing.position.x = MAX_X/2 ;
-					alienLaughing.position.y = MAX_Y - 98;
+					alienLaughing.position.y = MAX_Y - 150;
 
 				},4000)
 			} , 400)
@@ -455,10 +455,10 @@ const play = () => {
 		if (alienLaughingMoving) {
 			if (	alienLaughingPositionCounter !== 120 ) {
 				alienLaughingPositionCounter++
-				alienLaughing.position.y -= 1;
+				alienLaughing.position.y -= 0.000000125;
 			}
 			if (	alienLaughingPositionCounter === 120 ) {
-				alienLaughing.position.y += 0.00000125;
+				alienLaughing.position.y += 1;
 			}
 		}
 		if (!alienLaughingMoving) {
