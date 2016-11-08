@@ -14,7 +14,8 @@
             <li class="splashbutton" ng-click='stopSplashMusic(); play()'> <img class='selectImg selectImg1' ng-src="imgs/select.png" alt=""><span class='splashbutton1'> Play</span></li>
             <li ng-show="user" class="splashbutton"> <img class='selectImg selectImg2' ng-src="imgs/select.png" alt=""><span class='splashbutton2'> Continue</span></li>
 						<li ng-hide="user.isLoggedIn"> <img class='selectImg selectImg3' ng-src="imgs/select.png" alt="">  <a href="#ex1" rel="modal:open" class="login splashbutton splashbutton3">Login</a></li>
-            <li class="splashbutton"> <img class='selectImg selectImg4' ng-src="imgs/select.png" alt=""><span class='splashbutton4'> Settings</span></li>
+            <li class="splashbutton" ng-show='!sound' ng-click='mute(); sound=!sound'> <img class='selectImg selectImg4'; ng-src="imgs/select.png" alt=""><span class='splashbutton4'> Mute</span></li>
+						<li class="splashbutton" ng-show='sound' ng-click='unmute(); sound=!sound'> <img class='selectImg selectImg4'; ng-src="imgs/select.png" alt=""><span class='splashbutton4'> Unmute</span></li>
             <li class="splashbutton"> <img class='selectImg selectImg5' ng-src="imgs/select.png" alt=""><span ng-click="getScoreboard()" class='splashbutton5'> <a href="#ex3" rel="modal:open" style="text-decoration: none;" class="splashbutton splashbutton5">High Scores</a></span></li>
 					</ul>
 				</div>

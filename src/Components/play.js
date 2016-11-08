@@ -7,7 +7,9 @@ let theGameSpeed = 0;
 let huntedCounter = 0;
 
 
+
 let play = () => {
+
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
 	let renderer = PIXI.autoDetectRenderer(
@@ -22,8 +24,8 @@ let play = () => {
 	// prior to scaling, sets width/height.
 	const MAX_X = 800;
 	const MAX_Y = 600;
-	// windowScale creates the number by which scale size is determined (container height / actual window size)
-	// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+	/* windowScale creates the number by which scale size is determined (container height / actual window size)
+	ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.*/
 	let windowScale = window.innerHeight / MAX_Y;
 	let scaledStageWidth = MAX_X * windowScale
 	// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
@@ -62,8 +64,11 @@ let play = () => {
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
-	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png');
 
+	/////////////////////
+	//ufoIcon positions//
+	/////////////////////
 	const ufoIconPositions = [
 		300, 559,
 		325, 559,
@@ -77,6 +82,9 @@ let play = () => {
 		525, 559
 	]
 
+	////////////////////
+	//explosion images//
+	////////////////////
 	const   explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
 				, explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
 				, explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
@@ -110,7 +118,7 @@ let play = () => {
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
 	let hunted = false;
 	let laserCount = 0;
-	let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
+	let scoreNumber = new PIXI.Text(score,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 	const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
 
 	let roundText = new PIXI.Text('ROUND ' + round,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
@@ -167,8 +175,9 @@ let play = () => {
 	roundText.scale.x = 1.6;
 	roundText.scale.y = 1.6;
 
-
-
+	////////////////////
+	//Explosion effect//
+	////////////////////
 	setInterval(function(){
 
 		if (explosionCounter < 20){
@@ -374,7 +383,9 @@ let play = () => {
 
 	let animateCount = 0;
 
-
+	///////////////////////////////////////////////////
+	//counter used for spaceship and alien animations//
+	///////////////////////////////////////////////////
 	setInterval(function(){
 		animateCount++;
 		if (animateCount === 3 ){
@@ -382,7 +393,9 @@ let play = () => {
 		}
 	}, 150)
 
-
+	////////////////////////////////////////////////////////////
+	//controls spaceship rotationg AND alien walking animation//
+	////////////////////////////////////////////////////////////
 	setInterval( function (){
 		if(animateCount === 0) {
 			spaceship.texture = spaceship2;
@@ -423,6 +436,9 @@ let play = () => {
 	let	shotBol = false
 	let spaceshipInteractive = 'NO';
 
+	////////////////////////////
+	//spaceship click listener//
+	////////////////////////////
 	setTimeout(function(){
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
@@ -435,7 +451,7 @@ let play = () => {
 				laserCount++;
 			}
 		})
-	} , 6000)
+	} , 3200)
 
 	let shotBol1 = false;
 
@@ -474,6 +490,7 @@ let play = () => {
 		target.x = Math.floor( Math.random() * MAX_X );
 		target.y = Math.floor( Math.random() * MAX_Y );
 		spaceshipMove.play()
+
 
 	}
 
@@ -631,7 +648,7 @@ if(!pause){	renderer.render(stage);
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 5000)
+		} , 3000)
 	}
 
 	spaceship.on('mousedown', onDown);
@@ -658,7 +675,7 @@ if(!pause){	renderer.render(stage);
 		else {
 			ufoRow[spaceshipArrayCounter + 1]._texture = ufoIcon;
 		}
-	}, 1000);
+	}, 300);
 }
 
 
