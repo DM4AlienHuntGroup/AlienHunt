@@ -293,8 +293,7 @@ const play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash
-	);
+, flash);
 
 	let alienLaughingMoving = false;
 
@@ -330,6 +329,9 @@ const play = () => {
 
 	let animateCount = 0;
 
+	///////////////////////////////////////////////////
+	//counter used for spaceship and alien animations//
+	///////////////////////////////////////////////////
 	setInterval(function(){
 		animateCount++;
 		if (animateCount === 3 ){
@@ -337,7 +339,9 @@ const play = () => {
 		}
 	}, 150)
 
-
+	////////////////////////////////////////////////////////////
+	//controls spaceship rotationg AND alien walking animation//
+	////////////////////////////////////////////////////////////
 	setInterval( function (){
 		if(animateCount === 0) {
 			spaceship.texture = spaceship2;
@@ -378,6 +382,9 @@ const play = () => {
 	let	shotBol = false
 	let spaceshipInteractive = 'NO';
 
+	////////////////////////////
+	//spaceship click listener//
+	////////////////////////////
 	setTimeout(function(){
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
@@ -423,7 +430,7 @@ const play = () => {
 	} , 130)
 
 	var target = new PIXI.Point();
-	
+
 	function resetTarget () {
 		target.x = Math.random() * MAX_X;
 		target.y = Math.random() * 415;
@@ -520,7 +527,7 @@ const play = () => {
 
 	function contain(sprite, container) {
 		var collision = "";
-	//Left
+		//Left
 		if (sprite.x < container.x) {
 			sprite.x = container.x;
 			collision = "left";
@@ -580,7 +587,7 @@ const play = () => {
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 5000)
+		} , 3000)
 	}
 
 	spaceship.on('mousedown', onDown);
