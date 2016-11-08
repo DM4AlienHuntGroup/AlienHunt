@@ -60,6 +60,8 @@ const play = () => {
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
 	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
+	let counter = 9000
+	setInterval( () => { counter-- }, 1 );
 
 	/////////////////////
 	//ufoIcon positions//
@@ -304,9 +306,10 @@ const play = () => {
 	);
 
 	let alienLaughingMoving = false;
-	setInterval(()=>{console.log(spaceshipArrayCounter)}, 1000);
+
 	setInterval(function(){
 		if(!spaceShipHasBeenShotByUser && spaceship.rotation === 0 ){
+			counter = 9000;
 			laserCount = 4;
 			setTimeout(function(){
 				stage.removeChild(spaceship)
@@ -595,9 +598,11 @@ const play = () => {
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 6000)
+		} , counter)
+		console.log(counter);
+		counter = 9000;
 	}
-
+/////////////Shea//////////////
 	spaceship.on('mousedown', onDown);
 	spaceship.on('touchstart', onDown);
 
