@@ -4,6 +4,7 @@ let spaceshipArrayCounter = -1;
 let flashingSpaceShipBoolean = true;
 
 const play = () => {
+
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
 	let renderer = PIXI.autoDetectRenderer(
@@ -329,7 +330,6 @@ const play = () => {
 
 	let animateCount = 0;
 
-
 	setInterval(function(){
 		animateCount++;
 		if (animateCount === 3 ){
@@ -390,7 +390,7 @@ const play = () => {
 				laserCount++;
 			}
 		})
-	} , 6000)
+	} , 3200)
 
 	let shotBol1 = false;
 
@@ -423,10 +423,10 @@ const play = () => {
 	} , 130)
 
 	var target = new PIXI.Point();
-
+	
 	function resetTarget () {
-		target.x = Math.floor( Math.random() * MAX_X );
-		target.y = Math.floor( Math.random() * MAX_Y );
+		target.x = Math.random() * MAX_X;
+		target.y = Math.random() * 415;
 	}
 
 	// start animating
@@ -605,7 +605,7 @@ const play = () => {
 		else {
 			ufoRow[spaceshipArrayCounter + 1]._texture = ufoIcon;
 		}
-	}, 1000);
+	}, 300);
 }
 
 export default play;
