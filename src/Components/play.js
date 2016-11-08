@@ -19,8 +19,8 @@ const play = () => {
 	// prior to scaling, sets width/height.
 	const MAX_X = 800;
 	const MAX_Y = 600;
-	// windowScale creates the number by which scale size is determined (container height / actual window size)
-	// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+	/* windowScale creates the number by which scale size is determined (container height / actual window size)
+	ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.*/
 	let windowScale = window.innerHeight / MAX_Y;
 	let scaledStageWidth = MAX_X * windowScale
 	// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
@@ -61,6 +61,9 @@ const play = () => {
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
 	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 
+	/////////////////////
+	//ufoIcon positions//
+	/////////////////////
 	const ufoIconPositions = [
 		300, 559,
 		325, 559,
@@ -74,6 +77,9 @@ const play = () => {
 		525, 559
 	]
 
+	////////////////////
+	//explosion images//
+	////////////////////
 	const   explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
 				, explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
 				, explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
@@ -163,8 +169,9 @@ const play = () => {
 	roundText.scale.x = 1.6;
 	roundText.scale.y = 1.6;
 
-
-
+	////////////////////
+	//Explosion effect//
+	////////////////////
 	setInterval(function(){
 
 		if (explosionCounter < 20){
@@ -293,7 +300,8 @@ const play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash);
+		, flash
+	);
 
 	let alienLaughingMoving = false;
 
@@ -329,6 +337,9 @@ const play = () => {
 
 	let animateCount = 0;
 
+	///////////////////////////////////////////////////
+	//counter used for spaceship and alien animations//
+	///////////////////////////////////////////////////
 	setInterval(function(){
 		animateCount++;
 		if (animateCount === 3 ){
@@ -336,7 +347,9 @@ const play = () => {
 		}
 	}, 150)
 
-
+	////////////////////////////////////////////////////////////
+	//controls spaceship rotationg AND alien walking animation//
+	////////////////////////////////////////////////////////////
 	setInterval( function (){
 		if(animateCount === 0) {
 			spaceship.texture = spaceship2;
@@ -377,6 +390,9 @@ const play = () => {
 	let	shotBol = false
 	let spaceshipInteractive = 'NO';
 
+	////////////////////////////
+	//spaceship click listener//
+	////////////////////////////
 	setTimeout(function(){
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
@@ -579,7 +595,7 @@ const play = () => {
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 3000);
+		} , 3000)
 	}
 
 	spaceship.on('mousedown', onDown);
