@@ -12,20 +12,15 @@ section {
 .hamburger-icon{
 	height: 3vh;
 }
-#sideBar {
-	height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-	background-color: pink;
-  top: 0;
-  left: 0;
-	overflow-x: hidden;
-	padding-top: 60px;
-	transition: 0.5s;
+button.open {
+	position: fixed;
+	background-color: hsla(0, 0%, 0%, 0);
+	display: none;
+	border-style: none;
+	color:  rgb(0, 235, 219);
 }
-button {
-	
+button.open img {
+	width: 2rem;
 }
 #ex2{
 	background-color: rgb(88, 88, 88);

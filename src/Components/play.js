@@ -498,6 +498,7 @@ const play = () => {
 		contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
 
 	// render the container
+
 	renderer.render(stage);
 	requestAnimationFrame(animate);
 	}
