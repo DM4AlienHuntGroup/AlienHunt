@@ -1,7 +1,7 @@
 let score = 0;
 let round = 1;
 let spaceshipArrayCounter = -1;
-let flashingSpaceShipBoolean = true;
+let flashingSpaceShipBoolean = true;   
 
 const play = () => {
 
@@ -300,8 +300,7 @@ const play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash
-	);
+		, flash);
 
 	let alienLaughingMoving = false;
 
@@ -535,7 +534,7 @@ const play = () => {
 
 	function contain(sprite, container) {
 		var collision = "";
-	//Left
+		//Left
 		if (sprite.x < container.x) {
 			sprite.x = container.x;
 			collision = "left";
