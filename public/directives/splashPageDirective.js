@@ -52,7 +52,7 @@ function splashPage (  ) {
 
 			const stopSplashMusic = (  ) => {
 				splashMusic.pause(  );
-				const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
+
 				$('section').hide()
 			};
 
