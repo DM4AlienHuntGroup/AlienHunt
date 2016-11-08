@@ -490,8 +490,8 @@ let play = () => {
 
 	function resetTarget () {
 
-		target.x = Math.floor( Math.random() * MAX_X );
-		target.y = Math.floor( Math.random() * MAX_Y );
+		target.x = Math.random() * MAX_X;
+		target.y = Math.random() * 415;
 		spaceshipMove.play()
 
 
