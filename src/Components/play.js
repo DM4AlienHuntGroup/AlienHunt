@@ -410,18 +410,18 @@ const play = () => {
 	let shotBol1 = false;
 
 	setInterval(() => {
-		// if (shotBol){
-		// 	shotBol1 = !shotBol1;
-		// 	if (shotBol1) {
-		// 		shot.texture = transparent;
-		// 	}
-		// 	else {
-		// 		shot.texture = shot1;
-		// 	}
-		// }
-		// else {
-		// 	shot.texture = shot1
-		// }
+		if (shotBol){
+			shotBol1 = !shotBol1;
+			if (shotBol1) {
+				shot.texture = transparent;
+			}
+			else {
+				shot.texture = shot1;
+			}
+		}
+		else {
+			shot.texture = shot1
+		}
 	},125)
 
 	alienLaughing.interactive = true;
