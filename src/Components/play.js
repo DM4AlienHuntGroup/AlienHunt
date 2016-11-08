@@ -58,7 +58,7 @@ const play = () => {
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
-	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png');
 
 	const ufoIconPositions = [
 		300, 559,

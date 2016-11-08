@@ -25,6 +25,10 @@ function splashPage (  ) {
 				}
 			};
 
+			const mute = (  ) => {
+				Howler.mute(true);
+			};
+
 			setInterval( moveAlien, 1 );
 
 			const moveHunt = (  ) => {
@@ -82,6 +86,7 @@ function splashPage (  ) {
 
 			} );
 
+			scope.mute = mute;
 			scope.stopSplashMusic = stopSplashMusic;
 
 		}
