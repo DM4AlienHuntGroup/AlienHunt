@@ -59,7 +59,7 @@ const play = () => {
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
-	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png');
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 
 	/////////////////////
 	//ufoIcon positions//
@@ -111,7 +111,7 @@ const play = () => {
 	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-	let hunted = false;
+	let spaceShipHasBeenShotByUser = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text('0',{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 	const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -304,9 +304,9 @@ const play = () => {
 	);
 
 	let alienLaughingMoving = false;
-
+	setInterval(()=>{console.log(spaceshipArrayCounter)}, 1000);
 	setInterval(function(){
-		if(!hunted && spaceship.rotation === 0 ){
+		if(!spaceShipHasBeenShotByUser && spaceship.rotation === 0 ){
 			laserCount = 4;
 			setTimeout(function(){
 				stage.removeChild(spaceship)
@@ -314,7 +314,7 @@ const play = () => {
 			setTimeout(	function(){
 				shotBol = false
 				shot.texture = shot1
-				hunted = false
+				spaceShipHasBeenShotByUser = false
 				spaceship.rotation = 0
 				stage.addChildAt(spaceship, 2)
 				laserCount = 0
@@ -331,7 +331,7 @@ const play = () => {
 					alienLaughing.position.y = MAX_Y - 150;
 
 				},4000)
-			} , 400)
+			}, 400)
 		}
 	},9000)
 
@@ -509,7 +509,7 @@ const play = () => {
 			}
 		}
 		if ( laserCount <= 3  ) {
-			if(!hunted && alien.position.x > MAX_X/2) {
+			if(!spaceShipHasBeenShotByUser && alien.position.x > MAX_X/2) {
 				spaceship.position.x += (target.x - spaceship.x) * 0.1;
 				spaceship.position.y += (target.y - spaceship.y) * 0.1;
 
@@ -574,13 +574,13 @@ const play = () => {
 		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
 		// setTimeout(function() {
-		// 	if(!hunted){
+		// 	if(!spaceShipHasBeenShotByUser){
 		// 		laserCount = 4;
 		// 	setTimeout(() => {laugh.play()} , 400)
 		// }
 		// },10000)
 		explosion.play();
-		hunted = true;
+		spaceShipHasBeenShotByUser = true;
 		animate2();
 		// huntedSound.play()
 		score += 500
@@ -591,18 +591,18 @@ const play = () => {
 		setTimeout(	function(){
 			shotBol = false
 			shot.texture = shot1
-			hunted = false
+			spaceShipHasBeenShotByUser = false
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 3000)
+		} , 6000)
 	}
 
 	spaceship.on('mousedown', onDown);
 	spaceship.on('touchstart', onDown);
 
 	function animate2() {
-		if(hunted) {
+		if(spaceShipHasBeenShotByUser) {
 			requestAnimationFrame(animate2);
 			spaceship.rotation += 0.3;
 			spaceship.position.x += 0;
