@@ -1,8 +1,10 @@
 let score = 0;
 let round = 1;
-
+let spaceshipArrayCounter = -1;
+let flashingSpaceShipBoolean = true;
 
 const play = () => {
+
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
 	let renderer = PIXI.autoDetectRenderer(
@@ -17,8 +19,8 @@ const play = () => {
 	// prior to scaling, sets width/height.
 	const MAX_X = 800;
 	const MAX_Y = 600;
-	// windowScale creates the number by which scale size is determined (container height / actual window size)
-	// ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.
+	/* windowScale creates the number by which scale size is determined (container height / actual window size)
+	ex. window.innerHeight = 960, Max_Y = 600, windowScale = 1.6, so rendered stage with be 160% of actual size.*/
 	let windowScale = window.innerHeight / MAX_Y;
 	let scaledStageWidth = MAX_X * windowScale
 	// takes the rendered width , subtracting the scaled width of the stage, divides by two to find needed left margin to center the stage element within the canvas
@@ -56,22 +58,28 @@ const play = () => {
 	const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
+	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png');
 
-	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
-
+	/////////////////////
+	//ufoIcon positions//
+	/////////////////////
 	const ufoIconPositions = [
-		300, 558,
-		325, 558,
-		350, 558,
-		375, 558,
-		400, 558,
-		425, 558,
-		450, 558,
-		475, 558,
-		500, 558,
-		525, 558
+		300, 559,
+		325, 559,
+		350, 559,
+		375, 559,
+		400, 559,
+		425, 559,
+		450, 559,
+		475, 559,
+		500, 559,
+		525, 559
 	]
 
+	////////////////////
+	//explosion images//
+	////////////////////
 	const   explosionImg1   = PIXI.Texture.fromImage('./imgs/explosionImgs/1.png')
 				, explosionImg2  = PIXI.Texture.fromImage('./imgs/explosionImgs/2.png')
 				, explosionImg3  = PIXI.Texture.fromImage('./imgs/explosionImgs/3.png')
@@ -111,6 +119,10 @@ const play = () => {
 	let roundText = new PIXI.Text('ROUND ' + round,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 
 	let explosionCounter = 20;
+
+	const hitText = new PIXI.Text('HIT', {fontFamily: 'VT323', fontSize: 34, fill : '#8DEA03', align : 'center'})
+
+	const rText = new PIXI.Text('R: ' + round, {fontFamily: 'VT323', fontSize: 24, fill : '#fff', align : 'center'})
 
 	//sounds
 	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -157,8 +169,9 @@ const play = () => {
 	roundText.scale.x = 1.6;
 	roundText.scale.y = 1.6;
 
-
-
+	////////////////////
+	//Explosion effect//
+	////////////////////
 	setInterval(function(){
 
 		if (explosionCounter < 20){
@@ -255,10 +268,17 @@ const play = () => {
 	scoreNumber.scale.y = 1.6;
 
 	alienLaughing.anchor.set = (0.5, 0);
-	alienLaughing.scale.x = 2.8;
+	alienLaughing.scale.x = 3;
 	alienLaughing.scale.y = 2.8;
 	alienLaughing.position.x = MAX_X/2 ;
-	alienLaughing.position.y = MAX_Y - 98;
+	alienLaughing.position.y = MAX_Y - 150;
+
+	hitText.position.x = 212;
+	hitText.position.y = MAX_Y - 46;
+	hitText.scale.x = 1.7;
+
+	rText.position.x = 93;
+	rText.position.y = 517.5;
 
 	flash.scale.y = window.innerHeight;
 	flash.scale.x = window.innerWidth;
@@ -278,6 +298,8 @@ const play = () => {
 		, scoreImg
 		, RoundBox
 		, roundText
+		, hitText
+		, rText
 		, flash
 	);
 
@@ -301,10 +323,12 @@ const play = () => {
 			setTimeout( () => {
 				laugh.play();
 				alienLaughingMoving = true;
+				spaceshipArrayCounter++;
+				ufoRow[spaceshipArrayCounter]._texture = ufoIcon;
 				setTimeout(function(){
 					alienLaughingMoving = false;
 					alienLaughing.position.x = MAX_X/2 ;
-					alienLaughing.position.y = MAX_Y - 98;
+					alienLaughing.position.y = MAX_Y - 150;
 
 				},4000)
 			} , 400)
@@ -313,7 +337,9 @@ const play = () => {
 
 	let animateCount = 0;
 
-
+	///////////////////////////////////////////////////
+	//counter used for spaceship and alien animations//
+	///////////////////////////////////////////////////
 	setInterval(function(){
 		animateCount++;
 		if (animateCount === 3 ){
@@ -321,7 +347,9 @@ const play = () => {
 		}
 	}, 150)
 
-
+	////////////////////////////////////////////////////////////
+	//controls spaceship rotationg AND alien walking animation//
+	////////////////////////////////////////////////////////////
 	setInterval( function (){
 		if(animateCount === 0) {
 			spaceship.texture = spaceship2;
@@ -362,6 +390,9 @@ const play = () => {
 	let	shotBol = false
 	let spaceshipInteractive = 'NO';
 
+	////////////////////////////
+	//spaceship click listener//
+	////////////////////////////
 	setTimeout(function(){
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
@@ -374,7 +405,7 @@ const play = () => {
 				laserCount++;
 			}
 		})
-	} , 6000)
+	} , 3200)
 
 	let shotBol1 = false;
 
@@ -409,8 +440,8 @@ const play = () => {
 	var target = new PIXI.Point();
 
 	function resetTarget () {
-		target.x = Math.floor( Math.random() * MAX_X );
-		target.y = Math.floor( Math.random() * MAX_Y );
+		target.x = Math.random() * MAX_X;
+		target.y = Math.random() * 415;
 	}
 
 	// start animating
@@ -455,10 +486,10 @@ const play = () => {
 		if (alienLaughingMoving) {
 			if (	alienLaughingPositionCounter !== 120 ) {
 				alienLaughingPositionCounter++
-				alienLaughing.position.y -= 1;
+				alienLaughing.position.y -= 0.000000125;
 			}
 			if (	alienLaughingPositionCounter === 120 ) {
-				alienLaughing.position.y += 0.00000125;
+				alienLaughing.position.y += 0.75;
 			}
 		}
 		if (!alienLaughingMoving) {
@@ -540,6 +571,9 @@ const play = () => {
 	}
 
 	function onDown (eventData) {
+		spaceshipArrayCounter++;
+		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
+
 		// setTimeout(function() {
 		// 	if(!hunted){
 		// 		laserCount = 4;
@@ -562,7 +596,7 @@ const play = () => {
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 5000)
+		} , 3000)
 	}
 
 	spaceship.on('mousedown', onDown);
@@ -579,6 +613,15 @@ const play = () => {
 			explosionImg.position.y = spaceship.position.y - 240;
 		}
 	}
+	setInterval(() => {
+		flashingSpaceShipBoolean = !flashingSpaceShipBoolean
+		if (flashingSpaceShipBoolean) {
+		ufoRow[spaceshipArrayCounter + 1]._texture = ufoIconGrey;
+		}
+		else {
+			ufoRow[spaceshipArrayCounter + 1]._texture = ufoIcon;
+		}
+	}, 300);
 }
 
 export default play;

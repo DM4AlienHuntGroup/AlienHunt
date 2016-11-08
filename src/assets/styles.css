@@ -44,7 +44,6 @@ button.open img {
 }
 .splashcontainer {
   width: 80vh;
-  height: 80vh;
   /*border: 3px solid yellow;*/
   margin: 100px auto;
 }
@@ -79,7 +78,7 @@ button.open img {
 
 .hunt{
   position: absolute;
-  right: -1000px;
+  right: -1200px;
 }
 
 .splashbuttons {
@@ -186,6 +185,7 @@ button.open img {
 		cursor: auto;
 		color: rgb(0, 235, 219);
 		font-size: 22px;
+		overflow: scroll;
 	}
 	.fb-auth{
 		text-decoration: none;
