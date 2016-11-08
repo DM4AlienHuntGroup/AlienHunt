@@ -2,8 +2,12 @@ let score = 0;
 let round = 1;
 let spaceshipArrayCounter = -1;
 let flashingSpaceShipBoolean = true;
+let pause = false;
+let theGameSpeed = 0;
+let huntedCounter = 0;
 
-const play = () => {
+
+let play = () => {
 	document.body.style.background = "black";
 	document.body.style.overflow = "hidden";
 	let renderer = PIXI.autoDetectRenderer(
@@ -118,6 +122,7 @@ const play = () => {
 	const rText = new PIXI.Text('R: ' + round, {fontFamily: 'VT323', fontSize: 24, fill : '#fff', align : 'center'})
 
 	//sounds
+	const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
 	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
 	const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
 	const explosion = new Howl( {
@@ -295,9 +300,49 @@ const play = () => {
 		, flash
 	);
 
+
+	let nextRound = setInterval(function(){
+		console.log(spaceshipArrayCounter);
+		if ( spaceshipArrayCounter > 8 ){
+			theGameSpeed += 0.02
+			spaceshipArrayCounter = -1
+		setTimeout(function(){
+		pause = true;
+		round++;
+		clearInterval( nextRound );
+		clearInterval( flyAway );
+		clearInterval( flashingSpaceShip );
+
+		renderer.destroy( true );
+		gameBackgroundMusic.pause()
+		if(huntedCounter > 5){
+			huntedCounter = 0
+			setTimeout( function(){
+		pause = false;
+		play();
+		 },1 )
+	 	}
+		else {
+			const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
+			$('.game-over').css('display' , 'inherit')
+
+			// const gameOverImg = new PIXI.Sprite.fromImage('./imgs/gameOver.jpg');
+			// //
+			// 		gameOverImg.scale.set(MAX_Y * 0.0013);
+			// 		stage.addChild(gameOverImg)
+
+		}
+	},2000)
+
+	}
+
+},10)
+
+
+
 	let alienLaughingMoving = false;
 
-	setInterval(function(){
+	let flyAway = setInterval(function(){
 		if(!hunted && spaceship.rotation === 0 ){
 			laserCount = 4;
 			setTimeout(function(){
@@ -425,12 +470,17 @@ const play = () => {
 	var target = new PIXI.Point();
 
 	function resetTarget () {
+
 		target.x = Math.floor( Math.random() * MAX_X );
 		target.y = Math.floor( Math.random() * MAX_Y );
+		spaceshipMove.play()
+
 	}
 
 	// start animating
+	if (!pause){
 	requestAnimationFrame( animate );
+}
 
 	let alienLaughingPositionCounter = 0
 	let ufoRow = [];
@@ -495,15 +545,15 @@ const play = () => {
 		}
 		if ( laserCount <= 3  ) {
 			if(!hunted && alien.position.x > MAX_X/2) {
-				spaceship.position.x += (target.x - spaceship.x) * 0.1;
-				spaceship.position.y += (target.y - spaceship.y) * 0.1;
+				spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
+				spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
 
 				if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
 					spaceship.scale.x += 0.04
 					spaceship.scale.y += 0.04
 				}
 				if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
-					spaceshipMove.play()
+
 					resetTarget();
 				}
 			}
@@ -514,8 +564,8 @@ const play = () => {
 		contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
 
 	// render the container
-	renderer.render(stage);
-	requestAnimationFrame(animate);
+if(!pause){	renderer.render(stage);
+	requestAnimationFrame(animate);}
 	}
 
 	function contain(sprite, container) {
@@ -556,6 +606,7 @@ const play = () => {
 
 	function onDown (eventData) {
 		spaceshipArrayCounter++;
+		huntedCounter++
 		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
 		// setTimeout(function() {
@@ -588,7 +639,9 @@ const play = () => {
 
 	function animate2() {
 		if(hunted) {
+			if(!pause){
 			requestAnimationFrame(animate2);
+		}
 			spaceship.rotation += 0.3;
 			spaceship.position.x += 0;
 			spaceship.position.y += 3 + Math.random() * 7;
@@ -597,7 +650,7 @@ const play = () => {
 			explosionImg.position.y = spaceship.position.y - 240;
 		}
 	}
-	setInterval(() => {
+	let flashingSpaceShip = setInterval(() => {
 		flashingSpaceShipBoolean = !flashingSpaceShipBoolean
 		if (flashingSpaceShipBoolean) {
 		ufoRow[spaceshipArrayCounter + 1]._texture = ufoIconGrey;
@@ -607,5 +660,8 @@ const play = () => {
 		}
 	}, 1000);
 }
+
+
+
 
 export default play;
