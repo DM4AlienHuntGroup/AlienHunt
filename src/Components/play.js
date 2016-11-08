@@ -1,6 +1,7 @@
 let score = 0;
 let round = 1;
 let spaceshipArrayCounter = -1;
+let flashingSpaceShipBoolean = true;
 
 const play = () => {
 	document.body.style.background = "black";
@@ -56,7 +57,7 @@ const play = () => {
 	const transparent = PIXI.Texture.fromImage('./imgs/transparent.png');
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
-
+	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
 	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 
 	const ufoIconPositions = [
@@ -315,6 +316,7 @@ const play = () => {
 				laugh.play();
 				alienLaughingMoving = true;
 				spaceshipArrayCounter++;
+				ufoRow[spaceshipArrayCounter]._texture = ufoIcon;
 				setTimeout(function(){
 					alienLaughingMoving = false;
 					alienLaughing.position.x = MAX_X/2 ;
@@ -595,6 +597,15 @@ const play = () => {
 			explosionImg.position.y = spaceship.position.y - 240;
 		}
 	}
+	setInterval(() => {
+		flashingSpaceShipBoolean = !flashingSpaceShipBoolean
+		if (flashingSpaceShipBoolean) {
+		ufoRow[spaceshipArrayCounter + 1]._texture = ufoIconGrey;
+		}
+		else {
+			ufoRow[spaceshipArrayCounter + 1]._texture = ufoIcon;
+		}
+	}, 1000);
 }
 
 export default play;
