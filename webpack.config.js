@@ -35,6 +35,7 @@ module.exports = {
 		path: __dirname + "/"
 		, filename: "bundle.js"
 	}
+	// , plugins: [new webpack.optimize.UglifyJsPlugin()]
 	, devServer: {
 		contentBase: "./"
 	}

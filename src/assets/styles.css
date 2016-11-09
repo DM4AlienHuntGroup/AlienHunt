@@ -23,6 +23,7 @@ button.open img {
 	width: 2rem;
 }
 #ex2{
+	overflow: auto;
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
 	color: rgb(0, 235, 219);
@@ -233,6 +234,12 @@ button.open img {
 	}
 	#ex1 a{
 		text-decoration: none;
+	}
+	#ex1 {
+		overflow: auto;
+	}
+	#ex3 {
+		overflow: auto;
 	}
 /*/////////////////*/
 /* End of Modal Css*/
