@@ -15,6 +15,7 @@ function homeCtrl( $scope, homeService ) {
 
 	$scope.play = () => {
 		play();
+
 	}
 
 	getUser();

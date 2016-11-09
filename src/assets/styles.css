@@ -12,6 +12,16 @@ section {
 .hamburger-icon{
 	height: 3vh;
 }
+button.open {
+	position: fixed;
+	background-color: hsla(0, 0%, 0%, 0);
+	display: none;
+	border-style: none;
+	color:  rgb(0, 235, 219);
+}
+button.open img {
+	width: 2rem;
+}
 #ex2{
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
