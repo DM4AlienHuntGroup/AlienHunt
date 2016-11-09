@@ -215,7 +215,7 @@ function playService ( $http ) {
 		////////////////////
 		//Explosion effect//
 		////////////////////
-		setInterval( () => {
+		let explosionEffect = setInterval(function(){
 
 			if (explosionCounter < 20){
 			explosionCounter++
@@ -427,7 +427,7 @@ function playService ( $http ) {
 					stage.removeChild(spaceship)
 				} , 2000)
 
-				createNewSpaceship = setTimeout(	 () => {
+				createNewSpaceship = setTimeout( () => {
 					shotBol = false
 					shot.texture = shot1
 					spaceshipHasBeenShotByUser = false
@@ -441,7 +441,7 @@ function playService ( $http ) {
 					alienLaughingMoving = true;
 					spaceshipArrayCounter++;
 					ufoRow[spaceshipArrayCounter]._texture = ufoIcon;
-					setTimeout( () => {
+					laughingAlienPositionTimeout = setTimeout( () => {
 						alienLaughingMoving = false;
 						alienLaughing.position.x = MAX_X/2 ;
 						alienLaughing.position.y = MAX_Y - 150;
@@ -453,6 +453,9 @@ function playService ( $http ) {
 
 		let animateCount = 0;
 
+		///////////////////////////////////////////////////
+		//counter used for spaceship and alien animations//
+		///////////////////////////////////////////////////
 		setInterval( () => {
 			animateCount++;
 			if (animateCount === 3 ){
@@ -460,6 +463,9 @@ function playService ( $http ) {
 			}
 		}, 150)
 
+		////////////////////////////////////////////////////////////
+		//controls spaceship rotationg AND alien walking animation//
+		////////////////////////////////////////////////////////////
 		let spaceshipRotationgAndAlienWalking = setInterval( () => {
 			if(animateCount === 0) {
 				spaceship.texture = spaceship2;
@@ -481,9 +487,23 @@ function playService ( $http ) {
 					alien.texture = alienStep3
 				}
 			}
+			else {
+				alien.scale.x -= 0.1;
+				alien.scale.y -= 0.03;
+
+				if(animateCount === 0) {
+					alien.texture = alienStop1;
+				}
+				else if (animateCount === 1) {
+					alien.texture = alienStop2;
+				}
+				else  if (animateCount === 2) {
+					alien.texture = alienStop3;
+				}
+			}
 		} , 150)
 
-		let	shotBol = false;
+		let	shotBol = false
 		let spaceshipInteractive = 'NO';
 
 		////////////////////////////
@@ -632,10 +652,10 @@ function playService ( $http ) {
 					if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
 						if (	alienLaughingPositionCounter !== 120 ) {
 							alienLaughingPositionCounter++
-							alienLaughing.position.y -= 0.000000125;
+							alienLaughing.position.y -= 1;
 						}
 						if (	alienLaughingPositionCounter === 120 ) {
-							alienLaughing.position.y += 0.75;
+							alienLaughing.position.y += 1;
 						}
 					}
 				}
@@ -644,27 +664,15 @@ function playService ( $http ) {
 						spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
 						spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
 
-						if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
-							spaceship.scale.x += 0.04
-							spaceship.scale.y += 0.04
-						}
-						if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
+		if(!pause){
 
-							resetTarget();
-						}
+
+			renderer.render(stage);
+			requestAnimationFrame(animate);
 					}
 				}
-				alienWalking();
-				alienDisappear();
 
-				contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
 			}
-			// render the container
-			if(!pause) {
-				renderer.render(stage);
-				requestAnimationFrame(animate);
-			}
-		}
 
 		function contain(sprite, container) {
 			var collision = "";
@@ -735,13 +743,14 @@ function playService ( $http ) {
 			if(spaceshipHasBeenShotByUser) {
 				if(!pause){
 				requestAnimationFrame(animate2);
-			}
+
 				spaceship.rotation += 0.3;
 				spaceship.position.x += 0;
 				spaceship.position.y += 3 + Math.random() * 7;
 
 				explosionImg.position.x = spaceship.position.x - 120;
 				explosionImg.position.y = spaceship.position.y - 240;
+				}
 			}
 		}
 		let flashingSpaceShip = setInterval(() => {
@@ -754,5 +763,5 @@ function playService ( $http ) {
 			}
 		}, 300);
 	}
-}
+
 export default playService;
