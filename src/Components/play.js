@@ -64,7 +64,12 @@ let play = () => {
 
 	const ufoIcon = PIXI.Texture.fromImage('./imgs/tiny-spaceship-white.png');
 	const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
-	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png');
+	const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
+	let ufoIndexTimer = 9000;
+	setInterval( ( ) => {
+		ufoIndexTimer--
+	}, 1 )
+
 
 	/////////////////////
 	//ufoIcon positions//
@@ -116,7 +121,7 @@ let play = () => {
 	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-	let hunted = false;
+	let spaceshipHasBeenShotByUser = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text(score,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
 	const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -306,12 +311,10 @@ let play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash
-	);
+		, flash);
 
 
 	let nextRound = setInterval(function(){
-		console.log(spaceshipArrayCounter);
 		if ( spaceshipArrayCounter > 8 ){
 			theGameSpeed += 0.02
 			spaceshipArrayCounter = -1
@@ -336,7 +339,7 @@ let play = () => {
 
 
 
-		hunted = false;
+		spaceshipHasBeenShotByUser = false;
 
 		renderer.destroy( true );
 		stage.destroy( true );
@@ -367,7 +370,8 @@ let play = () => {
 	let laughingAlienPositionTimeout;
 
 	let flyAway = setInterval(function(){
-		if(!hunted && spaceship.rotation === 0 ){
+		if(!spaceshipHasBeenShotByUser && spaceship.rotation === 0 ){
+			ufoIndexTimer = 9000;
 			laserCount = 4;
 			setTimeout(function(){
 				stage.removeChild(spaceship)
@@ -376,7 +380,7 @@ let play = () => {
 			 createNewSpaceship = setTimeout(	function(){
 				shotBol = false
 				shot.texture = shot1
-				hunted = false
+				spaceshipHasBeenShotByUser = false
 				spaceship.rotation = 0
 
 				stage.addChildAt(spaceship, 2)
@@ -505,8 +509,8 @@ let play = () => {
 
 	function resetTarget () {
 
-		target.x = Math.floor( Math.random() * MAX_X );
-		target.y = Math.floor( Math.random() * MAX_Y );
+		target.x = Math.random() * MAX_X;
+		target.y = Math.random() * 415;
 		spaceshipMove.play()
 
 
@@ -578,7 +582,7 @@ let animate3 = setInterval(function(){
 	}
 
 	if ( laserCount <= 3  ) {
-		if(!hunted && alien.position.x > MAX_X/2) {
+		if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
 			spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
 			spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
 
@@ -608,9 +612,6 @@ let animate3 = setInterval(function(){
 			alienLaughingPositionCounter = 0
 		}
 
-
-
-	// render the container
 if(!pause){
 
 
@@ -618,11 +619,12 @@ if(!pause){
 	requestAnimationFrame(animate);
 			}
 		}
+
 	}
 
 	function contain(sprite, container) {
 		var collision = "";
-	//Left
+		//Left
 		if (sprite.x < container.x) {
 			sprite.x = container.x;
 			collision = "left";
@@ -664,8 +666,9 @@ let addASpaceship2;
 		huntedCounter++
 		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
+
 		explosion.play();
-		hunted = true;
+		spaceshipHasBeenShotByUser = true;
 		animate2();
 		// huntedSound.play()
 		score += 500
@@ -676,18 +679,19 @@ let addASpaceship2;
 		addASpaceship2 = setTimeout(	function(){
 			shotBol = false
 			shot.texture = shot1
-			hunted = false
+			spaceshipHasBeenShotByUser = false
 			spaceship.rotation = 0
 			stage.addChildAt(spaceship, 2)
 			laserCount = 0
-		} , 3000)
+		} , ufoIndexTimer)
+		ufoIndexTimer = 9000;
 	}
 
 	spaceship.on('mousedown', onDown);
 	spaceship.on('touchstart', onDown);
 
 	function animate2() {
-		if(hunted) {
+		if(spaceshipHasBeenShotByUser) {
 			if(!pause){
 			requestAnimationFrame(animate2);
 

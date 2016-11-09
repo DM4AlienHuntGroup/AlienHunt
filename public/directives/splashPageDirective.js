@@ -5,9 +5,10 @@ function splashPage (  ) {
 		, templateUrl: "../../public/splash.html"
     , link: function( scope ) {
 
+
 			const splashMusic = new Howl(
 				{
-					src: [ "../sounds/splashMusic.mp3" ]
+					src: [ "../sounds/xGon'GiveItToYa.mp3" ]
 					, autoplay: true
 					, loop: true
 				}
@@ -52,8 +53,9 @@ function splashPage (  ) {
 
 			const stopSplashMusic = (  ) => {
 				splashMusic.pause(  );
-				
+
 				$('section').hide()
+				$('.open').show()
 			};
 
 			$( ".selectImg" ).css( "opacity", "0" );
