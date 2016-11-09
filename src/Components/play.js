@@ -162,9 +162,16 @@ const play = () => {
 	roundText.scale.x = 1.6;
 	roundText.scale.y = 1.6;
 
+<<<<<<< HEAD
 
 
 	setInterval(function(){
+=======
+	////////////////////
+	//Explosion effect//
+	////////////////////
+	let explosionEffect = setInterval(function(){
+>>>>>>> master
 
 		if (explosionCounter < 20){
 		explosionCounter++
@@ -292,32 +299,93 @@ const play = () => {
 		, roundText
 		, hitText
 		, rText
+<<<<<<< HEAD
 		, flash
 	);
+=======
+		, flash);
+
+
+	let nextRound = setInterval(function(){
+		if ( spaceshipArrayCounter > 8 ){
+			theGameSpeed += 0.02
+			spaceshipArrayCounter = -1
+		setTimeout(function(){
+		pause = true;
+		round++;
+		clearInterval( nextRound );
+		clearInterval( flyAway );
+		clearInterval( flashingSpaceShip );
+		clearInterval( laughingAlienInterval );
+		clearInterval( spaceshipRotationgAndAlienWalking );
+		clearInterval( explosionEffect );
+		clearInterval( spaceshipClickListener );
+		clearInterval( flashingShotImage );
+		clearInterval( animate3 );
+		clearTimeout( createNewSpaceship );
+		clearTimeout( laughingAlienTimeout );
+		clearTimeout( laughingAlienPositionTimeout );
+		clearTimeout( removeTheSpaceship2 );
+		clearTimeout( addASpaceship2 );
+		clearTimeout( limitTheShots );
+
+
+
+		spaceshipHasBeenShotByUser = false;
+
+		renderer.destroy( true );
+		stage.destroy( true );
+		gameBackgroundMusic.pause()
+		if(huntedCounter > 5){
+			huntedCounter = 0
+			setTimeout( function(){
+		pause = false;
+		play();
+		 },1 )
+	 	}
+		else {
+			const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
+			$('.game-over').css('display' , 'inherit');
+
+		}
+	},2001)
+
+	}
+
+},10)
+
+
+>>>>>>> master
 
 	let alienLaughingMoving = false;
+	let createNewSpaceship;
+	let laughingAlienTimeout;
+	let laughingAlienPositionTimeout;
 
 	setInterval(function(){
 		if(!hunted && spaceship.rotation === 0 ){
 			laserCount = 4;
 			setTimeout(function(){
 				stage.removeChild(spaceship)
-			} , 1000)
-			setTimeout(	function(){
+			} , 2000)
+
+			 createNewSpaceship = setTimeout(	function(){
 				shotBol = false
 				shot.texture = shot1
 				hunted = false
 				spaceship.rotation = 0
+
 				stage.addChildAt(spaceship, 2)
+
 				laserCount = 0
 			} , 3000)
 
-			setTimeout( () => {
+			laughingAlienTimeout = setTimeout( function() {
 				laugh.play();
 				alienLaughingMoving = true;
 				spaceshipArrayCounter++;
 				ufoRow[spaceshipArrayCounter]._texture = ufoIcon;
-				setTimeout(function(){
+				laughingAlienPositionTimeout = setTimeout(function(){
 					alienLaughingMoving = false;
 					alienLaughing.position.x = MAX_X/2 ;
 					alienLaughing.position.y = MAX_Y - 150;
@@ -337,8 +405,15 @@ const play = () => {
 		}
 	}, 150)
 
+<<<<<<< HEAD
 
 	setInterval( function (){
+=======
+	////////////////////////////////////////////////////////////
+	//controls spaceship rotationg AND alien walking animation//
+	////////////////////////////////////////////////////////////
+	let spaceshipRotationgAndAlienWalking  = setInterval( function (){
+>>>>>>> master
 		if(animateCount === 0) {
 			spaceship.texture = spaceship2;
 		}
@@ -378,7 +453,14 @@ const play = () => {
 	let	shotBol = false
 	let spaceshipInteractive = 'NO';
 
+<<<<<<< HEAD
 	setTimeout(function(){
+=======
+	////////////////////////////
+	//spaceship click listener//
+	////////////////////////////
+	let spaceshipClickListener = setTimeout(function(){
+>>>>>>> master
 		spaceshipInteractive = 'YES';
 		$( 'canvas' ).click(function(){
 			if(laserCount < 3) {
@@ -394,7 +476,7 @@ const play = () => {
 
 	let shotBol1 = false;
 
-	setInterval(() => {
+	let flashingShotImage = setInterval(() => {
 		if (shotBol){
 			shotBol1 = !shotBol1;
 			if (shotBol1) {
@@ -412,7 +494,7 @@ const play = () => {
 	alienLaughing.interactive = true;
 	let alienLaughingBol = false
 
-	setInterval( function () {
+	let laughingAlienInterval =  setInterval( function () {
 		alienLaughingBol = !alienLaughingBol;
 		if( alienLaughingBol ) {
 			alienLaughing.texture = alienLaughing1;
@@ -444,42 +526,85 @@ const play = () => {
 		stage.addChild(ufoIndex);
 	}
 
+let limitTheShots = setInterval(function(){
+	if ( laserCount === 0 && spaceshipInteractive === 'YES' ) {
+		spaceship.interactive = true;
+		laserDots.texture = threeLaserdots;
+	}
+	else if ( laserCount === 1  ) {
+		spaceship.interactive = true;
+		laserDots.texture = twoLaserdots;
+	}
+	else if ( laserCount === 2  ) {
+		spaceship.interactive = true;
+		laserDots.texture = oneLaserdot;
+	}
+	else {
+		spaceship.interactive = false;
+		laserDots.texture = transparent;
+	}
+},20)
+
+let animate3 = setInterval(function(){
+	if (alienLaughingMoving) {
+		if (	alienLaughingPositionCounter !== 120 ) {
+			alienLaughingPositionCounter++
+			alienLaughing.position.y -= 0.000000125;
+		}
+		if (	alienLaughingPositionCounter === 120 ) {
+			alienLaughing.position.y += 0.75;
+		}
+	}
+	alienWalking();
+	alienDisappear();
+
+	contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575});
+
+	if ( laserCount > 3 ) {
+		spaceship.position.x += 10;
+		spaceship.position.y -= 10;
+		if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
+			if (	alienLaughingPositionCounter !== 120 ) {
+				alienLaughingPositionCounter++
+				alienLaughing.position.y -= 1;
+			}
+			if (	alienLaughingPositionCounter === 120 ) {
+				alienLaughing.position.y += 1;
+			}
+		}
+	}
+
+	if ( laserCount <= 3  ) {
+		if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
+			spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
+			spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
+
+			if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
+				spaceship.scale.x += 0.04
+				spaceship.scale.y += 0.04
+			}
+			if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
+
+				resetTarget();
+			}
+		}
+	}
+},16.6)
 
 	function animate() {
-		if ( laserCount === 0 && spaceshipInteractive === 'YES' ) {
-			spaceship.interactive = true;
-			laserDots.texture = threeLaserdots;
-		}
-		else if ( laserCount === 1  ) {
-			spaceship.interactive = true;
-			laserDots.texture = twoLaserdots;
-		}
-		else if ( laserCount === 2  ) {
-			spaceship.interactive = true;
-			laserDots.texture = oneLaserdot;
-		}
-		else {
-			spaceship.interactive = false;
-			laserDots.texture = transparent;
-		}
+	 if(!pause) {
+
 		if ( laserCount === 3 ) {
 			shotBol = true;
 		}
 		else {
 			shotBol = false
 		}
-		if (alienLaughingMoving) {
-			if (	alienLaughingPositionCounter !== 120 ) {
-				alienLaughingPositionCounter++
-				alienLaughing.position.y -= 0.000000125;
-			}
-			if (	alienLaughingPositionCounter === 120 ) {
-				alienLaughing.position.y += 0.75;
-			}
-		}
+
 		if (!alienLaughingMoving) {
 			alienLaughingPositionCounter = 0
 		}
+<<<<<<< HEAD
 		if ( laserCount > 3 ) {
 			spaceship.position.x += 10;
 			spaceship.position.y -= 10;
@@ -516,6 +641,17 @@ const play = () => {
 	// render the container
 	renderer.render(stage);
 	requestAnimationFrame(animate);
+=======
+
+if(!pause){
+
+
+	renderer.render(stage);
+	requestAnimationFrame(animate);
+			}
+		}
+
+>>>>>>> master
 	}
 
 	function contain(sprite, container) {
@@ -554,26 +690,33 @@ const play = () => {
 		}
 	}
 
+let removeTheSpaceship2;
+let addASpaceship2;
+
 	function onDown (eventData) {
 		spaceshipArrayCounter++;
 		ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
+<<<<<<< HEAD
 		// setTimeout(function() {
 		// 	if(!hunted){
 		// 		laserCount = 4;
 		// 	setTimeout(() => {laugh.play()} , 400)
 		// }
 		// },10000)
+=======
+
+>>>>>>> master
 		explosion.play();
 		hunted = true;
 		animate2();
 		// huntedSound.play()
 		score += 500
 		scoreNumber.setText(score)
-		setTimeout(function(){
+		removeTheSpaceship2 = setTimeout(function(){
 			stage.removeChild(spaceship)
 		} , 2000)
-		setTimeout(	function(){
+		addASpaceship2 = setTimeout(	function(){
 			shotBol = false
 			shot.texture = shot1
 			hunted = false
@@ -589,12 +732,17 @@ const play = () => {
 	function animate2() {
 		if(hunted) {
 			requestAnimationFrame(animate2);
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 			spaceship.rotation += 0.3;
 			spaceship.position.x += 0;
 			spaceship.position.y += 3 + Math.random() * 7;
 
 			explosionImg.position.x = spaceship.position.x - 120;
 			explosionImg.position.y = spaceship.position.y - 240;
+			}
 		}
 	}
 	setInterval(() => {
