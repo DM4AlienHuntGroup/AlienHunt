@@ -566,8 +566,8 @@ let play = () => {
 		}
 		if ( laserCount <= 3  ) {
 			if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
-				spaceship.position.x += (target.x - spaceship.x) * 0.1;
-				spaceship.position.y += (target.y - spaceship.y) * 0.1;
+				spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
+				spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
 
 				if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
 					spaceship.scale.x += 0.04
