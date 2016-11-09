@@ -121,7 +121,7 @@ let play = () => {
 	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-	const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
+	const alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
 	let spaceshipHasBeenShotByUser = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text(score,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
@@ -137,6 +137,7 @@ let play = () => {
 
 	let angryAlienTimeout;
 	let angryAlienInterval;
+	let setTheAlien2Position;
 
 	//sounds
 	const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
@@ -148,19 +149,20 @@ let play = () => {
 			explosionCounter = 0
 		}
 		, onend: function() {
+			huntedSound.play()
 			angryAlienTimeout = setTimeout(function(){
-				huntedSound.play();
+				;
 				angryAlienInterval = setInterval(function() {
 						if (	alien2Counter !== 120 ) {
 							alien2Counter++
-							alien2.position.y -=1;
+							alien2.position.y -=0.90;
 						}
 						if (	alien2Counter === 120 ) {
 							alien2.position.y += 1.5;
 						}
 				}, 16.6)
-			}, 500)
-			setTimeout(function(){
+			}, 1000)
+			setTheAlien2Position = setTimeout(function(){
 				clearInterval( angryAlienInterval );
 				clearTimeout( angryAlienTimeout );
 				alien2.position.y = MAX_Y - 140;
@@ -324,7 +326,7 @@ let play = () => {
 	stage.addChild(
 			background
 		, alienLaughing
-
+		, alien2
 		, spaceship
 		, explosionImg
 		, tree
@@ -340,7 +342,7 @@ let play = () => {
 		, hitText
 		, rText
 		, flash
-		, alien2);
+		);
 
 
 	let nextRound = setInterval(function(){
@@ -365,6 +367,9 @@ let play = () => {
 		clearTimeout( removeTheSpaceship2 );
 		clearTimeout( addASpaceship2 );
 		clearTimeout( limitTheShots );
+		clearTimeout( angryAlienTimeout );
+		clearInterval( angryAlienInterval);
+		clearTimeout( setTheAlien2Position );
 
 
 
