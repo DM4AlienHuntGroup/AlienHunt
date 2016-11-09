@@ -26,6 +26,7 @@ function playService ( $http ) {
 			if (playOrContinue === "continue") {
 				theGameSpeed = Number(user.theGameSpeed);
 				round = Number(user.currentGameLvl);
+				score = Number(user.currentScore);
 			}
 			addToStage();
 		} )
@@ -375,7 +376,7 @@ function playService ( $http ) {
 			else {
 				const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
 				$('.game-over').css('display' , 'inherit')
-
+				updateUser(user._id, {currentScore: 0})
 				// const gameOverImg = new PIXI.Sprite.fromImage('./imgs/gameOver.jpg');
 				// //
 				// 		gameOverImg.scale.set(MAX_Y * 0.0013);
