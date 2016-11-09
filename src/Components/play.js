@@ -153,13 +153,20 @@ let play = () => {
 				angryAlienInterval = setInterval(function() {
 						if (	alien2Counter !== 120 ) {
 							alien2Counter++
-							alien2.position.y -= 0.000000125;
+							alien2.position.y -=1;
 						}
 						if (	alien2Counter === 120 ) {
-							alien2.position.y += 0.75;
+							alien2.position.y += 1.5;
 						}
 				}, 16.6)
 			}, 500)
+			setTimeout(function(){
+				clearInterval( angryAlienInterval );
+				clearTimeout( angryAlienTimeout );
+				alien2.position.y = MAX_Y - 140;
+				alien2Counter = 0;
+
+			},4000)
 		}
 	} )
 	const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
@@ -302,7 +309,7 @@ let play = () => {
 	alien2.scale.x = 3;
 	alien2.scale.y = 2.8;
 	alien2.position.x = MAX_X/2;
-	alien2.position.y = MAX_Y - 150;
+	alien2.position.y = MAX_Y - 140;
 
 	hitText.position.x = 212;
 	hitText.position.y = MAX_Y - 46;
@@ -317,7 +324,7 @@ let play = () => {
 	stage.addChild(
 			background
 		, alienLaughing
-		, alien2
+
 		, spaceship
 		, explosionImg
 		, tree
@@ -332,7 +339,8 @@ let play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash);
+		, flash
+		, alien2);
 
 
 	let nextRound = setInterval(function(){
