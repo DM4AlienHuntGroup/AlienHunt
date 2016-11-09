@@ -121,6 +121,7 @@ let play = () => {
 	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
+	const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
 	let spaceshipHasBeenShotByUser = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text(score,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
@@ -134,6 +135,9 @@ let play = () => {
 
 	const rText = new PIXI.Text('R: ' + round, {fontFamily: 'VT323', fontSize: 24, fill : '#fff', align : 'center'})
 
+	let angryAlienTimeout;
+	let angryAlienInterval;
+
 	//sounds
 	const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
 	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
@@ -144,7 +148,18 @@ let play = () => {
 			explosionCounter = 0
 		}
 		, onend: function() {
-			huntedSound.play()
+			angryAlienTimeout = setTimeout(function(){
+				huntedSound.play();
+				angryAlienInterval = setInterval(function() {
+						if (	alien2Counter !== 120 ) {
+							alien2Counter++
+							alien2.position.y -= 0.000000125;
+						}
+						if (	alien2Counter === 120 ) {
+							alien2.position.y += 0.75;
+						}
+				}, 16.6)
+			}, 500)
 		}
 	} )
 	const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
@@ -281,8 +296,13 @@ let play = () => {
 	alienLaughing.anchor.set = (0.5, 0);
 	alienLaughing.scale.x = 3;
 	alienLaughing.scale.y = 2.8;
-	alienLaughing.position.x = MAX_X/2 ;
+	alienLaughing.position.x = MAX_X/2;
 	alienLaughing.position.y = MAX_Y - 150;
+
+	alien2.scale.x = 3;
+	alien2.scale.y = 2.8;
+	alien2.position.x = MAX_X/2;
+	alien2.position.y = MAX_Y - 150;
 
 	hitText.position.x = 212;
 	hitText.position.y = MAX_Y - 46;
@@ -297,6 +317,7 @@ let play = () => {
 	stage.addChild(
 			background
 		, alienLaughing
+		, alien2
 		, spaceship
 		, explosionImg
 		, tree
@@ -522,6 +543,7 @@ let play = () => {
 }
 
 	let alienLaughingPositionCounter = 0
+	let alien2Counter = 0
 	let ufoRow = [];
 
 	for (let i = 0; i < 10; i++) {
