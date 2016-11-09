@@ -149,6 +149,7 @@ function playService ( $http ) {
 		const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 		const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
+		const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
 		let spaceshipHasBeenShotByUser = false;
 		let laserCount = 0;
 		const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -156,6 +157,9 @@ function playService ( $http ) {
 		let explosionCounter = 20;
 
 		const hitText = new PIXI.Text('HIT', {fontFamily: 'VT323', fontSize: 34, fill : '#8DEA03', align : 'center'})
+
+		let angryAlienTimeout;
+		let angryAlienInterval;
 
 		//sounds
 		const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
@@ -167,7 +171,18 @@ function playService ( $http ) {
 				explosionCounter = 0
 			}
 			, onend:  () =>  {
-				huntedSound.play()
+				angryAlienTimeout = setTimeout( () => {
+					huntedSound.play();
+					angryAlienInterval = setInterval(function() {
+							if (	alien2Counter !== 120 ) {
+								alien2Counter++
+								alien2.position.y -= 0.000000125;
+							}
+							if (	alien2Counter === 120 ) {
+								alien2.position.y += 0.75;
+							}
+					}, 16.6)
+				}, 500)
 			}
 		} )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
@@ -295,6 +310,11 @@ function playService ( $http ) {
 		alienLaughing.position.x = MAX_X/2 ;
 		alienLaughing.position.y = MAX_Y - 150;
 
+		alien2.scale.x = 3;
+		alien2.scale.y = 2.8;
+		alien2.position.x = MAX_X/2;
+		alien2.position.y = MAX_Y - 150;
+
 		hitText.position.x = 212;
 		hitText.position.y = MAX_Y - 46;
 		hitText.scale.x = 1.7;
@@ -350,48 +370,54 @@ function playService ( $http ) {
 				stage.addChild(ufoIndex);
 			}
 		}
-
-
 		let nextRound = setInterval( () => {
 			if ( spaceshipArrayCounter > 8 ){
 				theGameSpeed += 0.02
 				spaceshipArrayCounter = -1
-			setTimeout( () => {
-			pause = true;
-			round++;
-			clearInterval( nextRound );
-			clearInterval( flyAway );
-			clearInterval( flashingSpaceShip );
-
-			renderer.destroy( true );
-			gameBackgroundMusic.pause()
-			updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
-			if( huntedCounter > 5 ){
-				huntedCounter = 0
 				setTimeout( () => {
-					pause = false;
-					this.play();
-			 },1 )
-		 	}
-			else {
-				const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
-				$('.game-over').css('display' , 'inherit')
-				updateUser(user._id, {currentScore: 0})
-				// const gameOverImg = new PIXI.Sprite.fromImage('./imgs/gameOver.jpg');
-				// //
-				// 		gameOverImg.scale.set(MAX_Y * 0.0013);
-				// 		stage.addChild(gameOverImg)
+				pause = true;
+				round++;
+				clearInterval( nextRound );
+				clearInterval( flyAway );
+				clearInterval( flashingSpaceShip );
+				clearInterval( laughingAlienInterval );
+				clearInterval( spaceshipRotationgAndAlienWalking );
+				clearInterval( explosionEffect );
+				clearInterval( spaceshipClickListener );
+				clearInterval( flashingShotImage );
+				clearInterval( animate3 );
+				clearTimeout( createNewSpaceship );
+				clearTimeout( laughingAlienTimeout );
+				clearTimeout( laughingAlienPositionTimeout );
+				clearTimeout( removeTheSpaceship2 );
+				clearTimeout( addASpaceship2 );
+				clearTimeout( limitTheShots );
 
+				spaceshipHasBeenShotByUser = false;
+
+				renderer.destroy( true );
+				stage.destroy( true );
+				gameBackgroundMusic.pause()
+					updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
+					if( huntedCounter > 5 ){
+						huntedCounter = 0
+						setTimeout( () => {
+							pause = false;
+							this.play();
+					 	},1 )
+				 	}
+					else {
+						const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
+						$('.game-over').css('display' , 'inherit')
+						updateUser(user._id, {currentScore: 0})
+					}
+				},2001)
 			}
-		},2000)
-
-		}
-
-	},10)
-
-
-
+		},10)
 		let alienLaughingMoving = false;
+		let createNewSpaceship;
+		let laughingAlienTimeout;
+		let laughingAlienPositionTimeout;
 
 		let flyAway = setInterval( () => {
 			if(!spaceshipHasBeenShotByUser && spaceship.rotation === 0 ){
@@ -399,8 +425,9 @@ function playService ( $http ) {
 				laserCount = 4;
 				setTimeout( () => {
 					stage.removeChild(spaceship)
-				} , 1000)
-				setTimeout(	 () => {
+				} , 2000)
+
+				createNewSpaceship = setTimeout(	 () => {
 					shotBol = false
 					shot.texture = shot1
 					spaceshipHasBeenShotByUser = false
@@ -409,7 +436,7 @@ function playService ( $http ) {
 					laserCount = 0
 				} , 3000)
 
-				setTimeout( () => {
+				laughingAlienTimeout = setTimeout( () => {
 					laugh.play();
 					alienLaughingMoving = true;
 					spaceshipArrayCounter++;
@@ -426,9 +453,6 @@ function playService ( $http ) {
 
 		let animateCount = 0;
 
-		///////////////////////////////////////////////////
-		//counter used for spaceship and alien animations//
-		///////////////////////////////////////////////////
 		setInterval( () => {
 			animateCount++;
 			if (animateCount === 3 ){
@@ -436,10 +460,7 @@ function playService ( $http ) {
 			}
 		}, 150)
 
-		////////////////////////////////////////////////////////////
-		//controls spaceship rotationg AND alien walking animation//
-		////////////////////////////////////////////////////////////
-		setInterval( function (){
+		let spaceshipRotationgAndAlienWalking = setInterval( () => {
 			if(animateCount === 0) {
 				spaceship.texture = spaceship2;
 			}
@@ -460,35 +481,21 @@ function playService ( $http ) {
 					alien.texture = alienStep3
 				}
 			}
-			else {
-				alien.scale.x -= 0.1;
-				alien.scale.y -= 0.03;
-
-				if(animateCount === 0) {
-					alien.texture = alienStop1;
-				}
-				else if (animateCount === 1) {
-					alien.texture = alienStop2;
-				}
-				else  if (animateCount === 2) {
-					alien.texture = alienStop3;
-				}
-			}
 		} , 150)
 
-		let	shotBol = false
+		let	shotBol = false;
 		let spaceshipInteractive = 'NO';
 
 		////////////////////////////
 		//spaceship click listener//
 		////////////////////////////
-		setTimeout( () => {
+		let spaceshipClickListener = setTimeout( () => {
 			spaceshipInteractive = 'YES';
-			$( 'canvas' ).click( () => {
+			$( 'canvas' ).click(function(){
 				if(laserCount < 3) {
 					laserShoot.play();
 					flash.texture = flashTexture;
-					setTimeout( () => {
+					setTimeout(function(){
 						flash.texture = transparent;
 					},25)
 					laserCount++;
@@ -498,7 +505,7 @@ function playService ( $http ) {
 
 		let shotBol1 = false;
 
-		setInterval(() => {
+		let flashingShotImage = setInterval(() => {
 			if (shotBol){
 				shotBol1 = !shotBol1;
 				if (shotBol1) {
@@ -516,7 +523,7 @@ function playService ( $http ) {
 		alienLaughing.interactive = true;
 		let alienLaughingBol = false
 
-		setInterval( function () {
+		let laughingAlienInterval =  setInterval( () => {
 			alienLaughingBol = !alienLaughingBol;
 			if( alienLaughingBol ) {
 				alienLaughing.texture = alienLaughing1;
@@ -528,24 +535,20 @@ function playService ( $http ) {
 
 		var target = new PIXI.Point();
 
-		function resetTarget () {
-
+		const resetTarget = () => {
 			target.x = Math.random() * MAX_X;
 			target.y = Math.random() * 415;
 			spaceshipMove.play()
-
-
 		}
 
-		// start animating
-		if (!pause){
-		requestAnimationFrame( animate );
-	}
-
 		let alienLaughingPositionCounter = 0
+		let alien2Counter = 0
 		let ufoRow = [];
 
-		function animate() {
+		if (!pause){
+			requestAnimationFrame( animate );
+		}
+		let limitTheShots = setInterval(function(){
 			if ( laserCount === 0 && spaceshipInteractive === 'YES' ) {
 				spaceship.interactive = true;
 				laserDots.texture = threeLaserdots;
@@ -562,12 +565,9 @@ function playService ( $http ) {
 				spaceship.interactive = false;
 				laserDots.texture = transparent;
 			}
-			if ( laserCount === 3 ) {
-				shotBol = true;
-			}
-			else {
-				shotBol = false
-			}
+		},20)
+
+		let animate3 = setInterval(function(){
 			if (alienLaughingMoving) {
 				if (	alienLaughingPositionCounter !== 120 ) {
 					alienLaughingPositionCounter++
@@ -577,9 +577,11 @@ function playService ( $http ) {
 					alienLaughing.position.y += 0.75;
 				}
 			}
-			if (!alienLaughingMoving) {
-				alienLaughingPositionCounter = 0
-			}
+			alienWalking();
+			alienDisappear();
+
+			contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575});
+
 			if ( laserCount > 3 ) {
 				spaceship.position.x += 10;
 				spaceship.position.y -= 10;
@@ -593,6 +595,7 @@ function playService ( $http ) {
 					}
 				}
 			}
+
 			if ( laserCount <= 3  ) {
 				if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
 					spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
@@ -608,15 +611,59 @@ function playService ( $http ) {
 					}
 				}
 			}
-			alienWalking();
-			alienDisappear();
+		},16.6)
 
-			contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
+		function animate() {
+		 	if(!pause) {
 
-		// render the container
+				if ( laserCount === 3 ) {
+					shotBol = true;
+				}
+				else {
+					shotBol = false
+				}
 
-	if(!pause){	renderer.render(stage);
-		requestAnimationFrame(animate);}
+				if (!alienLaughingMoving) {
+					alienLaughingPositionCounter = 0
+				}
+				if ( laserCount > 3 ) {
+					spaceship.position.x += 10;
+					spaceship.position.y -= 10;
+					if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
+						if (	alienLaughingPositionCounter !== 120 ) {
+							alienLaughingPositionCounter++
+							alienLaughing.position.y -= 0.000000125;
+						}
+						if (	alienLaughingPositionCounter === 120 ) {
+							alienLaughing.position.y += 0.75;
+						}
+					}
+				}
+				if ( laserCount <= 3  ) {
+					if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
+						spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
+						spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
+
+						if (spaceship.scale.x < 1.75 && spaceship.scale.y < 1.75) {
+							spaceship.scale.x += 0.04
+							spaceship.scale.y += 0.04
+						}
+						if(Math.abs(spaceship.x - target.x) < 1 && alien.position.x > MAX_X/2) {
+
+							resetTarget();
+						}
+					}
+				}
+				alienWalking();
+				alienDisappear();
+
+				contain(spaceship, {x: 0, y: -50, width: MAX_X, height: 575})
+			}
+			// render the container
+			if(!pause) {
+				renderer.render(stage);
+				requestAnimationFrame(animate);
+			}
 		}
 
 		function contain(sprite, container) {
@@ -654,27 +701,24 @@ function playService ( $http ) {
 				createjs.Tween.get(alien).to({alpha: 0}, 1700);
 			}
 		}
+		let removeTheSpaceship2;
+		let addASpaceship2;
 
 		function onDown (eventData) {
 			spaceshipArrayCounter++;
 			huntedCounter++
 			ufoRow[spaceshipArrayCounter]._texture = ufoIconRed;
 
-			// setTimeout( () =>  {
-			// 		laserCount = 4;
-			// 	setTimeout(() => {laugh.play()} , 400)
-			// }
-			// },10000)
 			explosion.play();
 			spaceshipHasBeenShotByUser = true;
 			animate2();
 			// huntedSound.play()
 			score += 500
 			scoreNumber.setText(score)
-			setTimeout( () => {
+			removeTheSpaceship2 = setTimeout(function(){
 				stage.removeChild(spaceship)
 			} , 2000)
-			setTimeout(	 () => {
+			addASpaceship2 = setTimeout(	function(){
 				shotBol = false
 				shot.texture = shot1
 				spaceshipHasBeenShotByUser = false
@@ -684,7 +728,6 @@ function playService ( $http ) {
 			} , ufoIndexTimer)
 			ufoIndexTimer = 9000;
 		}
-
 		spaceship.on('mousedown', onDown);
 		spaceship.on('touchstart', onDown);
 
