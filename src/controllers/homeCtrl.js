@@ -1,5 +1,5 @@
-import play from "../Components/play.js"
-function homeCtrl( $scope, homeService ) {
+import playService from "../Components/play.js"
+function homeCtrl( $scope, homeService, playService ) {
 	const getUser = () => {
 		homeService.getUser().then((response)=>{
 			$scope.options = true;
@@ -13,8 +13,8 @@ function homeCtrl( $scope, homeService ) {
 		})
 	}
 
-	$scope.play = () => {
-		play();
+	$scope.play = (user) => {
+		playService.play(user);
 
 	}
 

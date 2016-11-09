@@ -2,7 +2,7 @@ const mongoose = require( "mongoose" )
 			, User = require( "./User.js" )
 
 module.exports = {
-	getUser: (req, res) => {
+	getUser(req, res) {
 		if (req.user) {
 			User.findOne( {fbId: req.user.id}, (err, fbUser) => {
 				if (!fbUser) {
@@ -44,7 +44,7 @@ module.exports = {
 			} )
 		}
 	},
-	putUser: ( req, res ) => {
+	putUser( req, res ) {
 		User.findById( {_id: req.params.id}, (err, user) => {
 			if (err) {
 				return res.json(err)
