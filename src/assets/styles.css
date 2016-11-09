@@ -13,6 +13,7 @@ section {
 	height: 3vh;
 }
 #ex2{
+	overflow: auto;
 	background-color: rgb(88, 88, 88);
 	font-size: 1.25em;
 	color: rgb(0, 235, 219);
@@ -224,6 +225,42 @@ section {
 	#ex1 a{
 		text-decoration: none;
 	}
+	#ex1 {
+		overflow: auto;
+	}
+	#ex3 {
+		overflow: auto;
+	}
 /*/////////////////*/
 /* End of Modal Css*/
 /*/////////////////*/
+
+
+.game-over{
+	position: absolute;
+height: 100%;
+width: 100%;
+z-index: 100000;
+top: 0;
+display: none;
+cursor: default;
+}
+.game-over > img{
+	width: 100%;
+	    height: 100vh
+}
+.play-again{
+	position: absolute;
+    top: 66vh;
+    left: 44vw;
+		text-decoration: none;
+		width: 45vh;
+		margin: 0 auto;
+		list-style: none;
+		font-size: 35px;
+		font-weight: 700;
+		line-height: 1.4em;
+		font-family: 'VT323', monospace;
+	  color:  #fff;
+		cursor: pointer;
+}
