@@ -53,7 +53,7 @@ function splashPage (  ) {
 
 			const stopSplashMusic = (  ) => {
 				splashMusic.pause(  );
-				
+
 				$('section').hide()
 				$('.open').show()
 			};
