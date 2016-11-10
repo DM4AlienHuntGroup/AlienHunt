@@ -46794,9 +46794,17 @@
 					theGameSpeed = Number(user.theGameSpeed);
 					round = Number(user.currentGameLvl);
 					score = Number(user.currentScore);
+					scoreNumber = setText(score);
 				}
 				addToStage();
 			});
+	
+			///////////////////////////
+			//Update High Score Board//
+			///////////////////////////
+			var updateScoreBoard = function updateScoreBoard(userObj) {
+				return $http.put("/api/scoreboard", userObj);
+			};
 	
 			///////////////////////////////////////
 			//API call to update User infromation//
@@ -46900,7 +46908,7 @@
 	
 			var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
-			var tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
+			var tree = new PIXI.Sprite.fromImage('./imgs/Tree.png');
 			var sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
 			var alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
 			var spaceshipHasBeenShotByUser = false;
@@ -47140,7 +47148,7 @@
 							}, 1);
 						} else {
 							updateUser(user._id, { currentGameLvl: round - 1, currentScore: 0 });
-	
+							updateScoreBoard({ score: Number(score), userName: user.firstName });
 							var GameOver = new Howl({ src: '../../sounds/GameOver.mp3', autoplay: true, loop: false });
 							$('.game-over').css('display', 'inherit');
 						}
@@ -47415,7 +47423,7 @@
 				animate2();
 				// huntedSound.play()
 				score += 500;
-				scoreNumber.setText(score);
+				scoreNumber.text = score;
 				removeTheSpaceship2 = setTimeout(function () {
 					stage.removeChild(spaceship);
 				}, 2000);
