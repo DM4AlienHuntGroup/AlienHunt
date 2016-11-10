@@ -383,12 +383,13 @@ function playService ( $http ) {
 		}
 		let nextRound = setInterval( () => {
 			if ( spaceshipArrayCounter > 8 ){
+				clearInterval( flashingSpaceShip );
 				spaceshipArrayCounter = -1
 				setTimeout( () => {
 					pause = true;
 					clearInterval( nextRound );
 					clearInterval( flyAway );
-					clearInterval( flashingSpaceShip );
+					// clearInterval( flashingSpaceShip );
 					clearInterval( laughingAlienInterval );
 					clearInterval( spaceshipRotationgAndAlienWalking );
 					clearInterval( explosionEffect );
@@ -420,11 +421,10 @@ function playService ( $http ) {
 					 	},1 )
 				 	}
 					else {
-						updateUser(user._id, {currentGameLvl: round - 1, currentScore: 0, theGameSpeed: theGameSpeed})
+						updateUser(user._id, {currentGameLvl: round - 1, currentScore: 0})
 
 						const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
 						$('.game-over').css('display' , 'inherit')
-						updateUser(user._id, {currentScore: 0})
 					}
 				},2001)
 			}
