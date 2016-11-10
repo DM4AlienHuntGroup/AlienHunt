@@ -1,2 +1,4 @@
 node_modules
 serverConfig.js
+bundle.js
+bundle.js.map
