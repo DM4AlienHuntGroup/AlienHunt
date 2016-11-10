@@ -389,7 +389,6 @@ function playService ( $http ) {
 					pause = true;
 					clearInterval( nextRound );
 					clearInterval( flyAway );
-					// clearInterval( flashingSpaceShip );
 					clearInterval( laughingAlienInterval );
 					clearInterval( spaceshipRotationgAndAlienWalking );
 					clearInterval( explosionEffect );
