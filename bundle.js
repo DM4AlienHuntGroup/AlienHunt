@@ -50344,7 +50344,7 @@
 				}
 			};
 			var nextRound = setInterval(function () {
-				if (spaceshipArrayCounter > 0) {
+				if (spaceshipArrayCounter > 8) {
 					clearInterval(flashingSpaceShip);
 					spaceshipArrayCounter = -1;
 					setTimeout(function () {
@@ -50380,7 +50380,7 @@
 						} else if (round > 7) {
 							theGameSpeed += 0.007;
 						}
-						if (huntedCounter > -1) {
+						if (huntedCounter > 5) {
 							updateUser(user._id, { currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed });
 							huntedCounter = 0;
 							setTimeout(function () {
