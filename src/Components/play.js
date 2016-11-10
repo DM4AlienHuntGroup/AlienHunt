@@ -121,7 +121,7 @@ let play = () => {
 	const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 	const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 	const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-	const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
+	const alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
 	let spaceshipHasBeenShotByUser = false;
 	let laserCount = 0;
 	let scoreNumber = new PIXI.Text(score,{fontFamily : 'VT323', fontSize: 24, fill : '#fff', align : 'center' });
@@ -137,29 +137,41 @@ let play = () => {
 
 	let angryAlienTimeout;
 	let angryAlienInterval;
+	let setTheAlien2Position;
 
 	//sounds
 	const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
-	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-	const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
+	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } );
+	const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } );
+	const angryAlienSoundEffect = new Howl( { src: '../../sounds/angryAlien.mp3' , volume: 0.2 } );
 	const explosion = new Howl( {
 		  src: '../../sounds/Explosion.wav'
 		, onplay: function(){
 			explosionCounter = 0
 		}
 		, onend: function() {
+			if(spaceshipArrayCounter !== -1) {
+				// huntedSound.play()
+			}
 			angryAlienTimeout = setTimeout(function(){
-				huntedSound.play();
+				angryAlienSoundEffect.play()
 				angryAlienInterval = setInterval(function() {
 						if (	alien2Counter !== 120 ) {
 							alien2Counter++
-							alien2.position.y -= 0.000000125;
+							alien2.position.y -=0.90;
 						}
 						if (	alien2Counter === 120 ) {
-							alien2.position.y += 0.75;
+							alien2.position.y += 1.5;
 						}
 				}, 16.6)
-			}, 500)
+			}, 1000)
+			setTheAlien2Position = setTimeout(function(){
+				clearInterval( angryAlienInterval );
+				clearTimeout( angryAlienTimeout );
+				alien2.position.y = MAX_Y - 140;
+				alien2Counter = 0;
+
+			},4000)
 		}
 	} )
 	const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
@@ -302,7 +314,7 @@ let play = () => {
 	alien2.scale.x = 3;
 	alien2.scale.y = 2.8;
 	alien2.position.x = MAX_X/2;
-	alien2.position.y = MAX_Y - 150;
+	alien2.position.y = MAX_Y - 140;
 
 	hitText.position.x = 212;
 	hitText.position.y = MAX_Y - 46;
@@ -332,7 +344,8 @@ let play = () => {
 		, roundText
 		, hitText
 		, rText
-		, flash);
+		, flash
+		);
 
 
 	let nextRound = setInterval(function(){
@@ -357,6 +370,9 @@ let play = () => {
 		clearTimeout( removeTheSpaceship2 );
 		clearTimeout( addASpaceship2 );
 		clearTimeout( limitTheShots );
+		clearTimeout( angryAlienTimeout );
+		clearInterval( angryAlienInterval);
+		clearTimeout( setTheAlien2Position );
 
 
 
