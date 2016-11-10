@@ -149,7 +149,7 @@ function playService ( $http ) {
 		const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 		const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-		const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
+		const alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
 		let spaceshipHasBeenShotByUser = false;
 		let laserCount = 0;
 		const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
