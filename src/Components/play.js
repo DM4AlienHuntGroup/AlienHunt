@@ -149,7 +149,7 @@ function playService ( $http ) {
 		const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
 		const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-		const alien2 = new PIXI.Sprite.fromImage('./imgs/Alien2.png');
+		const alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
 		let spaceshipHasBeenShotByUser = false;
 		let laserCount = 0;
 		const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -180,7 +180,7 @@ function playService ( $http ) {
 					angryAlienInterval = setInterval(function() {
 							if (	alien2Counter !== 120 ) {
 								alien2Counter++
-								alien2.position.y -=0.90;
+								alien2.position.y -=0.80;
 							}
 							if (	alien2Counter === 120 ) {
 								alien2.position.y += 1.5;
@@ -411,7 +411,15 @@ function playService ( $http ) {
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
 					round++;
+					if(round < 3){
 					theGameSpeed += 0.02;
+					}
+					else if (round > 3 && round < 7 ){
+						theGameSpeed += 0.015
+					}
+					else if (round > 7){
+						theGameSpeed += 0.007
+					}
 					if( huntedCounter > 5 ){
 						updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 						huntedCounter = 0
