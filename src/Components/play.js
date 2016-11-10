@@ -10,6 +10,26 @@ let roundText;
 let rText;
 let scoreNumber;
 
+let pathsArray = ["./imgs/spaceship1.png", "./imgs/spaceship2.png", "./imgs/spaceship3.png"];
+let altPathsArray = ["./imgs/tieFighter.png"];
+let view1;
+let view2;
+let view3;
+let bool = false;
+
+setInterval(function() {
+	if (bool) {
+		view1 = pathsArray[0];
+		view2 = pathsArray[1];
+		view3 = pathsArray[2];
+	}
+	else {
+		view1 = altPathsArray[0];
+		view2 = altPathsArray[0];
+		view3 = altPathsArray[0];
+	}
+}, 1)
+
 function playService ( $http ) {
 	this.play = (playOrContinue) => {
 		////////////////////////////////////
@@ -64,9 +84,9 @@ function playService ( $http ) {
 
 		// stage.scale.set(windowScale);
 
-		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
-		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
-		const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
+		const spaceship1 = PIXI.Texture.fromImage(view1);
+		const spaceship2 = PIXI.Texture.fromImage(view2);
+		const spaceship3 = PIXI.Texture.fromImage(view3);
 
 		const oneLaserdot  = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
 		const twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
@@ -382,7 +402,7 @@ function playService ( $http ) {
 			}
 		}
 		let nextRound = setInterval( () => {
-			if ( spaceshipArrayCounter > 8 ){
+			if ( spaceshipArrayCounter > 0 ){
 				clearInterval( flashingSpaceShip );
 				spaceshipArrayCounter = -1
 				setTimeout( () => {
@@ -410,6 +430,7 @@ function playService ( $http ) {
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
 					round++;
+					bool = !bool;
 					if(round < 3){
 					theGameSpeed += 0.02;
 					}
@@ -419,7 +440,7 @@ function playService ( $http ) {
 					else if (round > 7){
 						theGameSpeed += 0.007
 					}
-					if( huntedCounter > 5 ){
+					if( huntedCounter > -1 ){
 						updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 						huntedCounter = 0
 						setTimeout( () => {
