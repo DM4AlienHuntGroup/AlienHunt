@@ -94,6 +94,7 @@ function playService ( $http ) {
 		const ufoIconGrey = PIXI.Texture.fromImage('./imgs/tiny-spaceship-grey.png');
 		const ufoIconRed = PIXI.Texture.fromImage('./imgs/tiny-spaceship-red.png')
 		let ufoIndexTimer = 9000;
+
 		setInterval( ( ) => {
 			ufoIndexTimer--
 		}, 1 )
@@ -375,29 +376,29 @@ function playService ( $http ) {
 				theGameSpeed += 0.02
 				spaceshipArrayCounter = -1
 				setTimeout( () => {
-				pause = true;
-				round++;
-				clearInterval( nextRound );
-				clearInterval( flyAway );
-				clearInterval( flashingSpaceShip );
-				clearInterval( laughingAlienInterval );
-				clearInterval( spaceshipRotationgAndAlienWalking );
-				clearInterval( explosionEffect );
-				clearInterval( spaceshipClickListener );
-				clearInterval( flashingShotImage );
-				clearInterval( animate3 );
-				clearTimeout( createNewSpaceship );
-				clearTimeout( laughingAlienTimeout );
-				clearTimeout( laughingAlienPositionTimeout );
-				clearTimeout( removeTheSpaceship2 );
-				clearTimeout( addASpaceship2 );
-				clearTimeout( limitTheShots );
+					pause = true;
+					round++;
+					clearInterval( nextRound );
+					clearInterval( flyAway );
+					clearInterval( flashingSpaceShip );
+					clearInterval( laughingAlienInterval );
+					clearInterval( spaceshipRotationgAndAlienWalking );
+					clearInterval( explosionEffect );
+					clearInterval( spaceshipClickListener );
+					clearInterval( flashingShotImage );
+					clearInterval( animate3 );
+					clearTimeout( createNewSpaceship );
+					clearTimeout( laughingAlienTimeout );
+					clearTimeout( laughingAlienPositionTimeout );
+					clearTimeout( removeTheSpaceship2 );
+					clearTimeout( addASpaceship2 );
+					clearTimeout( limitTheShots );
 
-				spaceshipHasBeenShotByUser = false;
+					spaceshipHasBeenShotByUser = false;
 
-				renderer.destroy( true );
-				stage.destroy( true );
-				gameBackgroundMusic.pause()
+					renderer.destroy( true );
+					stage.destroy( true );
+					gameBackgroundMusic.pause()
 					updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 					if( huntedCounter > 5 ){
 						huntedCounter = 0
@@ -568,6 +569,7 @@ function playService ( $http ) {
 		if (!pause){
 			requestAnimationFrame( animate );
 		}
+
 		let limitTheShots = setInterval(function(){
 			if ( laserCount === 0 && spaceshipInteractive === 'YES' ) {
 				spaceship.interactive = true;
@@ -635,7 +637,6 @@ function playService ( $http ) {
 
 		function animate() {
 		 	if(!pause) {
-
 				if ( laserCount === 3 ) {
 					shotBol = true;
 				}
@@ -663,16 +664,15 @@ function playService ( $http ) {
 					if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
 						spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
 						spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
-
-		if(!pause){
-
-
-			renderer.render(stage);
-			requestAnimationFrame(animate);
 					}
 				}
-
 			}
+		}
+		if(!pause){
+			renderer.render(stage);
+			requestAnimationFrame(animate);
+		}
+
 
 		function contain(sprite, container) {
 			var collision = "";
@@ -763,5 +763,5 @@ function playService ( $http ) {
 			}
 		}, 300);
 	}
-
+}
 export default playService;
