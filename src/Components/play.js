@@ -161,29 +161,40 @@ function playService ( $http ) {
 
 		let angryAlienTimeout;
 		let angryAlienInterval;
-
+		let setTheAlien2Position;
 		//sounds
 		const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
 		const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
+		const angryAlienSoundEffect = new Howl( { src: '../../sounds/angryAlien.mp3' , volume: 0.2 } );
 		const explosion = new Howl( {
 			  src: '../../sounds/Explosion.wav'
 			, onplay:  () => {
 				explosionCounter = 0
 			}
 			, onend:  () =>  {
-				angryAlienTimeout = setTimeout( () => {
-					huntedSound.play();
+				if(spaceshipArrayCounter !== -1) {
+					// huntedSound.play()
+				}
+				angryAlienTimeout = setTimeout(function(){
+					angryAlienSoundEffect.play()
 					angryAlienInterval = setInterval(function() {
 							if (	alien2Counter !== 120 ) {
 								alien2Counter++
-								alien2.position.y -= 0.000000125;
+								alien2.position.y -=0.90;
 							}
 							if (	alien2Counter === 120 ) {
-								alien2.position.y += 0.75;
+								alien2.position.y += 1.5;
 							}
 					}, 16.6)
-				}, 500)
+				}, 1000)
+				setTheAlien2Position = setTimeout(function(){
+					clearInterval( angryAlienInterval );
+					clearTimeout( angryAlienTimeout );
+					alien2.position.y = MAX_Y - 140;
+					alien2Counter = 0;
+
+				},4000)
 			}
 		} )
 		const spaceshipMove = new Howl( { src: '../../sounds/spaceshipMove.wav' , volume: 0.4 } )
@@ -346,6 +357,7 @@ function playService ( $http ) {
 			stage.addChild(
 					background
 				, alienLaughing
+				, alien2
 				, spaceship
 				, explosionImg
 				, tree
@@ -373,11 +385,9 @@ function playService ( $http ) {
 		}
 		let nextRound = setInterval( () => {
 			if ( spaceshipArrayCounter > 8 ){
-				theGameSpeed += 0.02
 				spaceshipArrayCounter = -1
 				setTimeout( () => {
 					pause = true;
-					round++;
 					clearInterval( nextRound );
 					clearInterval( flyAway );
 					clearInterval( flashingSpaceShip );
@@ -393,13 +403,17 @@ function playService ( $http ) {
 					clearTimeout( removeTheSpaceship2 );
 					clearTimeout( addASpaceship2 );
 					clearTimeout( limitTheShots );
+					clearTimeout( angryAlienTimeout );
+					clearInterval( angryAlienInterval);
+					clearTimeout( setTheAlien2Position );
 
 					spaceshipHasBeenShotByUser = false;
-
 					renderer.destroy( true );
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
 					updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
+					round++;
+					theGameSpeed += 0.02;
 					if( huntedCounter > 5 ){
 						huntedCounter = 0
 						setTimeout( () => {
@@ -647,33 +661,12 @@ function playService ( $http ) {
 				if (!alienLaughingMoving) {
 					alienLaughingPositionCounter = 0
 				}
-				if ( laserCount > 3 ) {
-					spaceship.position.x += 10;
-					spaceship.position.y -= 10;
-					if (spaceship.scale.x < 160 && spaceship.scale.y < 180) {
-						if (	alienLaughingPositionCounter !== 120 ) {
-							alienLaughingPositionCounter++
-							alienLaughing.position.y -= 1;
-						}
-						if (	alienLaughingPositionCounter === 120 ) {
-							alienLaughing.position.y += 1;
-						}
-					}
-				}
-				if ( laserCount <= 3  ) {
-					if(!spaceshipHasBeenShotByUser && alien.position.x > MAX_X/2) {
-						spaceship.position.x += (target.x - spaceship.x) * (0.1 + theGameSpeed);
-						spaceship.position.y += (target.y - spaceship.y) * (0.1 + theGameSpeed);
-					}
+				if(!pause){
+					renderer.render(stage);
+					requestAnimationFrame(animate);
 				}
 			}
 		}
-		if(!pause){
-			renderer.render(stage);
-			requestAnimationFrame(animate);
-		}
-
-
 		function contain(sprite, container) {
 			var collision = "";
 			//Left
@@ -694,14 +687,11 @@ function playService ( $http ) {
 			//Return the `collision` value
 			return collision;
 		}
-
-
 		function alienWalking() {
 			if (alien.position.x <= MAX_X/2) {
 				alien.position.x += 3;
 			}
 		}
-
 		function alienDisappear() {
 			if (alien.position.x > MAX_X/2) {
 				stage.removeChild(roundText)
