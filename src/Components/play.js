@@ -119,9 +119,17 @@ function playService ( $http ) {
 				theGameSpeed = Number(user.theGameSpeed);
 				round = Number(user.currentGameLvl);
 				score = Number(user.currentScore);
+				scoreNumber = setText(score);
 			}
 			addToStage();
 		} )
+
+		///////////////////////////
+		//Update High Score Board//
+		///////////////////////////
+		const updateScoreBoard = (userObj) => {
+			return $http.put(`/api/scoreboard`, userObj)
+		}
 
 		///////////////////////////////////////
 		//API call to update User infromation//
@@ -240,7 +248,7 @@ function playService ( $http ) {
 
 		const background = new PIXI.Sprite.fromImage(background1);
 		const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
-		const tree = new PIXI.Sprite.fromImage('./imgs/tree.png');
+		const tree = new PIXI.Sprite.fromImage('./imgs/Tree.png');
 		const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
 		const alien2 = new PIXI.Sprite.fromImage(angryView);
 		let spaceshipHasBeenShotByUser = false;
@@ -523,7 +531,7 @@ function playService ( $http ) {
 				 	}
 					else {
 						updateUser(user._id, {currentGameLvl: round - 1, currentScore: 0})
-
+						updateScoreBoard({score: Number(score), userName: user.firstName});
 						const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
 						$('.game-over').css('display' , 'inherit')
 					}
@@ -813,7 +821,7 @@ function playService ( $http ) {
 			animate2();
 			// huntedSound.play()
 			score += 500
-			scoreNumber.setText(score)
+			scoreNumber.text = score;
 			removeTheSpaceship2 = setTimeout(function(){
 				stage.removeChild(spaceship)
 			} , 2000)
