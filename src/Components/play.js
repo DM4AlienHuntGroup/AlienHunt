@@ -180,7 +180,7 @@ function playService ( $http ) {
 					angryAlienInterval = setInterval(function() {
 							if (	alien2Counter !== 120 ) {
 								alien2Counter++
-								alien2.position.y -=0.90;
+								alien2.position.y -=0.80;
 							}
 							if (	alien2Counter === 120 ) {
 								alien2.position.y += 1.5;
@@ -410,7 +410,15 @@ function playService ( $http ) {
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
 					round++;
+					if(round < 3){
 					theGameSpeed += 0.02;
+					}
+					else if (round > 3 && round < 7 ){
+						theGameSpeed += 0.015
+					}
+					else if (round > 7){
+						theGameSpeed += 0.007
+					}
 					if( huntedCounter > 5 ){
 						updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 						huntedCounter = 0
