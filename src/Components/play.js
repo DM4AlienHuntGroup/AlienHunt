@@ -12,7 +12,6 @@ let scoreNumber;
 
 function playService ( $http ) {
 	this.play = (playOrContinue) => {
-
 		////////////////////////////////////
 		//API call to Get user Information//
 		////////////////////////////////////
@@ -411,10 +410,10 @@ function playService ( $http ) {
 					renderer.destroy( true );
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
-					updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 					round++;
 					theGameSpeed += 0.02;
 					if( huntedCounter > 5 ){
+						updateUser(user._id, {currentGameLvl: round, currentScore: score, theGameSpeed: theGameSpeed})
 						huntedCounter = 0
 						setTimeout( () => {
 							pause = false;
@@ -422,6 +421,8 @@ function playService ( $http ) {
 					 	},1 )
 				 	}
 					else {
+						updateUser(user._id, {currentGameLvl: round - 1, currentScore: 0, theGameSpeed: theGameSpeed})
+
 						const GameOver = new Howl( { src: '../../sounds/GameOver.mp3', autoplay:true , loop:false } )
 						$('.game-over').css('display' , 'inherit')
 						updateUser(user._id, {currentScore: 0})
