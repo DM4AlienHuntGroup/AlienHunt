@@ -141,17 +141,20 @@ let play = () => {
 
 	//sounds
 	const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
-	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
-	const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
+	const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } );
+	const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } );
+	const angryAlienSoundEffect = new Howl( { src: '../../sounds/angryAlien.mp3' , volume: 0.2 } );
 	const explosion = new Howl( {
 		  src: '../../sounds/Explosion.wav'
 		, onplay: function(){
 			explosionCounter = 0
 		}
 		, onend: function() {
-			huntedSound.play()
+			if(spaceshipArrayCounter !== -1) {
+				// huntedSound.play()
+			}
 			angryAlienTimeout = setTimeout(function(){
-				;
+				angryAlienSoundEffect.play()
 				angryAlienInterval = setInterval(function() {
 						if (	alien2Counter !== 120 ) {
 							alien2Counter++
