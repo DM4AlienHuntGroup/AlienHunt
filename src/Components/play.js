@@ -10,6 +10,99 @@ let roundText;
 let rText;
 let scoreNumber;
 
+//////SPACESHIP ROTATION//////
+let pathsArray = ["./imgs/spaceship1.png", "./imgs/spaceship2.png", "./imgs/spaceship3.png"];
+let altPathsArray = ["./imgs/tieFighter.png", "./imgs/tieFighterGreen.png", "./imgs/tieFighterRed.png"];
+let view1;
+let view2;
+let view3;
+let bool = false;
+
+/////ALIEN STOP//////
+let alienStopArray = ['./imgs/alienStop1.png', './imgs/alienStop2.png', './imgs/alienStop3.png'];
+let yodaStopArray = ["./imgs/yodaStop1.png", "./imgs/yodaStop2.png", "./imgs/yodaStop3.png"];
+let stopView1;
+let stopView2;
+let stopView3;
+
+//////ALIEN WALK//////
+let alienArray = ['./imgs/alienStep1.png', './imgs/alienStep2.png', './imgs/alienStep3.png'];
+let yodaArray = ["./imgs/yodaStep1.png", "./imgs/yodaStep2.png", "./imgs/yodaStep3.png"];
+let alienView1;
+let alienView2;
+let alienView3;
+
+//////ANGRY ALIEN//////
+let angryAlienArray = ['./imgs/AlienMad.png'];
+let angryYodaArray = ["./imgs/yodaFront.png"];
+let angryView;
+
+//////LAUGHING ALIEN//////
+let laughingAlienArray = ['./imgs/AlienLaughing1.png', './imgs/AlienLaughing2.png'];
+let laughingYodaArray = ["./imgs/yodaFront.png"];
+let laughingview1;
+let laughingview2;
+
+//////BACKGROUND CHANGE/////
+let background1Array = ['./imgs/Background.png'];
+let background2Array = ['./imgs/starWarsBackground.png'];
+let background1;
+
+//////MUSIC CHANGE//////
+let stageMusicArray = ['../../sounds/gameBackgroundMusic.mp3', '../../sounds/starwarstheme.mp3'];
+let stageMusic;
+
+
+setInterval(function() {
+	if (bool) {
+		view1 = altPathsArray[0];
+		view2 = altPathsArray[1];
+		view3 = altPathsArray[2];
+
+		stopView1 = yodaStopArray[0];
+		stopView2 = yodaStopArray[1];
+		stopView3 = yodaStopArray[2];
+
+		alienView1 = yodaArray[0];
+		alienView2 = yodaArray[1];
+		alienView3 = yodaArray[2];
+
+		angryView = angryYodaArray[0];
+
+		laughingview1 = laughingYodaArray[0];
+		laughingview2 = laughingYodaArray[0];
+
+		background1 = background2Array[0];
+
+		stageMusic = stageMusicArray[1];
+	}
+	else {
+		view1 = pathsArray[0];
+		view2 = pathsArray[1];
+		view3 = pathsArray[2];
+
+		stopView1 = alienStopArray[0];
+		stopView2 = alienStopArray[1];
+		stopView3 = alienStopArray[2];
+
+		alienView1 = alienArray[0];
+		alienView2 = alienArray[1];
+		alienView3 = alienArray[2];
+
+		angryView = angryAlienArray[0];
+
+		laughingview1 = laughingAlienArray[0];
+		laughingview2 = laughingAlienArray[1];
+
+		background1 = background1Array[0];
+
+		stageMusic = stageMusicArray[0];
+	}
+}, 1);
+
+
+
+
 function playService ( $http ) {
 	this.play = (playOrContinue) => {
 		////////////////////////////////////
@@ -72,24 +165,24 @@ function playService ( $http ) {
 
 		// stage.scale.set(windowScale);
 
-		const spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
-		const spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
-		const spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
+		const spaceship1 = PIXI.Texture.fromImage(view1);
+		const spaceship2 = PIXI.Texture.fromImage(view2);
+		const spaceship3 = PIXI.Texture.fromImage(view3);
 
 		const oneLaserdot  = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
 		const twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
 		const threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
 
-		const alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
-		const alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
-		const alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
+		const alienStop1 = PIXI.Texture.fromImage(stopView1);
+		const alienStop2 = PIXI.Texture.fromImage(stopView2);
+		const alienStop3 = PIXI.Texture.fromImage(stopView3);
 
-		const alienStep1 = PIXI.Texture.fromImage('./imgs/alienStep1.png');
-		const alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
-		const alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
+		const alienStep1 = PIXI.Texture.fromImage(alienView1);
+		const alienStep2 = PIXI.Texture.fromImage(alienView2);
+		const alienStep3 = PIXI.Texture.fromImage(alienView3);
 
-		const alienLaughing1 = PIXI.Texture.fromImage('./imgs/AlienLaughing1.png');
-		const alienLaughing2 = PIXI.Texture.fromImage('./imgs/AlienLaughing2.png');
+		const alienLaughing1 = PIXI.Texture.fromImage(laughingview1);
+		const alienLaughing2 = PIXI.Texture.fromImage(laughingview2);
 
 		const shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 
@@ -153,11 +246,11 @@ function playService ( $http ) {
 		const RoundBox  = new PIXI.Sprite(box);
 
 
-		const background = new PIXI.Sprite.fromImage('./imgs/Background.png');
+		const background = new PIXI.Sprite.fromImage(background1);
 		const grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 		const tree = new PIXI.Sprite.fromImage('./imgs/Tree.png');
 		const sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-		const alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
+		const alien2 = new PIXI.Sprite.fromImage(angryView);
 		let spaceshipHasBeenShotByUser = false;
 		let laserCount = 0;
 		const scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -170,7 +263,7 @@ function playService ( $http ) {
 		let angryAlienInterval;
 		let setTheAlien2Position;
 		//sounds
-		const gameBackgroundMusic = new Howl( { src: '../../sounds/gameBackgroundMusic.mp3', autoplay:true , loop:true } )
+		const gameBackgroundMusic = new Howl( { src: stageMusic, autoplay:true , loop:true } )
 		const laserShoot = new Howl( { src: '../../sounds/Laser_Shoot.wav' } )
 		const huntedSound = new Howl( { src: '../../sounds/huntedSound.mp3' } )
 		const angryAlienSoundEffect = new Howl( { src: '../../sounds/angryAlien.mp3' , volume: 0.2 } );
@@ -418,6 +511,7 @@ function playService ( $http ) {
 					stage.destroy( true );
 					gameBackgroundMusic.pause()
 					round++;
+					bool = !bool;
 					if(round < 3){
 					theGameSpeed += 0.02;
 					}

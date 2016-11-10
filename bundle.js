@@ -46776,6 +46776,94 @@
 	var rText = void 0;
 	var scoreNumber = void 0;
 	
+	//////SPACESHIP ROTATION//////
+	var pathsArray = ["./imgs/spaceship1.png", "./imgs/spaceship2.png", "./imgs/spaceship3.png"];
+	var altPathsArray = ["./imgs/tieFighter.png", "./imgs/tieFighterGreen.png", "./imgs/tieFighterRed.png"];
+	var view1 = void 0;
+	var view2 = void 0;
+	var view3 = void 0;
+	var bool = false;
+	
+	/////ALIEN STOP//////
+	var alienStopArray = ['./imgs/alienStop1.png', './imgs/alienStop2.png', './imgs/alienStop3.png'];
+	var yodaStopArray = ["./imgs/yodaStop1.png", "./imgs/yodaStop2.png", "./imgs/yodaStop3.png"];
+	var stopView1 = void 0;
+	var stopView2 = void 0;
+	var stopView3 = void 0;
+	
+	//////ALIEN WALK//////
+	var alienArray = ['./imgs/alienStep1.png', './imgs/alienStep2.png', './imgs/alienStep3.png'];
+	var yodaArray = ["./imgs/yodaStep1.png", "./imgs/yodaStep2.png", "./imgs/yodaStep3.png"];
+	var alienView1 = void 0;
+	var alienView2 = void 0;
+	var alienView3 = void 0;
+	
+	//////ANGRY ALIEN//////
+	var angryAlienArray = ['./imgs/AlienMad.png'];
+	var angryYodaArray = ["./imgs/yodaFront.png"];
+	var angryView = void 0;
+	
+	//////LAUGHING ALIEN//////
+	var laughingAlienArray = ['./imgs/AlienLaughing1.png', './imgs/AlienLaughing2.png'];
+	var laughingYodaArray = ["./imgs/yodaFront.png"];
+	var laughingview1 = void 0;
+	var laughingview2 = void 0;
+	
+	//////BACKGROUND CHANGE/////
+	var background1Array = ['./imgs/Background.png'];
+	var background2Array = ['./imgs/starWarsBackground.png'];
+	var background1 = void 0;
+	
+	//////MUSIC CHANGE//////
+	var stageMusicArray = ['../../sounds/gameBackgroundMusic.mp3', '../../sounds/starwarstheme.mp3'];
+	var stageMusic = void 0;
+	
+	setInterval(function () {
+		if (bool) {
+			view1 = altPathsArray[0];
+			view2 = altPathsArray[1];
+			view3 = altPathsArray[2];
+	
+			stopView1 = yodaStopArray[0];
+			stopView2 = yodaStopArray[1];
+			stopView3 = yodaStopArray[2];
+	
+			alienView1 = yodaArray[0];
+			alienView2 = yodaArray[1];
+			alienView3 = yodaArray[2];
+	
+			angryView = angryYodaArray[0];
+	
+			laughingview1 = laughingYodaArray[0];
+			laughingview2 = laughingYodaArray[0];
+	
+			background1 = background2Array[0];
+	
+			stageMusic = stageMusicArray[1];
+		} else {
+			view1 = pathsArray[0];
+			view2 = pathsArray[1];
+			view3 = pathsArray[2];
+	
+			stopView1 = alienStopArray[0];
+			stopView2 = alienStopArray[1];
+			stopView3 = alienStopArray[2];
+	
+			alienView1 = alienArray[0];
+			alienView2 = alienArray[1];
+			alienView3 = alienArray[2];
+	
+			angryView = angryAlienArray[0];
+	
+			laughingview1 = laughingAlienArray[0];
+			laughingview2 = laughingAlienArray[1];
+	
+			background1 = background1Array[0];
+	
+			stageMusic = stageMusicArray[0];
+		}
+	}, 1);
+	
 	function playService($http) {
 		var _this = this;
 	
@@ -46838,24 +46926,24 @@
 	
 			// stage.scale.set(windowScale);
 	
-			var spaceship1 = PIXI.Texture.fromImage('./imgs/spaceship1.png');
-			var spaceship2 = PIXI.Texture.fromImage('./imgs/spaceship2.png');
-			var spaceship3 = PIXI.Texture.fromImage('./imgs/spaceship3.png');
+			var spaceship1 = PIXI.Texture.fromImage(view1);
+			var spaceship2 = PIXI.Texture.fromImage(view2);
+			var spaceship3 = PIXI.Texture.fromImage(view3);
 	
 			var oneLaserdot = PIXI.Texture.fromImage('./imgs/oneLaserdot.png');
 			var twoLaserdots = PIXI.Texture.fromImage('./imgs/twoLaserdots.png');
 			var threeLaserdots = PIXI.Texture.fromImage('./imgs/threeLaserdots.png');
 	
-			var alienStop1 = PIXI.Texture.fromImage('./imgs/alienStop1.png');
-			var alienStop2 = PIXI.Texture.fromImage('./imgs/alienStop2.png');
-			var alienStop3 = PIXI.Texture.fromImage('./imgs/alienStop3.png');
+			var alienStop1 = PIXI.Texture.fromImage(stopView1);
+			var alienStop2 = PIXI.Texture.fromImage(stopView2);
+			var alienStop3 = PIXI.Texture.fromImage(stopView3);
 	
-			var alienStep1 = PIXI.Texture.fromImage('./imgs/alienStep1.png');
-			var alienStep2 = PIXI.Texture.fromImage('./imgs/alienStep2.png');
-			var alienStep3 = PIXI.Texture.fromImage('./imgs/alienStep3.png');
+			var alienStep1 = PIXI.Texture.fromImage(alienView1);
+			var alienStep2 = PIXI.Texture.fromImage(alienView2);
+			var alienStep3 = PIXI.Texture.fromImage(alienView3);
 	
-			var alienLaughing1 = PIXI.Texture.fromImage('./imgs/AlienLaughing1.png');
-			var alienLaughing2 = PIXI.Texture.fromImage('./imgs/AlienLaughing2.png');
+			var alienLaughing1 = PIXI.Texture.fromImage(laughingview1);
+			var alienLaughing2 = PIXI.Texture.fromImage(laughingview2);
 	
 			var shot1 = PIXI.Texture.fromImage('./imgs/shot.png');
 	
@@ -46906,11 +46994,11 @@
 			var explosionImg = new PIXI.Sprite(transparent);
 			var RoundBox = new PIXI.Sprite(box);
 	
-			var background = new PIXI.Sprite.fromImage('./imgs/Background.png');
+			var background = new PIXI.Sprite.fromImage(background1);
 			var grass = new PIXI.Sprite.fromImage('./imgs/GrassBoard.png');
 			var tree = new PIXI.Sprite.fromImage('./imgs/Tree.png');
 			var sign = new PIXI.Sprite.fromImage('./imgs/Area51.png');
-			var alien2 = new PIXI.Sprite.fromImage('./imgs/AlienMad.png');
+			var alien2 = new PIXI.Sprite.fromImage(angryView);
 			var spaceshipHasBeenShotByUser = false;
 			var laserCount = 0;
 			var scoreImg = new PIXI.Sprite.fromImage('./imgs/scoreImg.png');
@@ -46923,7 +47011,7 @@
 			var angryAlienInterval = void 0;
 			var setTheAlien2Position = void 0;
 			//sounds
-			var gameBackgroundMusic = new Howl({ src: '../../sounds/gameBackgroundMusic.mp3', autoplay: true, loop: true });
+			var gameBackgroundMusic = new Howl({ src: stageMusic, autoplay: true, loop: true });
 			var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
 			var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
 			var angryAlienSoundEffect = new Howl({ src: '../../sounds/angryAlien.mp3', volume: 0.2 });
@@ -47132,6 +47220,7 @@
 						stage.destroy(true);
 						gameBackgroundMusic.pause();
 						round++;
+						bool = !bool;
 						if (round < 3) {
 							theGameSpeed += 0.02;
 						} else if (round > 3 && round < 7) {
