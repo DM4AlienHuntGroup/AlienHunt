@@ -192,7 +192,6 @@ function playService ( $http ) {
 					clearTimeout( angryAlienTimeout );
 					alien2.position.y = MAX_Y - 140;
 					alien2Counter = 0;
-
 				},4000)
 			}
 		} )
