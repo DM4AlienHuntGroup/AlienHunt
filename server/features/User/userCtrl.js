@@ -57,7 +57,6 @@ module.exports = {
 				if (req.body.currentGameLvl > user.highLevel) {
 					tempUser.highLevel = req.body.currentGameLvl
 				}
-				console.log(tempUser);
 				User.findByIdAndUpdate( {_id: req.params.id}, tempUser, (err, oldUserData) => {
 					if (err) {
 						res.status(500).json(err)

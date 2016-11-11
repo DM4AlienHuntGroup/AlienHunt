@@ -17,6 +17,7 @@
             <li class="splashbutton" ng-show='!sound' ng-click='mute(); sound=!sound'> <img class='selectImg selectImg4'; ng-src="imgs/select.png" alt=""><span class='splashbutton4'> Mute</span></li>
 						<li class="splashbutton" ng-show='sound' ng-click='unmute(); sound=!sound'> <img class='selectImg selectImg4'; ng-src="imgs/select.png" alt=""><span class='splashbutton4'> Unmute</span></li>
             <li class="splashbutton"> <img class='selectImg selectImg5' ng-src="imgs/select.png" alt=""><span ng-click="getScoreboard()" class='splashbutton5'> <a href="#ex3" rel="modal:open" style="text-decoration: none;" class="splashbutton splashbutton5">High Scores</a></span></li>
+						<li class="splashbutton"> <img class='selectImg selectImg6'; ng-src="imgs/select.png" alt=""><span class='splashbutton6'> <a href="#ex4" rel="modal:open" style="text-decoration: none;" class="splashbutton splashbutton6">Themes</a></span></li>
 					</ul>
 				</div>
 		</div>
@@ -53,4 +54,14 @@
 			<div ng-repeat="score in scores" class="high-score-list">
 				<li>{{score.place}}. {{score.userName}} <span style="float:right">{{score.score | number}} pts</span></li>
 			</div>
+		</div>
+
+		<div id="ex4" style="display:none;">
+			<p><h4>Please select game theme.</h4></p>
+			<p>
+				<div>
+					<li ng-click='setTheme("alien")'><a href="">Alien</a></li>
+					<li ng-click='setTheme("starwars")'><a href="">Star Wars Theme</a></li>
+				</div>
+			</p>
 		</div>

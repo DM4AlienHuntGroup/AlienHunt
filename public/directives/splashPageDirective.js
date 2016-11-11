@@ -86,6 +86,10 @@ function splashPage (  ) {
 					$( ".selectImg5" ).css( "opacity", "1" );
 				} );
 
+				$( ".splashbutton6" ).hover( () => {
+					$( ".selectImg6" ).css( "opacity", "1" );
+				} );
+
 				$( ".splashbutton" ).mouseout( () => {
 					$( ".selectImg" ).css( "opacity", "0" );
 				} );
