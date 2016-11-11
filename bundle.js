@@ -47014,8 +47014,9 @@
 			var gameBackgroundMusic = new Howl({ src: stageMusic, autoplay: true, loop: true });
 			var laserShoot = new Howl({ src: '../../sounds/Laser_Shoot.wav' });
 			var huntedSound = new Howl({ src: '../../sounds/huntedSound.mp3' });
-			var angryAlienSoundEffect = new Howl({ src: '../../sounds/angryAlien.mp3', volume: 0.2 });
+			var angryAlienSoundEffect = new Howl({ src: '../../sounds/growl.mp3', volume: 0.4 });
 			var explosion = new Howl({
+				volume: 0.4,
 				src: '../../sounds/Explosion.wav',
 				onplay: function onplay() {
 					explosionCounter = 0;
@@ -47025,11 +47026,14 @@
 						// huntedSound.play()
 					}
 					angryAlienTimeout = setTimeout(function () {
-						angryAlienSoundEffect.play();
+						setTimeout(function () {
+							angryAlienSoundEffect.play();
+						}, 750);
+						// angryAlienSoundEffect.play()
 						angryAlienInterval = setInterval(function () {
 							if (alien2Counter !== 120) {
 								alien2Counter++;
-								alien2.position.y -= 0.80;
+								alien2.position.y -= .83;
 							}
 							if (alien2Counter === 120) {
 								alien2.position.y += 1.5;
