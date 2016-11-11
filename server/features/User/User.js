@@ -11,6 +11,7 @@ const User = new mongoose.Schema({
 		, isLoggedIn: {type: Boolean, default: true}
 		, currentScore: {type: Number, default: 0}
 		, theGameSpeed: {type: String, default: 0}
+		, theme: {type: String, default: "alien"}
 
 })
 

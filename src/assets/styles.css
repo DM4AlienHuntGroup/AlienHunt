@@ -112,7 +112,14 @@ button.open img {
 .splashbutton5{
 	color: #ffa347;
 }
+.splashbutton6{
+	color: #ffa347;
+}
 .splashbutton5:hover{
+	color: white;
+	cursor: pointer;
+}
+.splashbutton6:hover{
 	color: white;
 	cursor: pointer;
 }
@@ -152,95 +159,107 @@ button.open img {
   text-align: center;
 	align-content: center;
 }
-	.blocker:before{
-	  content: "";
-	  display: inline-block;
-	  height: 100%;
-	  vertical-align: middle;
-	  margin-right: -0.05em;
-	}
-	.blocker.behind {
-	  background-color: transparent;
-	}
-	.modal {
-	  display: inline-block;
-	  vertical-align: middle;
-	  position: relative;
-	  z-index: 2;
-	  max-width: 500px;
-	  box-sizing: border-box;
-	  width: 90%;
-	  background: rgb(88, 88, 88);
-	  padding: 15px 30px;
-	  -webkit-border-radius: 8px;
-	  -moz-border-radius: 8px;
-	  -o-border-radius: 8px;
-	  -ms-border-radius: 8px;
-	  border-radius: 8px;
-	  -webkit-box-shadow: 0 0 10px #000;
-	  -moz-box-shadow: 0 0 10px #000;
-	  -o-box-shadow: 0 0 10px #000;
-	  -ms-box-shadow: 0 0 10px #000;
-	  box-shadow: 0 0 10px #000;
-	  text-align: center;
-		cursor: auto;
-		color: rgb(0, 235, 219);
-		font-size: 22px;
-		overflow: scroll;
-	}
-	.fb-auth{
-		text-decoration: none;
-		width: 45vh;
-		margin: 0 auto;
-		list-style: none;
-		font-size: 15px;
-		font-weight: 700;
-		line-height: 1.4em;
-		font-family: 'VT323', monospace;
-		color: rgb(0, 235, 219);
-	}
-	div.social-wrap button {
-  padding-right: 45px;
-  height: 35px;
-  background: none;
-  border: none;
-  display: block;
-  background-size: 35px 35px;
-  background-position: right center;
-  background-repeat: no-repeat;
-  border-radius: 4px;
-  color: white;
-  font-family: "Merriweather Sans", sans-serif;
-  font-size: 14px;
-  margin-bottom: 15px;
-  width: 205px;
-  border-bottom: 2px solid transparent;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  box-shadow: 0 4px 2px -2px gray;
-  text-shadow: rgba(0, 0, 0, 0.5) -1px -1px 0;
-	}
-	div.social-wrap button:active {
-  background-color: #222;
-	}
-	div.social-wrap {
-		display: flex;
-		justify-content: space-around;
-	}
-	button#facebook {
-  border-color: #2d5073;
-  background-color: #3b5998;
-  background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
-	}
-	#ex1 a{
-		text-decoration: none;
-	}
-	#ex1 {
-		overflow: auto;
-	}
-	#ex3 {
-		overflow: auto;
-	}
+.blocker:before{
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.05em;
+}
+.blocker.behind {
+  background-color: transparent;
+}
+.modal {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  box-sizing: border-box;
+  width: 90%;
+  background: rgb(88, 88, 88);
+  padding: 15px 30px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -o-box-shadow: 0 0 10px #000;
+  -ms-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+	cursor: auto;
+	color: rgb(0, 235, 219);
+	font-size: 22px;
+	overflow: scroll;
+}
+.fb-auth{
+	text-decoration: none;
+	width: 45vh;
+	margin: 0 auto;
+	list-style: none;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.4em;
+	font-family: 'VT323', monospace;
+	color: rgb(0, 235, 219);
+}
+div.social-wrap button {
+	padding-right: 45px;
+	height: 35px;
+	background: none;
+	border: none;
+	display: block;
+	background-size: 35px 35px;
+	background-position: right center;
+	background-repeat: no-repeat;
+	border-radius: 4px;
+	color: white;
+	font-family: "Merriweather Sans", sans-serif;
+	font-size: 14px;
+	margin-bottom: 15px;
+	width: 205px;
+	border-bottom: 2px solid transparent;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+	box-shadow: 0 4px 2px -2px gray;
+	text-shadow: rgba(0, 0, 0, 0.5) -1px -1px 0;
+}
+div.social-wrap button:active {
+	background-color: #222;
+}
+div.social-wrap {
+	display: flex;
+	justify-content: space-around;
+}
+button#facebook {
+	border-color: #2d5073;
+	background-color: #3b5998;
+	background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+}
+#ex1 a{
+	text-decoration: none;
+}
+#ex1 {
+	overflow: auto;
+}
+#ex3 {
+	overflow: auto;
+}
+#ex4 {
+	overflow: hidden;
+	color: #ffa347;
+}
+#ex4  li {
+	list-style-type: none;
+	line-height: 1.4em;
+}
+#ex4 a{
+	color: rgb(0, 235, 219);
+	text-decoration: none;
+}
 /*/////////////////*/
 /* End of Modal Css*/
 /*/////////////////*/
@@ -248,29 +267,29 @@ button.open img {
 
 .game-over{
 	position: absolute;
-height: 100%;
-width: 100%;
-z-index: 100000;
-top: 0;
-display: none;
-cursor: default;
+	height: 100%;
+	width: 100%;
+	z-index: 100000;
+	top: 0;
+	display: none;
+	cursor: default;
 }
 .game-over > img{
 	width: 100%;
-	    height: 100vh
+  height: 100vh
 }
 .play-again{
 	position: absolute;
-    top: 66vh;
-    left: 44vw;
-		text-decoration: none;
-		width: 45vh;
-		margin: 0 auto;
-		list-style: none;
-		font-size: 35px;
-		font-weight: 700;
-		line-height: 1.4em;
-		font-family: 'VT323', monospace;
-	  color:  #fff;
-		cursor: pointer;
+	top: 66vh;
+	left: 44vw;
+	text-decoration: none;
+	width: 45vh;
+	margin: 0 auto;
+	list-style: none;
+	font-size: 35px;
+	font-weight: 700;
+	line-height: 1.4em;
+	font-family: 'VT323', monospace;
+	color:  #fff;
+	cursor: pointer;
 }
