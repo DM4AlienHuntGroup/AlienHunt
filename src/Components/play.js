@@ -459,12 +459,12 @@ function playService ( $http ) {
 
 			stage.addChild(
 					background
-				, alienLaughing
 				, alien2
 				, spaceship
 				, explosionImg
 				, tree
 				, sign
+				, alienLaughing
 				, grass
 				, alien
 				, laserDots

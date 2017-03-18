@@ -47185,7 +47185,7 @@
 				scoreNumber.scale.x = 1;
 				scoreNumber.scale.y = 1.6;
 	
-				stage.addChild(background, alienLaughing, alien2, spaceship, explosionImg, tree, sign, grass, alien, laserDots, shot, scoreImg, scoreNumber, RoundBox, roundText, hitText, rText, flash);
+				stage.addChild(background, alien2, spaceship, explosionImg, tree, sign, alienLaughing, grass, alien, laserDots, shot, scoreImg, scoreNumber, RoundBox, roundText, hitText, rText, flash);
 				for (var i = 0; i < 10; i++) {
 					var ufoIndex = new PIXI.Sprite(ufoIcon);
 					ufoRow.push(ufoIndex);
