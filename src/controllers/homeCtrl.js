@@ -13,12 +13,6 @@ function homeCtrl( $scope, homeService, playService ) {
 		})
 	}
 
-	$scope.setTheme = (theme) => {
-		homeService.updateUser($scope.user._id, {theme: theme}).then( response => {
-			$scope.user = response.data;
-		})
-	}
-
 	$scope.play = (user) => {
 		playService.play(user);
 	}
