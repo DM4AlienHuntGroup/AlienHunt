@@ -3,11 +3,6 @@ function splashPage() {
     restrict: "E"
     , templateUrl: "../../public/splash.html"
     , link: function( scope ) {
-      const splashMusic = new Howl( {
-        src: [ "../sounds/xGon'GiveItToYa.mp3" ]
-        , autoplay: false
-        , loop: true
-      } );
       const beep = new Howl( { src: [ "../sounds/beep.wav" ] } );
 
       const moveAlien = () => {
@@ -44,8 +39,6 @@ function splashPage() {
       }, 1500 );
 
       const stopSplashMusic = () => {
-        splashMusic.pause();
-
         $( "section" ).hide();
         $( ".open" ).show();
       };
