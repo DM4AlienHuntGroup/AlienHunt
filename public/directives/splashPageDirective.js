@@ -1,106 +1,95 @@
-function splashPage (  ) {
-	return {
-
-		restrict: "E"
-		, templateUrl: "../../public/splash.html"
+function splashPage() {
+  return {
+    restrict: "E"
+    , templateUrl: "../../public/splash.html"
     , link: function( scope ) {
+      const splashMusic = new Howl( {
+        src: [ "../sounds/xGon'GiveItToYa.mp3" ]
+        , autoplay: false
+        , loop: true
+      } );
+      const beep = new Howl( { src: [ "../sounds/beep.wav" ] } );
 
+      const moveAlien = () => {
+        const alienXCssPosition = $( ".alien" ).css( "left" );
+        const alienPosition = parseInt( alienXCssPosition.replace( /px/gi, "" ) );
 
-			const splashMusic = new Howl(
-				{
-					src: [ "../sounds/xGon'GiveItToYa.mp3" ]
-					, autoplay: true
-					, loop: true
-				}
-			);
-			const beep = new Howl( { src: [ "../sounds/beep.wav" ] } );
-
-			const moveAlien = (  ) => {
-				const alienXCssPosition = $( ".alien" ).css( "left" );
-				const alienPosition = parseInt( alienXCssPosition.replace( /px/gi, "" ) );
-
-				if ( alienPosition !== -91 ) {
+        if ( alienPosition !== -91 ) {
           // console.log( huntPosition );
-					$( ".alien" ).css( "left", `${ alienPosition + 3 }px` );
+          $( ".alien" ).css( "left", `${ alienPosition + 3 }px` );
+        }
+      };
 
-				}
-			};
+      const mute = () => {
+        Howler.mute( true );
+      };
 
-			const mute = (  ) => {
-				Howler.mute(true);
-			};
+      const unmute = () => {
+        Howler.mute( false );
+      };
 
-			const unmute = (  ) => {
-				Howler.mute(false);
-			}
+      setInterval( moveAlien, 1 );
 
-			setInterval( moveAlien, 1 );
+      const moveHunt = () => {
+        const huntXCssPosition = $( ".hunt" ).css( "right" );
+        const huntPosition = parseInt( huntXCssPosition.replace( /px/gi, "" ) );
 
-			const moveHunt = (  ) => {
-				const huntXCssPosition = $( ".hunt" ).css( "right" );
-				const huntPosition = parseInt( huntXCssPosition.replace( /px/gi, "" ) );
+        if ( huntPosition !== -125 ) {
+          $( ".hunt" ).css( "right", `${ huntPosition + 5 }px` );
+        }
+      };
 
-				if ( huntPosition !== -125 ) {
+      setTimeout( () => {
+        setInterval( moveHunt, 1 );
+      }, 1500 );
 
-					$( ".hunt" ).css( "right", `${ huntPosition + 5 }px`  );
+      const stopSplashMusic = () => {
+        splashMusic.pause();
 
-				}
-			};
+        $( "section" ).hide();
+        $( ".open" ).show();
+      };
 
-			setTimeout( (  ) => {
-				setInterval( moveHunt, 1 );
-			}, 1500 );
+      $( ".selectImg" ).css( "opacity", "0" );
 
-			const stopSplashMusic = (  ) => {
-				splashMusic.pause(  );
+      $( document ).ready( () => {
+        $( ".splashbutton" ).hover( () => {
+          beep.play();
+        } );
 
-				$('section').hide()
-				$('.open').show()
-			};
+        $( ".splashbutton1" ).hover( () => {
+          $( ".selectImg1" ).css( "opacity", "1" );
+        } );
 
-			$( ".selectImg" ).css( "opacity", "0" );
+        $( ".splashbutton2" ).hover( () => {
+          $( ".selectImg2" ).css( "opacity", "1" );
+        } );
 
-			$( document ).ready( () => {
+        $( ".login" ).hover( () => {
+          $( ".selectImg3" ).css( "opacity", "1" );
+        } );
 
-				$( ".splashbutton" ).hover( () => {
-					beep.play();
-				} );
+        $( ".splashbutton4" ).hover( () => {
+          $( ".selectImg4" ).css( "opacity", "1" );
+        } );
 
-				$( ".splashbutton1" ).hover( () => {
-					$( ".selectImg1" ).css( "opacity", "1" );
-				} );
+        $( ".splashbutton5" ).hover( () => {
+          $( ".selectImg5" ).css( "opacity", "1" );
+        } );
 
-				$( ".splashbutton2" ).hover( () => {
-					$( ".selectImg2" ).css( "opacity", "1" );
-				} );
+        $( ".splashbutton6" ).hover( () => {
+          $( ".selectImg6" ).css( "opacity", "1" );
+        } );
 
-				$( ".login" ).hover( () => {
-					$( ".selectImg3" ).css( "opacity", "1" );
-				} );
+        $( ".splashbutton" ).mouseout( () => {
+          $( ".selectImg" ).css( "opacity", "0" );
+        } );
+      } );
 
-				$( ".splashbutton4" ).hover( () => {
-					$( ".selectImg4" ).css( "opacity", "1" );
-				} );
-
-				$( ".splashbutton5" ).hover( () => {
-					$( ".selectImg5" ).css( "opacity", "1" );
-				} );
-
-				$( ".splashbutton6" ).hover( () => {
-					$( ".selectImg6" ).css( "opacity", "1" );
-				} );
-
-				$( ".splashbutton" ).mouseout( () => {
-					$( ".selectImg" ).css( "opacity", "0" );
-				} );
-
-			} );
-
-			scope.mute = mute;
-			scope.unmute = unmute;
-			scope.stopSplashMusic = stopSplashMusic;
-
-		}
-	};
-};
+      scope.mute = mute;
+      scope.unmute = unmute;
+      scope.stopSplashMusic = stopSplashMusic;
+    }
+  };
+}
 export default splashPage;

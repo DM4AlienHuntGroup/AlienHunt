@@ -47600,106 +47600,102 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	function splashPage() {
-		return {
+	  return {
+	    restrict: "E",
+	    templateUrl: "../../public/splash.html",
+	    link: function link(scope) {
+	      var splashMusic = new Howl({
+	        src: ["../sounds/xGon'GiveItToYa.mp3"],
+	        autoplay: false,
+	        loop: true
+	      });
+	      var beep = new Howl({ src: ["../sounds/beep.wav"] });
 	
-			restrict: "E",
-			templateUrl: "../../public/splash.html",
-			link: function link(scope) {
+	      var moveAlien = function moveAlien() {
+	        var alienXCssPosition = $(".alien").css("left");
+	        var alienPosition = parseInt(alienXCssPosition.replace(/px/gi, ""));
 	
-				var splashMusic = new Howl({
-					src: ["../sounds/xGon'GiveItToYa.mp3"],
-					autoplay: true,
-					loop: true
-				});
-				var beep = new Howl({ src: ["../sounds/beep.wav"] });
+	        if (alienPosition !== -91) {
+	          // console.log( huntPosition );
+	          $(".alien").css("left", alienPosition + 3 + "px");
+	        }
+	      };
 	
-				var moveAlien = function moveAlien() {
-					var alienXCssPosition = $(".alien").css("left");
-					var alienPosition = parseInt(alienXCssPosition.replace(/px/gi, ""));
+	      var mute = function mute() {
+	        Howler.mute(true);
+	      };
 	
-					if (alienPosition !== -91) {
-						// console.log( huntPosition );
-						$(".alien").css("left", alienPosition + 3 + "px");
-					}
-				};
+	      var unmute = function unmute() {
+	        Howler.mute(false);
+	      };
 	
-				var mute = function mute() {
-					Howler.mute(true);
-				};
+	      setInterval(moveAlien, 1);
 	
-				var unmute = function unmute() {
-					Howler.mute(false);
-				};
+	      var moveHunt = function moveHunt() {
+	        var huntXCssPosition = $(".hunt").css("right");
+	        var huntPosition = parseInt(huntXCssPosition.replace(/px/gi, ""));
 	
-				setInterval(moveAlien, 1);
+	        if (huntPosition !== -125) {
+	          $(".hunt").css("right", huntPosition + 5 + "px");
+	        }
+	      };
 	
-				var moveHunt = function moveHunt() {
-					var huntXCssPosition = $(".hunt").css("right");
-					var huntPosition = parseInt(huntXCssPosition.replace(/px/gi, ""));
+	      setTimeout(function () {
+	        setInterval(moveHunt, 1);
+	      }, 1500);
 	
-					if (huntPosition !== -125) {
+	      var stopSplashMusic = function stopSplashMusic() {
+	        splashMusic.pause();
 	
-						$(".hunt").css("right", huntPosition + 5 + "px");
-					}
-				};
+	        $("section").hide();
+	        $(".open").show();
+	      };
 	
-				setTimeout(function () {
-					setInterval(moveHunt, 1);
-				}, 1500);
+	      $(".selectImg").css("opacity", "0");
 	
-				var stopSplashMusic = function stopSplashMusic() {
-					splashMusic.pause();
+	      $(document).ready(function () {
+	        $(".splashbutton").hover(function () {
+	          beep.play();
+	        });
 	
-					$('section').hide();
-					$('.open').show();
-				};
+	        $(".splashbutton1").hover(function () {
+	          $(".selectImg1").css("opacity", "1");
+	        });
 	
-				$(".selectImg").css("opacity", "0");
+	        $(".splashbutton2").hover(function () {
+	          $(".selectImg2").css("opacity", "1");
+	        });
 	
-				$(document).ready(function () {
+	        $(".login").hover(function () {
+	          $(".selectImg3").css("opacity", "1");
+	        });
 	
-					$(".splashbutton").hover(function () {
-						beep.play();
-					});
+	        $(".splashbutton4").hover(function () {
+	          $(".selectImg4").css("opacity", "1");
+	        });
 	
-					$(".splashbutton1").hover(function () {
-						$(".selectImg1").css("opacity", "1");
-					});
+	        $(".splashbutton5").hover(function () {
+	          $(".selectImg5").css("opacity", "1");
+	        });
 	
-					$(".splashbutton2").hover(function () {
-						$(".selectImg2").css("opacity", "1");
-					});
+	        $(".splashbutton6").hover(function () {
+	          $(".selectImg6").css("opacity", "1");
+	        });
 	
-					$(".login").hover(function () {
-						$(".selectImg3").css("opacity", "1");
-					});
+	        $(".splashbutton").mouseout(function () {
+	          $(".selectImg").css("opacity", "0");
+	        });
+	      });
 	
-					$(".splashbutton4").hover(function () {
-						$(".selectImg4").css("opacity", "1");
-					});
-	
-					$(".splashbutton5").hover(function () {
-						$(".selectImg5").css("opacity", "1");
-					});
-	
-					$(".splashbutton6").hover(function () {
-						$(".selectImg6").css("opacity", "1");
-					});
-	
-					$(".splashbutton").mouseout(function () {
-						$(".selectImg").css("opacity", "0");
-					});
-				});
-	
-				scope.mute = mute;
-				scope.unmute = unmute;
-				scope.stopSplashMusic = stopSplashMusic;
-			}
-		};
-	};
+	      scope.mute = mute;
+	      scope.unmute = unmute;
+	      scope.stopSplashMusic = stopSplashMusic;
+	    }
+	  };
+	}
 	exports.default = splashPage;
 
 /***/ },
